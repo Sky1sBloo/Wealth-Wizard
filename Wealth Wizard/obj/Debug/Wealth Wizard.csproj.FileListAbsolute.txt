@@ -1,0 +1,20 @@
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\Wealth Wizard.exe.config
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\Wealth Wizard.exe
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\Wealth Wizard.pdb
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\EntityFramework.dll
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\EntityFramework.SqlServer.dll
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Data.SQLite.dll
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Data.SQLite.EF6.dll
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Data.SQLite.Linq.dll
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\EntityFramework.xml
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\EntityFramework.SqlServer.xml
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Data.SQLite.xml
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth Wizard.csproj.AssemblyReference.cache
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.Display.resources
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.Properties.Resources.resources
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth Wizard.csproj.GenerateResource.cache
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth Wizard.csproj.CoreCompileInputs.cache
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth Wizard.csproj.CopyComplete
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth Wizard.exe
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth Wizard.pdb
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.Preferences.resources
