@@ -48,5 +48,95 @@ namespace Wealth_Wizard
             con.Close();
             return dt;
         }
+
+        // Add new entry to the database
+        public static void AddNewEntry(DateTime date, string type, string name, float amount)
+        {
+            // Required variables
+            object typeIdx;
+
+            // Conenct to database
+            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
+            con.Open();
+
+            string querySelect = "SELECT type_idx FROM types WHERE name='" + type + "'";
+            SQLiteCommand cmd = new SQLiteCommand(querySelect, con);
+            DataTable entryTypeName = new DataTable();
+            SQLiteDataAdapter dataAdapter = new SQLiteDataAdapter(cmd);
+
+            dataAdapter.Fill(entryTypeName);
+
+            typeIdx = entryTypeName.Rows[0][0];
+
+            // Insert into database
+            string queryInsert = "INSERT INTO purchases Values(@date, @type_idx, @name, @amount)";
+
+            SQLiteCommand insertToDb = new SQLiteCommand(queryInsert, con);
+            insertToDb.Parameters.Add(new SQLiteParameter("@date", date.ToString("yyyy-MM-dd")));
+            insertToDb.Parameters.Add(new SQLiteParameter("@type_idx", typeIdx));
+            insertToDb.Parameters.Add(new SQLiteParameter("@name", name));
+            insertToDb.Parameters.Add(new SQLiteParameter("@amount", amount));
+            try
+            {
+                insertToDb.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            con.Close();
+        }
+
+        // Delete an entry in the database
+        public static void DeleteEntry(DateTime date,  string type, string name, double amount)
+        {
+            // Open connection to database
+            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
+            con.Open();
+
+            // Create query for deletion
+            string queryDelete = "DELETE FROM purchases \r\n" +
+                "WHERE purchases.purchase_date = @date AND purchases.name = @name AND " +
+                "purchases.amount = @amount AND " +
+                "purchases.type_idx = (" +
+                "SELECT types.type_idx " +
+                "FROM types " +
+                "WHERE types.name = @type_name)";
+
+            SQLiteCommand deleteRowDb = new SQLiteCommand(queryDelete, con);
+            deleteRowDb.Parameters.Add(new SQLiteParameter("@date", date.ToString("yyyy-MM-dd")));
+            deleteRowDb.Parameters.Add(new SQLiteParameter("@name", name));
+            deleteRowDb.Parameters.Add(new SQLiteParameter("@amount", amount));
+            deleteRowDb.Parameters.Add(new SQLiteParameter("@type_name", type));
+
+            // Delete row from query
+            deleteRowDb.ExecuteNonQuery();
+
+            con.Close();
+        }
+
+        // Returns the entry type names
+        public static List<string> GetEntryTypes()
+        {
+            List<string> entryTypes = new List<string>();
+
+            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
+            con.Open();
+            string query = "SELECT name\r\n" +
+                "FROM types";
+            SQLiteCommand cmd = new SQLiteCommand(query, con);
+            DataTable types = new DataTable();
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd);
+            adapter.Fill(types);
+
+            foreach (DataRow row in types.Rows)
+            {
+                entryTypes.Add(row["name"].ToString());
+            }
+
+            con.Close();
+            return entryTypes;
+        }
     }
 }
