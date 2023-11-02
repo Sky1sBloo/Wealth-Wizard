@@ -68,7 +68,8 @@
             this.Lbl_TypeDisplay = new System.Windows.Forms.Label();
             this.Lbl_DateDisplay = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.Lbl_Debug = new System.Windows.Forms.Label();
+            this.Lbl_DatabaseNameDisplay = new System.Windows.Forms.Label();
+            this.Lbl_DatabaseName = new System.Windows.Forms.Label();
             this.NumTxtB_EntryAmount = new NumericTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Display)).BeginInit();
             this.Panel_Filter.SuspendLayout();
@@ -255,21 +256,21 @@
             // newDatabaseToolStripMenuItem
             // 
             this.newDatabaseToolStripMenuItem.Name = "newDatabaseToolStripMenuItem";
-            this.newDatabaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newDatabaseToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.newDatabaseToolStripMenuItem.Text = "New Database";
             this.newDatabaseToolStripMenuItem.Click += new System.EventHandler(this.NewDatabaseMenu_Click);
             // 
             // openDatabaseToolStripMenuItem
             // 
             this.openDatabaseToolStripMenuItem.Name = "openDatabaseToolStripMenuItem";
-            this.openDatabaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openDatabaseToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.openDatabaseToolStripMenuItem.Text = "Open Database";
             this.openDatabaseToolStripMenuItem.Click += new System.EventHandler(this.OpenDatabaseMenu_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // editToolStripMenuItem
@@ -450,20 +451,31 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.Lbl_Debug);
+            this.panel2.Controls.Add(this.Lbl_DatabaseName);
+            this.panel2.Controls.Add(this.Lbl_DatabaseNameDisplay);
             this.panel2.Location = new System.Drawing.Point(12, 27);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(240, 234);
             this.panel2.TabIndex = 7;
             // 
-            // Lbl_Debug
+            // Lbl_DatabaseNameDisplay
             // 
-            this.Lbl_Debug.AutoSize = true;
-            this.Lbl_Debug.Location = new System.Drawing.Point(9, 16);
-            this.Lbl_Debug.Name = "Lbl_Debug";
-            this.Lbl_Debug.Size = new System.Drawing.Size(10, 13);
-            this.Lbl_Debug.TabIndex = 0;
-            this.Lbl_Debug.Text = "-";
+            this.Lbl_DatabaseNameDisplay.AutoSize = true;
+            this.Lbl_DatabaseNameDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_DatabaseNameDisplay.Location = new System.Drawing.Point(9, 16);
+            this.Lbl_DatabaseNameDisplay.Name = "Lbl_DatabaseNameDisplay";
+            this.Lbl_DatabaseNameDisplay.Size = new System.Drawing.Size(65, 13);
+            this.Lbl_DatabaseNameDisplay.TabIndex = 0;
+            this.Lbl_DatabaseNameDisplay.Text = "Database:";
+            // 
+            // Lbl_DatabaseName
+            // 
+            this.Lbl_DatabaseName.AutoSize = true;
+            this.Lbl_DatabaseName.Location = new System.Drawing.Point(71, 16);
+            this.Lbl_DatabaseName.Name = "Lbl_DatabaseName";
+            this.Lbl_DatabaseName.Size = new System.Drawing.Size(10, 13);
+            this.Lbl_DatabaseName.TabIndex = 1;
+            this.Lbl_DatabaseName.Text = "-";
             // 
             // NumTxtB_EntryAmount
             // 
@@ -539,12 +551,13 @@
         private NumericTextBox NumTxtB_EntryAmount;
         private System.Windows.Forms.DateTimePicker DatePick_EntryDate;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label Lbl_Debug;
+        private System.Windows.Forms.Label Lbl_DatabaseNameDisplay;
         private System.Windows.Forms.Label Lbl_Filter;
         private System.Windows.Forms.ComboBox ComboB_FilterType;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem queriesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem1;
+        private System.Windows.Forms.Label Lbl_DatabaseName;
     }
 }
 

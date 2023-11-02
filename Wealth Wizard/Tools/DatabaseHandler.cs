@@ -11,6 +11,7 @@ namespace Wealth_Wizard
 {
     public static class DatabaseHandler
     {
+        // In the future check if database location exists
         public static string databaseLocation;
         public static string[] defaultEntryTypes = {
             "Personal Needs",
@@ -33,6 +34,8 @@ namespace Wealth_Wizard
             // Create the table
             string sqlitePath = @"data source=" + fileLocation + "\\" + name + ".wwiz";
             SQLiteConnection con = new SQLiteConnection(sqlitePath);
+
+            if (openDatabase) { databaseLocation = sqlitePath; }
 
             con.Open();
             string queryCreateEntriesTable = "CREATE TABLE entries( " +
@@ -63,9 +66,6 @@ namespace Wealth_Wizard
                 cmd.ExecuteNonQuery();
             }
             con.Close();
-
-
-            if (openDatabase) { databaseLocation = sqlitePath; }
         }
 
         // Returns all the values from the specified table
@@ -219,10 +219,10 @@ namespace Wealth_Wizard
                 "type = @type";
 
             SQLiteCommand deleteRowDb = new SQLiteCommand(queryDelete, con);
-            deleteRowDb.Parameters.Add(new SQLiteParameter("@date", entry._date.ToString("yyyy-MM-dd")));
-            deleteRowDb.Parameters.Add(new SQLiteParameter("@name", entry._name));
-            deleteRowDb.Parameters.Add(new SQLiteParameter("@amount", entry._amount));
-            deleteRowDb.Parameters.Add(new SQLiteParameter("@type", entry._type));
+            deleteRowDb.Parameters.AddWithValue("@date", entry._date.ToString("yyyy-MM-dd"));
+            deleteRowDb.Parameters.AddWithValue("@name", entry._name);
+            deleteRowDb.Parameters.AddWithValue("@amount", entry._amount);
+            deleteRowDb.Parameters.AddWithValue("@type", entry._type);
 
             // Delete row from query
             deleteRowDb.ExecuteNonQuery();
@@ -244,6 +244,39 @@ namespace Wealth_Wizard
             return entryTypes;
         }
 
+        // Adds a new entry type
+        public static void AddEntryType(string newType)
+        {
+            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
+            con.Open();
+
+            string queryAdd = "INSERT INTO entry_types (types) VALUES (@entry_type)";
+            SQLiteCommand cmd = new SQLiteCommand(queryAdd, con);
+            cmd.Parameters.AddWithValue("@entry_type", newType);
+
+            cmd.ExecuteNonQuery();
+
+            con.Close();
+        }
+
+        // Edits an entry type
+        public static void UpdateEntryType(string selectedType, string newType)
+        {
+            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
+            con.Open();
+
+            string queryAdd = "UPDATE entry_types " +
+                "SET types = @new_type " +
+                "WHERE types = @selected_type";
+            SQLiteCommand cmd = new SQLiteCommand(queryAdd, con);
+            cmd.Parameters.AddWithValue("@selected_type", selectedType);
+            cmd.Parameters.AddWithValue("@new_type", newType);
+
+            cmd.ExecuteNonQuery();
+
+            con.Close();
+        }
+
         // Deletes the specific entry type on the database
         public static void DeleteEntryTypes(string type)
         {
@@ -254,7 +287,7 @@ namespace Wealth_Wizard
                 "WHERE types = @type";
 
             SQLiteCommand cmd = new SQLiteCommand(queryDelete, con);
-            cmd.Parameters.Add(new SQLiteParameter("@type", type));
+            cmd.Parameters.AddWithValue("@type", type);
             cmd.ExecuteNonQuery();
 
             con.Close();

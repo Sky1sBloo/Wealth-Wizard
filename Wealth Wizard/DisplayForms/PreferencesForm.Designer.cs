@@ -35,6 +35,7 @@
             this.Lbl_DefaultDatabase = new System.Windows.Forms.Label();
             this.Lbl_Defaults = new System.Windows.Forms.Label();
             this.Panel_EntryTypes = new System.Windows.Forms.Panel();
+            this.Lbl_Notice = new System.Windows.Forms.Label();
             this.Lbl_EntryTypesHeader = new System.Windows.Forms.Label();
             this.Btn_DeleteEntryType = new System.Windows.Forms.Button();
             this.ListB_EntryTypes = new System.Windows.Forms.ListBox();
@@ -44,7 +45,6 @@
             this.Btn_Ok = new System.Windows.Forms.Button();
             this.Btn_Cancel = new System.Windows.Forms.Button();
             this.Btn_Apply = new System.Windows.Forms.Button();
-            this.Lbl_Notice = new System.Windows.Forms.Label();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.Panel_EntryTypes.SuspendLayout();
@@ -124,6 +124,15 @@
             this.Panel_EntryTypes.Size = new System.Drawing.Size(555, 105);
             this.Panel_EntryTypes.TabIndex = 6;
             // 
+            // Lbl_Notice
+            // 
+            this.Lbl_Notice.AutoSize = true;
+            this.Lbl_Notice.Location = new System.Drawing.Point(83, 0);
+            this.Lbl_Notice.Name = "Lbl_Notice";
+            this.Lbl_Notice.Size = new System.Drawing.Size(179, 13);
+            this.Lbl_Notice.TabIndex = 6;
+            this.Lbl_Notice.Text = "*EntryTypes is localized to Database";
+            // 
             // Lbl_EntryTypesHeader
             // 
             this.Lbl_EntryTypesHeader.AutoSize = true;
@@ -142,6 +151,7 @@
             this.Btn_DeleteEntryType.TabIndex = 5;
             this.Btn_DeleteEntryType.Text = "Delete";
             this.Btn_DeleteEntryType.UseVisualStyleBackColor = true;
+            this.Btn_DeleteEntryType.Click += new System.EventHandler(this.Btn_DeleteEntryType_Click);
             // 
             // ListB_EntryTypes
             // 
@@ -153,12 +163,13 @@
             // 
             // Btn_EditEntryType
             // 
-            this.Btn_EditEntryType.Location = new System.Drawing.Point(174, 45);
+            this.Btn_EditEntryType.Location = new System.Drawing.Point(174, 46);
             this.Btn_EditEntryType.Name = "Btn_EditEntryType";
             this.Btn_EditEntryType.Size = new System.Drawing.Size(75, 23);
             this.Btn_EditEntryType.TabIndex = 4;
             this.Btn_EditEntryType.Text = "Edit";
             this.Btn_EditEntryType.UseVisualStyleBackColor = true;
+            this.Btn_EditEntryType.Click += new System.EventHandler(this.Btn_EditEntryType_Click);
             // 
             // Btn_AddEntryType
             // 
@@ -208,15 +219,6 @@
             this.Btn_Apply.Text = "Apply";
             this.Btn_Apply.UseVisualStyleBackColor = true;
             this.Btn_Apply.Click += new System.EventHandler(this.Btn_Apply_Click);
-            // 
-            // Lbl_Notice
-            // 
-            this.Lbl_Notice.AutoSize = true;
-            this.Lbl_Notice.Location = new System.Drawing.Point(83, 0);
-            this.Lbl_Notice.Name = "Lbl_Notice";
-            this.Lbl_Notice.Size = new System.Drawing.Size(179, 13);
-            this.Lbl_Notice.TabIndex = 6;
-            this.Lbl_Notice.Text = "*EntryTypes is localized to Database";
             // 
             // PreferencesForm
             // 

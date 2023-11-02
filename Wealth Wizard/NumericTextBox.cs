@@ -11,5 +11,6 @@ public class NumericTextBox : System.Windows.Forms.NumericUpDown
     {
         Controls[0].Visible = false;
         DecimalPlaces = 2;
+        Maximum = Decimal.MaxValue;
     }
 }

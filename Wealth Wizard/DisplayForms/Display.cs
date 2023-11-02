@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,18 +24,41 @@ namespace Wealth_Wizard
         public Display()
         {
             InitializeComponent();
-            DatabaseHandler.databaseLocation = @"data source=" + PreferencesHandler.LoadPreferences().defaultDatabase;
 
-            // Display all entries
-            DisplayEntries(true);
+            // Check if default database location exists
+            string fileLocation = (PreferencesHandler.LoadPreferences().defaultDatabase).Replace(@"data source=", "");
+            
+            if (File.Exists(fileLocation))
+            {
+                DatabaseHandler.databaseLocation = PreferencesHandler.LoadPreferences().defaultDatabase;
+            }
+            else
+            {
+                // File location doesn't exist promt the user to create a new database to set it to default
+                NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
+                
+                if (newDatabaseForm.ShowDialog() != DialogResult.OK)
+                {
+                    System.Environment.Exit(1);
+                    return;
+                }
+
+                // Save into preferences
+                Preferences preferences = PreferencesHandler.LoadPreferences();
+                preferences.defaultDatabase = DatabaseHandler.databaseLocation;
+
+                PreferencesHandler.SavePreferences(preferences);
+            }
+
+            DisplayEntries(true);  // Refresh the page
         }
 
         // Display purchases on the table with the filters
-        public void DisplayEntries(bool refreshSelection = false)
+        public void DisplayEntries(bool refreshDatabaseInfo = false)
         {
-            // Set combo box items list when refreshSelection is true
+            // Set combo box items list and database name when refreshSelection is true
             // Usually used when loading a new database
-            if (refreshSelection)
+            if (refreshDatabaseInfo)
             {
                 // Set combo boxes items
                 ComboB_EntryType.Items.Clear();
@@ -46,7 +70,10 @@ namespace Wealth_Wizard
                 }
 
                 ComboB_FilterType.Items.Add("All");
+
+                // 
             }
+
             DataGridV_Display.DataSource = DatabaseHandler.GetEntries(DatePick_FilterStartDate.Value,
             DatePick_FilterEndDate.Value, selectedFilterType);
 

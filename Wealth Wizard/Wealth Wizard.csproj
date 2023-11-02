@@ -93,6 +93,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HelperForms\InputMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelperForms\InputMessageBox.Designer.cs">
+      <DependentUpon>InputMessageBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\Preferences.cs" />
     <Compile Include="Tools\DatabaseHandler.cs" />
     <Compile Include="DisplayForms\Display.cs">
@@ -128,6 +134,9 @@
     <Compile Include="Tools\PreferencesHandler.cs" />
     <EmbeddedResource Include="DisplayForms\Display.resx">
       <DependentUpon>Display.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelperForms\InputMessageBox.resx">
+      <DependentUpon>InputMessageBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HelperForms\EditEntry.resx">
       <DependentUpon>EditEntry.cs</DependentUpon>
