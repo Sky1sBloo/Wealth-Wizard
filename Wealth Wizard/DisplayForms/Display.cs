@@ -54,11 +54,18 @@ namespace Wealth_Wizard
         }
 
         // Display purchases on the table with the filters
-        public void DisplayEntries(bool refreshDatabaseInfo = false)
+        public void DisplayEntries(bool refreshDatabaseSettings = false)
         {
+            DataGridV_Display.DataSource = DatabaseHandler.GetEntries(DatePick_FilterStartDate.Value,
+            DatePick_FilterEndDate.Value, selectedFilterType);
+
+            // Disable or enable buttons when selection is available
+            Btn_Delete.Enabled = (DataGridV_Display.Rows.Count > 0 && DataGridV_Display.Rows != null);
+            Btn_EditEntry.Enabled = (DataGridV_Display.Rows.Count > 0 && DataGridV_Display.Rows != null);
+
             // Set combo box items list and database name when refreshSelection is true
             // Usually used when loading a new database
-            if (refreshDatabaseInfo)
+            if (refreshDatabaseSettings)
             {
                 // Set combo boxes items
                 ComboB_EntryType.Items.Clear();
@@ -71,22 +78,13 @@ namespace Wealth_Wizard
 
                 ComboB_FilterType.Items.Add("All");
 
-                // 
+                // Set the default values of the combo boxes
+                // Initialize defaults
+                ComboB_FilterPreset.SelectedIndex = 0;
+
+                ComboB_FilterType.SelectedIndex = ComboB_FilterType.Items.Count - 1;
+                if (ComboB_EntryType.Items.Count != 0) ComboB_EntryType.SelectedIndex = 0;
             }
-
-            DataGridV_Display.DataSource = DatabaseHandler.GetEntries(DatePick_FilterStartDate.Value,
-            DatePick_FilterEndDate.Value, selectedFilterType);
-
-            // Set the default values of the combo boxes
-            // Initialize defaults
-            ComboB_FilterPreset.SelectedIndex = 0;
-
-            ComboB_FilterType.SelectedIndex = ComboB_FilterType.Items.Count - 1;
-            if (ComboB_EntryType.Items.Count != 0) ComboB_EntryType.SelectedIndex = 0;
-
-            // Disable or enable buttons when selection is available
-            Btn_Delete.Enabled = (DataGridV_Display.Rows.Count > 0 && DataGridV_Display.Rows != null);
-            Btn_EditEntry.Enabled = (DataGridV_Display.Rows.Count > 0 && DataGridV_Display.Rows != null);
         }
 
         // Delete a database row
@@ -263,6 +261,11 @@ namespace Wealth_Wizard
             newDatabaseForm.ShowDialog();
 
             DisplayEntries(true);  // Refresh the page
+        }
+
+        private void Display_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

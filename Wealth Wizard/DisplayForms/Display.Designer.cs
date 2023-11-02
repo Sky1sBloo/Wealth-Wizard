@@ -68,8 +68,8 @@
             this.Lbl_TypeDisplay = new System.Windows.Forms.Label();
             this.Lbl_DateDisplay = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.Lbl_DatabaseNameDisplay = new System.Windows.Forms.Label();
             this.Lbl_DatabaseName = new System.Windows.Forms.Label();
+            this.Lbl_DatabaseNameDisplay = new System.Windows.Forms.Label();
             this.NumTxtB_EntryAmount = new NumericTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Display)).BeginInit();
             this.Panel_Filter.SuspendLayout();
@@ -84,6 +84,7 @@
             this.DataGridV_Display.AllowUserToAddRows = false;
             this.DataGridV_Display.AllowUserToDeleteRows = false;
             this.DataGridV_Display.AllowUserToResizeRows = false;
+            this.DataGridV_Display.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DataGridV_Display.Location = new System.Drawing.Point(258, 95);
             this.DataGridV_Display.Name = "DataGridV_Display";
             this.DataGridV_Display.ReadOnly = true;
@@ -458,6 +459,15 @@
             this.panel2.Size = new System.Drawing.Size(240, 234);
             this.panel2.TabIndex = 7;
             // 
+            // Lbl_DatabaseName
+            // 
+            this.Lbl_DatabaseName.AutoSize = true;
+            this.Lbl_DatabaseName.Location = new System.Drawing.Point(71, 16);
+            this.Lbl_DatabaseName.Name = "Lbl_DatabaseName";
+            this.Lbl_DatabaseName.Size = new System.Drawing.Size(10, 13);
+            this.Lbl_DatabaseName.TabIndex = 1;
+            this.Lbl_DatabaseName.Text = "-";
+            // 
             // Lbl_DatabaseNameDisplay
             // 
             this.Lbl_DatabaseNameDisplay.AutoSize = true;
@@ -468,19 +478,15 @@
             this.Lbl_DatabaseNameDisplay.TabIndex = 0;
             this.Lbl_DatabaseNameDisplay.Text = "Database:";
             // 
-            // Lbl_DatabaseName
-            // 
-            this.Lbl_DatabaseName.AutoSize = true;
-            this.Lbl_DatabaseName.Location = new System.Drawing.Point(71, 16);
-            this.Lbl_DatabaseName.Name = "Lbl_DatabaseName";
-            this.Lbl_DatabaseName.Size = new System.Drawing.Size(10, 13);
-            this.Lbl_DatabaseName.TabIndex = 1;
-            this.Lbl_DatabaseName.Text = "-";
-            // 
             // NumTxtB_EntryAmount
             // 
             this.NumTxtB_EntryAmount.DecimalPlaces = 2;
             this.NumTxtB_EntryAmount.Location = new System.Drawing.Point(52, 91);
+            this.NumTxtB_EntryAmount.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            0});
             this.NumTxtB_EntryAmount.Name = "NumTxtB_EntryAmount";
             this.NumTxtB_EntryAmount.Size = new System.Drawing.Size(176, 20);
             this.NumTxtB_EntryAmount.TabIndex = 8;
@@ -489,6 +495,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -498,6 +505,7 @@
             this.MainMenuStrip = this.MenuStrip_Display;
             this.Name = "Display";
             this.Text = "Wealth Wizard";
+            this.Load += new System.EventHandler(this.Display_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Display)).EndInit();
             this.Panel_Filter.ResumeLayout(false);
             this.Panel_Filter.PerformLayout();
