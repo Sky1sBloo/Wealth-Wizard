@@ -26,15 +26,17 @@ namespace Wealth_Wizard
             // Initialize defaults
             ComboB_FilterPreset.SelectedIndex = 0;
 
-            // Set combo boxes selections and feault values
+            // Set combo boxes items
             foreach (string entryType in DatabaseHandler.GetEntryTypes())
             {
                 ComboB_EntryType.Items.Add(entryType);
                 ComboB_FilterType.Items.Add(entryType);
             }
             ComboB_FilterType.Items.Add("All");
+
+            // Set the default values of the combo boxes
             ComboB_FilterType.SelectedIndex = ComboB_FilterType.Items.Count - 1;
-            ComboB_EntryType.SelectedIndex = 0;
+            if (ComboB_EntryType.Items.Count != 0) ComboB_EntryType.SelectedIndex = 0;
 
             // Display all entries
             DisplayPurchases();
@@ -60,11 +62,11 @@ namespace Wealth_Wizard
             // Store selected row into variables
             DataRow selectedRow = ((DataRowView)DataGridV_Display.Rows[rowIndex].DataBoundItem).Row;
             DateTime selectedDate = selectedRow.Field<DateTime>("Date");
-            string selectedType = selectedRow.Field<string>("Types");
+            string selectedType = selectedRow.Field<string>("Type");
             string selectedName = selectedRow.Field<string>("Name");
             double selectedAmount = selectedRow.Field<double>("Amount");
 
-            DialogResult deleteChoice = MessageBox.Show("Would you want to delete " + selectedDate.ToString("yyyy/MM/dd") + " "+ selectedName + "?", "Warning", 
+            DialogResult deleteChoice = MessageBox.Show("Would you want to delete entry: " + selectedDate.ToString("yyyy/MM/dd") + ", "+ selectedName + "?", "Warning", 
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             // Create final warning
@@ -124,7 +126,15 @@ namespace Wealth_Wizard
         // Add button click
         private void Btn_AddEntry_Click(object sender, EventArgs e)
         {
-            // Final amount for negative handling of expenses
+            // IN THE FUTURE, ENSURE THAT YOU CHECK IF SOME SPACES ARE BLANK
+            // Check if some of the input fields are empty
+            if (TxtB_EntryName.Text == "")
+            {
+                MessageBox.Show("Add Entry Error, 'Name' field is empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Logic for expenses or income
             float finalAmount = (float)NumTxtB_EntryAmount.Value;
             if (ChkB_Expenses.Checked) finalAmount *= -1;
             DatabaseHandler.AddNewEntry(DatePick_EntryDate.Value, ComboB_EntryType.Text, TxtB_EntryName.Text, finalAmount);

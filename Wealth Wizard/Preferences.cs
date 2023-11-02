@@ -19,6 +19,15 @@ namespace Wealth_Wizard
 
         private void Preferences_Load(object sender, EventArgs e)
         {
+            // Initialize entry types to the list box
+            foreach (string entryType in DatabaseHandler.GetEntryTypes())
+            {
+                ListB_EntryTypes.Items.Add(entryType);
+            }
+        }
+
+        private void Btn_AddEntryType_Click(object sender, EventArgs e)
+        {
 
         }
     }

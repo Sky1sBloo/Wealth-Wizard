@@ -12,6 +12,56 @@ namespace Wealth_Wizard
     {
         public static string databaseLocation;
 
+        // Returns all the values from the specified table
+        public static DataTable GetAllValuesFromTable(string tableName)
+        {
+            // Result variable
+            DataTable result = new DataTable();
+
+            // Open database
+            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
+            con.Open();
+
+            string querySelect = "SELECT * FROM " + tableName;
+            SQLiteCommand cmd = new SQLiteCommand(querySelect, con);
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd);
+            adapter.Fill(result);
+
+            con.Close();
+
+            return result;
+        }
+
+        // Get values from the table that can be specified by columns and conditions
+        // Columns can be used like: column AS type
+        // Conditions are query based
+        public static DataTable GetValuesFromTable(string tableName, string[] columns = null, string conditions = null)
+        {
+            // 
+            string columnQuery = "*";
+            string querySelection = "SELECT @columns FROM " + tableName;
+
+            // Get return columns
+            for (int i = 0; i < columns.Length; i++)
+            {
+                if (i == 0) columnQuery = columns[i];
+                else columnQuery += ", " + columns[i];
+            }
+
+            if (conditions != null) querySelection += "\r\n WHERE @conditions";
+
+            // Open the database
+            SQLiteConnection con = new SQLiteConnection(databaseLocation);
+            con.Open();
+
+            SQLiteCommand cmd = new SQLiteCommand(querySelection, con);
+            cmd.Parameters.Add(new SQLiteParameter("@columns", columnQuery));
+            cmd.Parameters.Add(new SQLiteParameter("@conditions", conditions));
+
+            con.Close();
+            return null;
+        }
+
         // Returns all entries from "purchases" table in database
         // filterSpecificType parameters can accept "ALL" or null if you want all types to be displayed
         public static DataTable GetEntries(DateTime startDate, DateTime endDate, string filterSpecificType)
@@ -22,12 +72,8 @@ namespace Wealth_Wizard
             con.Open();
 
             // Query object
-            string query = "SELECT purchases.purchase_date AS 'Date', types.name AS Types, \r\n" +
-                "purchases.name AS Name, purchases.amount As 'Amount' \r\n" +
-                "FROM purchases \r\n" +
-                "JOIN types \r\n" +
-                "ON types.type_idx = purchases.type_idx\r\n" +
-                "WHERE purchases.purchase_date BETWEEN @start_date AND @end_date";
+            string query = "SELECT entry_date AS 'Date', type AS 'Type', name AS 'Name', amount AS 'Amount' " +
+                "FROM entries;";
 
             // Filter type is not ALL (which is alwys the size of the combobox - 1)
             if (filterSpecificType != "All" && filterSpecificType != null)
@@ -52,28 +98,16 @@ namespace Wealth_Wizard
         // Add new entry to the database
         public static void AddNewEntry(DateTime date, string type, string name, float amount)
         {
-            // Required variables
-            object typeIdx;
-
             // Conenct to database
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
             con.Open();
 
-            string querySelect = "SELECT type_idx FROM types WHERE name='" + type + "'";
-            SQLiteCommand cmd = new SQLiteCommand(querySelect, con);
-            DataTable entryTypeName = new DataTable();
-            SQLiteDataAdapter dataAdapter = new SQLiteDataAdapter(cmd);
-
-            dataAdapter.Fill(entryTypeName);
-
-            typeIdx = entryTypeName.Rows[0][0];
-
             // Insert into database
-            string queryInsert = "INSERT INTO purchases Values(@date, @type_idx, @name, @amount)";
+            string queryInsert = "INSERT INTO entries Values(@date, @type, @name, @amount)";
 
             SQLiteCommand insertToDb = new SQLiteCommand(queryInsert, con);
             insertToDb.Parameters.Add(new SQLiteParameter("@date", date.ToString("yyyy-MM-dd")));
-            insertToDb.Parameters.Add(new SQLiteParameter("@type_idx", typeIdx));
+            insertToDb.Parameters.Add(new SQLiteParameter("@type", type));
             insertToDb.Parameters.Add(new SQLiteParameter("@name", name));
             insertToDb.Parameters.Add(new SQLiteParameter("@amount", amount));
             try
@@ -96,19 +130,16 @@ namespace Wealth_Wizard
             con.Open();
 
             // Create query for deletion
-            string queryDelete = "DELETE FROM purchases \r\n" +
-                "WHERE purchases.purchase_date = @date AND purchases.name = @name AND " +
-                "purchases.amount = @amount AND " +
-                "purchases.type_idx = (" +
-                "SELECT types.type_idx " +
-                "FROM types " +
-                "WHERE types.name = @type_name)";
+            string queryDelete = "DELETE FROM entries \r\n" +
+                "WHERE entry_date = @date AND name = @name AND " +
+                "amount = @amount AND " +
+                "type = @type";
 
             SQLiteCommand deleteRowDb = new SQLiteCommand(queryDelete, con);
             deleteRowDb.Parameters.Add(new SQLiteParameter("@date", date.ToString("yyyy-MM-dd")));
             deleteRowDb.Parameters.Add(new SQLiteParameter("@name", name));
             deleteRowDb.Parameters.Add(new SQLiteParameter("@amount", amount));
-            deleteRowDb.Parameters.Add(new SQLiteParameter("@type_name", type));
+            deleteRowDb.Parameters.Add(new SQLiteParameter("@type", type));
 
             // Delete row from query
             deleteRowDb.ExecuteNonQuery();
@@ -116,27 +147,34 @@ namespace Wealth_Wizard
             con.Close();
         }
 
-        // Returns the entry type names
+        // Entry types
+        // Returns all entry type names
         public static List<string> GetEntryTypes()
         {
             List<string> entryTypes = new List<string>();
 
-            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
-            con.Open();
-            string query = "SELECT name\r\n" +
-                "FROM types";
-            SQLiteCommand cmd = new SQLiteCommand(query, con);
-            DataTable types = new DataTable();
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd);
-            adapter.Fill(types);
-
-            foreach (DataRow row in types.Rows)
+            foreach (DataRow row in GetAllValuesFromTable("entry_types").Rows)
             {
-                entryTypes.Add(row["name"].ToString());
+                entryTypes.Add(row["types"].ToString());
             }
 
-            con.Close();
             return entryTypes;
+        }
+
+        // Deletes the specific entry type on the database
+        public static void DeleteEntryTypes(string type)
+        {
+            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
+            con.Open();
+
+            string queryDelete = "DELETE FROM entry_types \r\n" +
+                "WHERE types = @type";
+
+            SQLiteCommand cmd = new SQLiteCommand(queryDelete, con);
+            cmd.Parameters.Add(new SQLiteParameter("@type", type));
+            cmd.ExecuteNonQuery();
+
+            con.Close();
         }
     }
 }
