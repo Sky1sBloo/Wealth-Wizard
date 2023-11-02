@@ -138,6 +138,7 @@
             // 
             // Btn_Cancel
             // 
+            this.Btn_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Btn_Cancel.Location = new System.Drawing.Point(105, 136);
             this.Btn_Cancel.Name = "Btn_Cancel";
             this.Btn_Cancel.Size = new System.Drawing.Size(75, 23);
@@ -161,8 +162,10 @@
             // 
             // EditEntry
             // 
+            this.AcceptButton = this.Btn_Apply;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.Btn_Cancel;
             this.ClientSize = new System.Drawing.Size(198, 172);
             this.Controls.Add(this.NumTxtB_EntryAmount);
             this.Controls.Add(this.Btn_Cancel);

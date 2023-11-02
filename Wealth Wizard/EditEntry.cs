@@ -13,12 +13,35 @@ namespace Wealth_Wizard
 {
     public partial class EditEntry : Form
     {
-        public EditEntry()
+        public EditEntry(Entry defaultValues)
         {
             InitializeComponent();
+
+            // Initialize tpye
+            foreach (string type in DatabaseHandler.GetEntryTypes())
+            {
+                ComboB_Types.Items.Add(type);
+            }
+
+            // Load default values
+            DateT_Date.Value = defaultValues._date;
+            ComboB_Types.Text = defaultValues._type;
+            TxtB_Name.Text = defaultValues._name;
+
+            ChkB_Expenses.Checked = defaultValues._amount < 0;
+            ChkB_Income.Checked = defaultValues._amount >= 0;
+
+            NumTxtB_EntryAmount.Value = Math.Abs((decimal)defaultValues._amount);
         }
 
         // Setters and getters
+        // Returns all entry values
+        public Entry GetEntryValues()
+        {
+            Entry entry = new Entry(GetEntryDate(), GetEntryType(), GetEntryName(), GetAmount());
+            return entry;
+        }
+
         public DateTime GetEntryDate()
         {
             return DateT_Date.Value;
@@ -40,17 +63,10 @@ namespace Wealth_Wizard
             return -(float)NumTxtB_EntryAmount.Value;
         }
 
-        private void Btn_Apply_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.OK;
-        }
+        
 
-        private void Btn_Cancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-        }
-
-
+        // Events
+        // Toggle between income and expenses
         private void ChkB_Income_CheckedChanged(object sender, EventArgs e)
         {
             ChkB_Expenses.Checked = !ChkB_Income.Checked;
@@ -59,6 +75,17 @@ namespace Wealth_Wizard
         private void ChkB_Expenses_CheckedChanged(object sender, EventArgs e)
         {
             ChkB_Income.Checked = !ChkB_Expenses.Checked;
+        }
+
+        // Apply and cancel logic
+        private void Btn_Apply_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+        }
+
+        private void Btn_Cancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
         }
     }
 }

@@ -126,7 +126,28 @@ namespace Wealth_Wizard
         // Edit an entry to the database
         public static void EditEntry(Entry selectedEntry, Entry newEntry)
         {
+            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
+            con.Open();
 
+            string queryUpdate = "UPDATE entries " +
+                "SET entry_date = @new_date, type = @new_type, name = @new_name, amount = @new_amount " +
+                "WHERE entry_date = @old_date AND type = @old_type AND name = @old_name AND amount = @old_amount";
+
+            // Create query command and fill parameters
+            SQLiteCommand updateToDb = new SQLiteCommand(queryUpdate, con);
+            updateToDb.Parameters.AddWithValue("@new_date", newEntry._date.ToString("yyyy-MM-dd"));
+            updateToDb.Parameters.AddWithValue("@new_type", newEntry._type);
+            updateToDb.Parameters.AddWithValue("@new_name", newEntry._name);
+            updateToDb.Parameters.AddWithValue("@new_amount", newEntry._amount);
+
+            updateToDb.Parameters.AddWithValue("@old_date", selectedEntry._date.ToString("yyyy-MM-dd"));
+            updateToDb.Parameters.AddWithValue("@old_type", selectedEntry._type);
+            updateToDb.Parameters.AddWithValue("@old_name", selectedEntry._name);
+            updateToDb.Parameters.AddWithValue("@old_amount", selectedEntry._amount);
+
+            // Execute the query
+            updateToDb.ExecuteNonQuery();
+            con.Close();
         }
         // Delete an entry in the database
         public  static void DeleteEntry(Entry entry)

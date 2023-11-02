@@ -39,11 +39,11 @@ namespace Wealth_Wizard
             if (ComboB_EntryType.Items.Count != 0) ComboB_EntryType.SelectedIndex = 0;
 
             // Display all entries
-            DisplayPurchases();
+            DisplayEntries();
         }
 
         // Display purchases on the table with the filters
-        public void DisplayPurchases()
+        public void DisplayEntries()
         {
             DataGridV_Display.DataSource = DatabaseHandler.GetEntries(DatePick_FilterStartDate.Value,
                 DatePick_FilterEndDate.Value, selectedFilterType);
@@ -66,6 +66,8 @@ namespace Wealth_Wizard
             string selectedName = selectedRow.Field<string>("Name");
             double selectedAmount = selectedRow.Field<double>("Amount");  // Needed to use double since somehow the datatable type is float
 
+            Entry entryToBeDeleted = new Entry(selectedDate, selectedType, selectedName, (float)selectedAmount);
+
             DialogResult deleteChoice = MessageBox.Show("Would you want to delete entry: " + selectedDate.ToString("yyyy/MM/dd") + ", "+ selectedName + "?", "Warning", 
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -73,13 +75,13 @@ namespace Wealth_Wizard
             if (deleteChoice == DialogResult.No) return;
 
             // Delete the entry in the database handler
-            Entry entryToBeDeleted = new Entry(selectedDate, selectedType, selectedName, (float)selectedAmount);
+            
             DatabaseHandler.DeleteEntry(entryToBeDeleted);
         }
 
         private void RefreshBtn_Clicked(object sender, EventArgs e)
         {
-            DisplayPurchases();
+            DisplayEntries();
         }
 
         // Update the date time filters
@@ -121,7 +123,7 @@ namespace Wealth_Wizard
         // Refresh the page
         private void DateUpdated(object sender, EventArgs e)
         {
-            DisplayPurchases();
+            DisplayEntries();
         }
 
         // Add button click
@@ -141,26 +143,53 @@ namespace Wealth_Wizard
 
             Entry newEntry = new Entry(DatePick_EntryDate.Value, ComboB_EntryType.Text, TxtB_EntryName.Text, finalAmount);
             DatabaseHandler.AddNewEntry(newEntry);
-            DisplayPurchases();  // Refresh table
+            DisplayEntries();  // Refresh table
         }
 
         // Edit entry
         private void Btn_EditEntry_Click(object sender, EventArgs e)
         {
-            EditEntry editEntryForm = new EditEntry();
+            // Check if you have any selection
+            if (DataGridV_Display.Rows.Count == 0)
+            {
+                MessageBox.Show("No row has been selected for editing.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Get old values
+            DataRow selectedRow = ((DataRowView)DataGridV_Display.Rows[entrySelectionRowIndex].DataBoundItem).Row;
+            Entry selectedEntry = new Entry(selectedRow.Field<DateTime>("Date"),
+                selectedRow.Field<string>("Type"),
+                selectedRow.Field<string>("Name"),
+                (float)selectedRow.Field<double>("Amount"));
+
+            EditEntry editEntryForm = new EditEntry(selectedEntry);
             editEntryForm.ShowDialog();
 
-            if (editEntryForm.ShowDialog() == DialogResult.OK)
+            // Check if the entry is accepted
+            if (editEntryForm.DialogResult == DialogResult.OK)
             {
-                
+                editEntryForm.Close();
+                // Store new values
+                Entry newEntry = editEntryForm.GetEntryValues();
+
+                // Edit the database
+                DatabaseHandler.EditEntry(selectedEntry, newEntry);
             }
+            else if (editEntryForm.DialogResult == DialogResult.Cancel)
+            {
+                editEntryForm.Close();
+            }
+
+            // Refresh the table
+            DisplayEntries();
         }
 
         // Delete selected row
         private void Btn_Delete_Click(object sender, EventArgs e)
         {
             DeleteRowEntry(entrySelectionRowIndex);
-            DisplayPurchases();
+            DisplayEntries();
         }
 
         // Alternate between expenses and income
