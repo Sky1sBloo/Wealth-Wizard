@@ -32,6 +32,8 @@
             this.Btn_Refresh = new System.Windows.Forms.Button();
             this.Lbl_FilterDisplay = new System.Windows.Forms.Label();
             this.Panel_Filter = new System.Windows.Forms.Panel();
+            this.ComboB_FilterType = new System.Windows.Forms.ComboBox();
+            this.Lbl_Filter = new System.Windows.Forms.Label();
             this.ComboB_FilterPreset = new System.Windows.Forms.ComboBox();
             this.DatePick_FilterEndDate = new System.Windows.Forms.DateTimePicker();
             this.Lbl_FilterEndDisplay = new System.Windows.Forms.Label();
@@ -47,6 +49,9 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.queriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferencesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.preferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subscriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,6 +59,7 @@
             this.manageGoalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.DatePick_EntryDate = new System.Windows.Forms.DateTimePicker();
+            this.NumTxtB_EntryAmount = new NumericTextBox();
             this.Lbl_AmountDisplay = new System.Windows.Forms.Label();
             this.ChkB_Income = new System.Windows.Forms.CheckBox();
             this.ChkB_Expenses = new System.Windows.Forms.CheckBox();
@@ -64,18 +70,12 @@
             this.Lbl_DateDisplay = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.Lbl_Debug = new System.Windows.Forms.Label();
-            this.Lbl_Filter = new System.Windows.Forms.Label();
-            this.ComboB_FilterType = new System.Windows.Forms.ComboBox();
-            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.queriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.preferencesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.NumTxtB_EntryAmount = new NumericTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Display)).BeginInit();
             this.Panel_Filter.SuspendLayout();
             this.MenuStrip_Display.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // DataGridV_Display
@@ -125,6 +125,25 @@
             this.Panel_Filter.Name = "Panel_Filter";
             this.Panel_Filter.Size = new System.Drawing.Size(530, 62);
             this.Panel_Filter.TabIndex = 4;
+            // 
+            // ComboB_FilterType
+            // 
+            this.ComboB_FilterType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboB_FilterType.FormattingEnabled = true;
+            this.ComboB_FilterType.Location = new System.Drawing.Point(208, 13);
+            this.ComboB_FilterType.Name = "ComboB_FilterType";
+            this.ComboB_FilterType.Size = new System.Drawing.Size(121, 21);
+            this.ComboB_FilterType.TabIndex = 10;
+            this.ComboB_FilterType.SelectedValueChanged += new System.EventHandler(this.ComboB_FilterType_SelectedValueChanged);
+            // 
+            // Lbl_Filter
+            // 
+            this.Lbl_Filter.AutoSize = true;
+            this.Lbl_Filter.Location = new System.Drawing.Point(168, 17);
+            this.Lbl_Filter.Name = "Lbl_Filter";
+            this.Lbl_Filter.Size = new System.Drawing.Size(34, 13);
+            this.Lbl_Filter.TabIndex = 9;
+            this.Lbl_Filter.Text = "Type:";
             // 
             // ComboB_FilterPreset
             // 
@@ -198,6 +217,7 @@
             this.Btn_EditEntry.TabIndex = 1;
             this.Btn_EditEntry.Text = "Edit";
             this.Btn_EditEntry.UseVisualStyleBackColor = true;
+            this.Btn_EditEntry.Click += new System.EventHandler(this.Btn_EditEntry_Click);
             // 
             // Btn_Delete
             // 
@@ -264,8 +284,27 @@
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.addToolStripMenuItem.Text = "New Entry";
+            // 
+            // preferencesToolStripMenuItem
+            // 
+            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.preferencesToolStripMenuItem.Text = "Edit Entry";
+            // 
+            // queriesToolStripMenuItem
+            // 
+            this.queriesToolStripMenuItem.Name = "queriesToolStripMenuItem";
+            this.queriesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.queriesToolStripMenuItem.Text = "Queries";
+            // 
+            // preferencesToolStripMenuItem1
+            // 
+            this.preferencesToolStripMenuItem1.Name = "preferencesToolStripMenuItem1";
+            this.preferencesToolStripMenuItem1.Size = new System.Drawing.Size(135, 22);
+            this.preferencesToolStripMenuItem1.Text = "Preferences";
+            this.preferencesToolStripMenuItem1.Click += new System.EventHandler(this.PreferencesMenu_Click);
             // 
             // preferenceToolStripMenuItem
             // 
@@ -330,6 +369,13 @@
             this.DatePick_EntryDate.Name = "DatePick_EntryDate";
             this.DatePick_EntryDate.Size = new System.Drawing.Size(176, 20);
             this.DatePick_EntryDate.TabIndex = 13;
+            // 
+            // NumTxtB_EntryAmount
+            // 
+            this.NumTxtB_EntryAmount.Location = new System.Drawing.Point(52, 91);
+            this.NumTxtB_EntryAmount.Name = "NumTxtB_EntryAmount";
+            this.NumTxtB_EntryAmount.Size = new System.Drawing.Size(176, 20);
+            this.NumTxtB_EntryAmount.TabIndex = 8;
             // 
             // Lbl_AmountDisplay
             // 
@@ -424,51 +470,6 @@
             this.Lbl_Debug.TabIndex = 0;
             this.Lbl_Debug.Text = "-";
             // 
-            // Lbl_Filter
-            // 
-            this.Lbl_Filter.AutoSize = true;
-            this.Lbl_Filter.Location = new System.Drawing.Point(168, 17);
-            this.Lbl_Filter.Name = "Lbl_Filter";
-            this.Lbl_Filter.Size = new System.Drawing.Size(34, 13);
-            this.Lbl_Filter.TabIndex = 9;
-            this.Lbl_Filter.Text = "Type:";
-            // 
-            // ComboB_FilterType
-            // 
-            this.ComboB_FilterType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComboB_FilterType.FormattingEnabled = true;
-            this.ComboB_FilterType.Location = new System.Drawing.Point(208, 13);
-            this.ComboB_FilterType.Name = "ComboB_FilterType";
-            this.ComboB_FilterType.Size = new System.Drawing.Size(121, 21);
-            this.ComboB_FilterType.TabIndex = 10;
-            this.ComboB_FilterType.SelectedValueChanged += new System.EventHandler(this.ComboB_FilterType_SelectedValueChanged);
-            // 
-            // preferencesToolStripMenuItem
-            // 
-            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.preferencesToolStripMenuItem.Text = "Edit Entry";
-            // 
-            // queriesToolStripMenuItem
-            // 
-            this.queriesToolStripMenuItem.Name = "queriesToolStripMenuItem";
-            this.queriesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.queriesToolStripMenuItem.Text = "Queries";
-            // 
-            // preferencesToolStripMenuItem1
-            // 
-            this.preferencesToolStripMenuItem1.Name = "preferencesToolStripMenuItem1";
-            this.preferencesToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.preferencesToolStripMenuItem1.Text = "Preferences";
-            this.preferencesToolStripMenuItem1.Click += new System.EventHandler(this.PreferencesMenu_Click);
-            // 
-            // NumTxtB_EntryAmount
-            // 
-            this.NumTxtB_EntryAmount.Location = new System.Drawing.Point(52, 91);
-            this.NumTxtB_EntryAmount.Name = "NumTxtB_EntryAmount";
-            this.NumTxtB_EntryAmount.Size = new System.Drawing.Size(176, 20);
-            this.NumTxtB_EntryAmount.TabIndex = 8;
-            // 
             // Display
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -489,9 +490,9 @@
             this.MenuStrip_Display.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

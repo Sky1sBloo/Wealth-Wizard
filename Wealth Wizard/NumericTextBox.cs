@@ -10,5 +10,6 @@ public class NumericTextBox : System.Windows.Forms.NumericUpDown
     public NumericTextBox()
     {
         Controls[0].Visible = false;
+        DecimalPlaces = 2;
     }
 }

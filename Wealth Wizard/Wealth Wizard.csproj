@@ -72,6 +72,13 @@
     <Compile Include="Display.Designer.cs">
       <DependentUpon>Display.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditEntry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditEntry.Designer.cs">
+      <DependentUpon>EditEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entry.cs" />
     <Compile Include="NumericTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -85,6 +92,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Display.resx">
       <DependentUpon>Display.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditEntry.resx">
+      <DependentUpon>EditEntry.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Preferences.resx">
       <DependentUpon>Preferences.cs</DependentUpon>

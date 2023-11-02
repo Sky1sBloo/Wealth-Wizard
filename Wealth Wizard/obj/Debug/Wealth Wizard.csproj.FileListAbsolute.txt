@@ -18,3 +18,4 @@ E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth Wizard.csproj.CopyC
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth Wizard.exe
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth Wizard.pdb
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.Preferences.resources
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.EditEntry.resources

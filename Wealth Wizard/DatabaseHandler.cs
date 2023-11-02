@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Wealth_Wizard
 {
@@ -96,7 +97,7 @@ namespace Wealth_Wizard
         }
 
         // Add new entry to the database
-        public static void AddNewEntry(DateTime date, string type, string name, float amount)
+        public static void AddNewEntry(Entry entry)
         {
             // Conenct to database
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
@@ -106,10 +107,10 @@ namespace Wealth_Wizard
             string queryInsert = "INSERT INTO entries Values(@date, @type, @name, @amount)";
 
             SQLiteCommand insertToDb = new SQLiteCommand(queryInsert, con);
-            insertToDb.Parameters.Add(new SQLiteParameter("@date", date.ToString("yyyy-MM-dd")));
-            insertToDb.Parameters.Add(new SQLiteParameter("@type", type));
-            insertToDb.Parameters.Add(new SQLiteParameter("@name", name));
-            insertToDb.Parameters.Add(new SQLiteParameter("@amount", amount));
+            insertToDb.Parameters.Add(new SQLiteParameter("@date", entry._date.ToString("yyyy-MM-dd")));
+            insertToDb.Parameters.Add(new SQLiteParameter("@type", entry._type));
+            insertToDb.Parameters.Add(new SQLiteParameter("@name", entry._name));
+            insertToDb.Parameters.Add(new SQLiteParameter("@amount", entry._amount));
             try
             {
                 insertToDb.ExecuteNonQuery();
@@ -122,8 +123,13 @@ namespace Wealth_Wizard
             con.Close();
         }
 
+        // Edit an entry to the database
+        public static void EditEntry(Entry selectedEntry, Entry newEntry)
+        {
+
+        }
         // Delete an entry in the database
-        public static void DeleteEntry(DateTime date,  string type, string name, double amount)
+        public  static void DeleteEntry(Entry entry)
         {
             // Open connection to database
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
@@ -136,10 +142,10 @@ namespace Wealth_Wizard
                 "type = @type";
 
             SQLiteCommand deleteRowDb = new SQLiteCommand(queryDelete, con);
-            deleteRowDb.Parameters.Add(new SQLiteParameter("@date", date.ToString("yyyy-MM-dd")));
-            deleteRowDb.Parameters.Add(new SQLiteParameter("@name", name));
-            deleteRowDb.Parameters.Add(new SQLiteParameter("@amount", amount));
-            deleteRowDb.Parameters.Add(new SQLiteParameter("@type", type));
+            deleteRowDb.Parameters.Add(new SQLiteParameter("@date", entry._date.ToString("yyyy-MM-dd")));
+            deleteRowDb.Parameters.Add(new SQLiteParameter("@name", entry._name));
+            deleteRowDb.Parameters.Add(new SQLiteParameter("@amount", entry._amount));
+            deleteRowDb.Parameters.Add(new SQLiteParameter("@type", entry._type));
 
             // Delete row from query
             deleteRowDb.ExecuteNonQuery();

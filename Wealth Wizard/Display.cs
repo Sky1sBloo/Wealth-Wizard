@@ -64,7 +64,7 @@ namespace Wealth_Wizard
             DateTime selectedDate = selectedRow.Field<DateTime>("Date");
             string selectedType = selectedRow.Field<string>("Type");
             string selectedName = selectedRow.Field<string>("Name");
-            double selectedAmount = selectedRow.Field<double>("Amount");
+            double selectedAmount = selectedRow.Field<double>("Amount");  // Needed to use double since somehow the datatable type is float
 
             DialogResult deleteChoice = MessageBox.Show("Would you want to delete entry: " + selectedDate.ToString("yyyy/MM/dd") + ", "+ selectedName + "?", "Warning", 
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -73,7 +73,8 @@ namespace Wealth_Wizard
             if (deleteChoice == DialogResult.No) return;
 
             // Delete the entry in the database handler
-            DatabaseHandler.DeleteEntry(selectedDate, selectedType, selectedName, selectedAmount);
+            Entry entryToBeDeleted = new Entry(selectedDate, selectedType, selectedName, (float)selectedAmount);
+            DatabaseHandler.DeleteEntry(entryToBeDeleted);
         }
 
         private void RefreshBtn_Clicked(object sender, EventArgs e)
@@ -137,8 +138,22 @@ namespace Wealth_Wizard
             // Logic for expenses or income
             float finalAmount = (float)NumTxtB_EntryAmount.Value;
             if (ChkB_Expenses.Checked) finalAmount *= -1;
-            DatabaseHandler.AddNewEntry(DatePick_EntryDate.Value, ComboB_EntryType.Text, TxtB_EntryName.Text, finalAmount);
+
+            Entry newEntry = new Entry(DatePick_EntryDate.Value, ComboB_EntryType.Text, TxtB_EntryName.Text, finalAmount);
+            DatabaseHandler.AddNewEntry(newEntry);
             DisplayPurchases();  // Refresh table
+        }
+
+        // Edit entry
+        private void Btn_EditEntry_Click(object sender, EventArgs e)
+        {
+            EditEntry editEntryForm = new EditEntry();
+            editEntryForm.ShowDialog();
+
+            if (editEntryForm.ShowDialog() == DialogResult.OK)
+            {
+                
+            }
         }
 
         // Delete selected row
@@ -151,11 +166,11 @@ namespace Wealth_Wizard
         // Alternate between expenses and income
         private void ChkB_Expenses_CheckedChanged(object sender, EventArgs e)
         {
-            ChkB_Income.Checked = false;
+            ChkB_Income.Checked = !ChkB_Expenses.Checked;
         }
         private void ChkB_Income_CheckedChanged(object sender, EventArgs e)
         {
-            ChkB_Expenses.Checked = false;
+            ChkB_Expenses.Checked = !ChkB_Income.Checked;
         }
 
         // Updates the row of the current selection
@@ -173,7 +188,7 @@ namespace Wealth_Wizard
         private void PreferencesMenu_Click(object sender, EventArgs e)
         {
             Preferences preferenceWindow = new Preferences();
-            preferenceWindow.Show();
+            preferenceWindow.ShowDialog();
         }
     }
 }
