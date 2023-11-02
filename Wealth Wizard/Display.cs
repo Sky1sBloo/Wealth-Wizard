@@ -23,42 +23,47 @@ namespace Wealth_Wizard
         {
             InitializeComponent();
             DatabaseHandler.databaseLocation = @"data source=C:\Users\james\AppData\Roaming\SQLite 3\wealth_wizard.db";
-            // Initialize defaults
-            ComboB_FilterPreset.SelectedIndex = 0;
-
-            // Set combo boxes items
-            foreach (string entryType in DatabaseHandler.GetEntryTypes())
-            {
-                ComboB_EntryType.Items.Add(entryType);
-                ComboB_FilterType.Items.Add(entryType);
-            }
-            ComboB_FilterType.Items.Add("All");
-
-            // Set the default values of the combo boxes
-            ComboB_FilterType.SelectedIndex = ComboB_FilterType.Items.Count - 1;
-            if (ComboB_EntryType.Items.Count != 0) ComboB_EntryType.SelectedIndex = 0;
 
             // Display all entries
-            DisplayEntries();
+            DisplayEntries(true);
         }
 
         // Display purchases on the table with the filters
-        public void DisplayEntries()
+        public void DisplayEntries(bool refreshSelection = false)
         {
+            // Set combo box items list when refreshSelection is true
+            // Usually used when loading a new database
+            if (refreshSelection)
+            {
+                // Set combo boxes items
+                ComboB_EntryType.Items.Clear();
+                ComboB_FilterType.Items.Clear();
+                foreach (string entryType in DatabaseHandler.GetEntryTypes())
+                {
+                    ComboB_EntryType.Items.Add(entryType);
+                    ComboB_FilterType.Items.Add(entryType);
+                }
+
+                ComboB_FilterType.Items.Add("All");
+            }
             DataGridV_Display.DataSource = DatabaseHandler.GetEntries(DatePick_FilterStartDate.Value,
-                DatePick_FilterEndDate.Value, selectedFilterType);
+            DatePick_FilterEndDate.Value, selectedFilterType);
+
+            // Set the default values of the combo boxes
+            // Initialize defaults
+            ComboB_FilterPreset.SelectedIndex = 0;
+
+            ComboB_FilterType.SelectedIndex = ComboB_FilterType.Items.Count - 1;
+            if (ComboB_EntryType.Items.Count != 0) ComboB_EntryType.SelectedIndex = 0;
+
+            // Disable or enable buttons when selection is available
+            Btn_Delete.Enabled = (DataGridV_Display.Rows.Count > 0 && DataGridV_Display.Rows != null);
+            Btn_EditEntry.Enabled = (DataGridV_Display.Rows.Count > 0 && DataGridV_Display.Rows != null);
         }
 
         // Delete a database row
         public void DeleteRowEntry(int rowIndex)
         {
-            // Check if you have something to delete
-            if (DataGridV_Display.Rows.Count == 0)
-            {
-                MessageBox.Show("No row has been selected for deletion.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             // Store selected row into variables
             DataRow selectedRow = ((DataRowView)DataGridV_Display.Rows[rowIndex].DataBoundItem).Row;
             DateTime selectedDate = selectedRow.Field<DateTime>("Date");
@@ -149,13 +154,6 @@ namespace Wealth_Wizard
         // Edit entry
         private void Btn_EditEntry_Click(object sender, EventArgs e)
         {
-            // Check if you have any selection
-            if (DataGridV_Display.Rows.Count == 0)
-            {
-                MessageBox.Show("No row has been selected for editing.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             // Get old values
             DataRow selectedRow = ((DataRowView)DataGridV_Display.Rows[entrySelectionRowIndex].DataBoundItem).Row;
             Entry selectedEntry = new Entry(selectedRow.Field<DateTime>("Date"),
@@ -169,16 +167,11 @@ namespace Wealth_Wizard
             // Check if the entry is accepted
             if (editEntryForm.DialogResult == DialogResult.OK)
             {
-                editEntryForm.Close();
                 // Store new values
                 Entry newEntry = editEntryForm.GetEntryValues();
-
+                
                 // Edit the database
                 DatabaseHandler.EditEntry(selectedEntry, newEntry);
-            }
-            else if (editEntryForm.DialogResult == DialogResult.Cancel)
-            {
-                editEntryForm.Close();
             }
 
             // Refresh the table
@@ -214,10 +207,34 @@ namespace Wealth_Wizard
             selectedFilterType = ComboB_FilterType.SelectedItem.ToString();
         }
 
+        // Menu Items
         private void PreferencesMenu_Click(object sender, EventArgs e)
         {
-            Preferences preferenceWindow = new Preferences();
+            PreferencesForm preferenceWindow = new PreferencesForm();
             preferenceWindow.ShowDialog();
+
+            DisplayEntries(true);
+        }
+
+        private void OpenDatabaseMenu_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog databaseDialog = new OpenFileDialog();
+            databaseDialog.Filter = "Wealth Wizard Database|*.wwiz";
+
+            if (databaseDialog.ShowDialog() == DialogResult.OK)
+            {
+                DatabaseHandler.databaseLocation = @"data source=" + databaseDialog.FileName;
+            }
+
+            DisplayEntries(true);  // Refresh the page
+        }
+
+        private void NewDatabaseMenu_Click(object sender, EventArgs e)
+        {
+            NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
+            newDatabaseForm.ShowDialog();
+
+            DisplayEntries(true);  // Refresh the page
         }
     }
 }

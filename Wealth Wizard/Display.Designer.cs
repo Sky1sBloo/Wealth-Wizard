@@ -59,7 +59,6 @@
             this.manageGoalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.DatePick_EntryDate = new System.Windows.Forms.DateTimePicker();
-            this.NumTxtB_EntryAmount = new NumericTextBox();
             this.Lbl_AmountDisplay = new System.Windows.Forms.Label();
             this.ChkB_Income = new System.Windows.Forms.CheckBox();
             this.ChkB_Expenses = new System.Windows.Forms.CheckBox();
@@ -70,12 +69,13 @@
             this.Lbl_DateDisplay = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.Lbl_Debug = new System.Windows.Forms.Label();
+            this.NumTxtB_EntryAmount = new NumericTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Display)).BeginInit();
             this.Panel_Filter.SuspendLayout();
             this.MenuStrip_Display.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).BeginInit();
             this.SuspendLayout();
             // 
             // DataGridV_Display
@@ -255,19 +255,21 @@
             // newDatabaseToolStripMenuItem
             // 
             this.newDatabaseToolStripMenuItem.Name = "newDatabaseToolStripMenuItem";
-            this.newDatabaseToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.newDatabaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newDatabaseToolStripMenuItem.Text = "New Database";
+            this.newDatabaseToolStripMenuItem.Click += new System.EventHandler(this.NewDatabaseMenu_Click);
             // 
             // openDatabaseToolStripMenuItem
             // 
             this.openDatabaseToolStripMenuItem.Name = "openDatabaseToolStripMenuItem";
-            this.openDatabaseToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.openDatabaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openDatabaseToolStripMenuItem.Text = "Open Database";
+            this.openDatabaseToolStripMenuItem.Click += new System.EventHandler(this.OpenDatabaseMenu_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // editToolStripMenuItem
@@ -370,13 +372,6 @@
             this.DatePick_EntryDate.Size = new System.Drawing.Size(176, 20);
             this.DatePick_EntryDate.TabIndex = 13;
             // 
-            // NumTxtB_EntryAmount
-            // 
-            this.NumTxtB_EntryAmount.Location = new System.Drawing.Point(52, 91);
-            this.NumTxtB_EntryAmount.Name = "NumTxtB_EntryAmount";
-            this.NumTxtB_EntryAmount.Size = new System.Drawing.Size(176, 20);
-            this.NumTxtB_EntryAmount.TabIndex = 8;
-            // 
             // Lbl_AmountDisplay
             // 
             this.Lbl_AmountDisplay.AutoSize = true;
@@ -470,6 +465,14 @@
             this.Lbl_Debug.TabIndex = 0;
             this.Lbl_Debug.Text = "-";
             // 
+            // NumTxtB_EntryAmount
+            // 
+            this.NumTxtB_EntryAmount.DecimalPlaces = 2;
+            this.NumTxtB_EntryAmount.Location = new System.Drawing.Point(52, 91);
+            this.NumTxtB_EntryAmount.Name = "NumTxtB_EntryAmount";
+            this.NumTxtB_EntryAmount.Size = new System.Drawing.Size(176, 20);
+            this.NumTxtB_EntryAmount.TabIndex = 8;
+            // 
             // Display
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -490,9 +493,9 @@
             this.MenuStrip_Display.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

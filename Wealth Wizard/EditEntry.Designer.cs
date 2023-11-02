@@ -180,6 +180,7 @@
             this.Controls.Add(this.DateT_Date);
             this.Controls.Add(this.Lbl_Date);
             this.Name = "EditEntry";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit Entry";
             ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).EndInit();
             this.ResumeLayout(false);

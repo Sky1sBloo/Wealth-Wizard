@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Wealth_Wizard
 {
-    public partial class Preferences : Form
+    public partial class PreferencesForm : Form
     {
-        public Preferences()
+        public PreferencesForm()
         {
             InitializeComponent();
         }
@@ -29,6 +29,19 @@ namespace Wealth_Wizard
         private void Btn_AddEntryType_Click(object sender, EventArgs e)
         {
 
+        }
+
+        // Selected the default database
+        private void Btn_BrowseDatabase_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog defaultDatabaseDialog = new OpenFileDialog();
+            
+            defaultDatabaseDialog.Filter = "Wealth Wizard Database|*.wwiz";
+
+            if (defaultDatabaseDialog.ShowDialog() == DialogResult.OK) 
+            {
+                TxtB_DefaultDatabase.Text = defaultDatabaseDialog.FileName;
+            }
         }
     }
 }

@@ -12,6 +12,61 @@ namespace Wealth_Wizard
     public static class DatabaseHandler
     {
         public static string databaseLocation;
+        public static string[] defaultEntryTypes = {
+            "Personal Needs",
+            "Utilities",
+            "Healthcare",
+            "School",
+            "Groceries",
+            "Vehicle Expenses",
+            "Household Repair",
+            "Entertainment",
+            "Salary",
+            "Miscellaneous"
+        };
+
+        // Creates a new database
+        public static void CreateDatabase(string name, string fileLocation, bool openDatabase = false)
+        {
+            SQLiteConnection.CreateFile(fileLocation + "\\" + name + ".wwiz");
+
+            // Create the table
+            string sqlitePath = @"data source=" + fileLocation + "\\" + name + ".wwiz";
+            SQLiteConnection con = new SQLiteConnection(sqlitePath);
+
+            con.Open();
+            string queryCreateEntriesTable = "CREATE TABLE entries( " +
+                "entry_date DATE NOT NULL, " +
+                "type VARCHAR(30), " +
+                "name VARCHAR(30), " +
+                "amount FLOAT, " +
+                "PRIMARY KEY(entry_date, type, name), " +
+                "FOREIGN KEY(type) REFERENCES entry_types(types) ON DELETE SET NULL)";
+
+            string queryCreateEntryTypesTable = "CREATE TABLE entry_types( " +
+                "types VARCHAR(30) PRIMARY KEY NOT NULL)";
+
+
+            // Create 2 tables: "entries" and "entry_types"
+            SQLiteCommand cmd = new SQLiteCommand(queryCreateEntryTypesTable, con);
+            cmd.ExecuteNonQuery();
+
+            cmd = new SQLiteCommand(queryCreateEntriesTable, con);
+            cmd.ExecuteNonQuery();
+
+            // Insert default entry types
+            foreach (string entryType in defaultEntryTypes)
+            {
+                string insertQuery = "INSERT INTO entry_types VALUES (@type)";
+                cmd = new SQLiteCommand(insertQuery, con);
+                cmd.Parameters.AddWithValue("@type", entryType);
+                cmd.ExecuteNonQuery();
+            }
+            con.Close();
+
+
+            if (openDatabase) { databaseLocation = sqlitePath; }
+        }
 
         // Returns all the values from the specified table
         public static DataTable GetAllValuesFromTable(string tableName)
@@ -149,6 +204,7 @@ namespace Wealth_Wizard
             updateToDb.ExecuteNonQuery();
             con.Close();
         }
+
         // Delete an entry in the database
         public  static void DeleteEntry(Entry entry)
         {
