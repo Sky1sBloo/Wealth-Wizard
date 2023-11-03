@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wealth_Wizard.Tools;
 
 namespace Wealth_Wizard.DisplayForms
 {
@@ -16,14 +17,23 @@ namespace Wealth_Wizard.DisplayForms
         {
             InitializeComponent();
 
-            RefreshTable();
-        }
-
-        public void RefreshTable()
-        {
-            string[] columns = { "entry_date AS 'Start Date'", "entry_type AS 'Type'", "name AS 'Name'", 
+            // Initialize table
+            string[] columns = { "entry_date AS 'Start Date'", "entry_type AS 'Type'", "name AS 'Name'",
                 "amount AS 'Amount'", "billing_cycle AS 'Cycle'"};
             DataGridV_Subscriptions.DataSource = DatabaseHandler.GetValuesFromTable("subscriptions", columns);
+
+            // Load Combo Box types
+            foreach (string entryType in EntryTypesHandler.GetEntryTypes())
+            {
+                ComboB_Type.Items.Add(entryType);
+            }
+            ComboB_Type.SelectedIndex = 0;
+
+            // Load billing cycle
+            foreach (string billingCycle in DatabaseHandler.defaultBillingCycles)
+            { 
+                ComboB_BillingCycle.Items.Add(billingCycle);
+            }
         }
     }
 }

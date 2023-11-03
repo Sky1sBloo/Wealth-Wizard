@@ -13,6 +13,7 @@ namespace Wealth_Wizard
     {
         // In the future check if database location exists
         public static string databaseLocation;
+
         public static string[] defaultEntryTypes = {
             "Personal Needs",
             "Utilities",
@@ -24,6 +25,13 @@ namespace Wealth_Wizard
             "Entertainment",
             "Salary",
             "Miscellaneous"
+        };
+        public static string[] defaultBillingCycles =
+        {
+            "Daily",
+            "Weekly",
+            "Monthly",
+            "Yearly"
         };
 
         // Creates a new database
@@ -174,176 +182,24 @@ namespace Wealth_Wizard
             return count;
         }
 
-        // Returns all entries from "purchases" table in database
-        // filterSpecificType parameters can accept "ALL" or null if you want all types to be displayed
-        public static DataTable GetEntries(DateTime startDate, DateTime endDate, string filterSpecificType)
+        // Deletes selected items on table
+        public static void DeleteRowFromTable(string tableName, string conditions = null)
         {
-            // Check if filter type is not null
-            // Conenct to database
-            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
-            con.Open();
-
-            // Query object
-            string query = "SELECT entry_date AS 'Date', type AS 'Type', name AS 'Name', amount AS 'Amount' " +
-                "FROM entries;";
-
-            // Filter type is not ALL (which is alwys the size of the combobox - 1)
-            if (filterSpecificType != "All" && filterSpecificType != null)
+            string deleteQuery = "DELETE * FROM @table_name";
+            if (conditions != null)
             {
-                // Add this condition to query to filter a specific type
-                query += " AND purchases.type_idx = (SELECT types.type_idx FROM types WHERE types.name = @type_filter)";
+                deleteQuery += " WHERE @conditions";
             }
 
-            SQLiteCommand cmd = new SQLiteCommand(query, con);
-            cmd.Parameters.Add(new SQLiteParameter("@start_date", startDate.ToString("yyyy-MM-dd")));
-            cmd.Parameters.Add(new SQLiteParameter("@end_date", endDate.ToString("yyyy-MM-dd")));
-            cmd.Parameters.Add(new SQLiteParameter("@type_filter", filterSpecificType));
-
-            DataTable dt = new DataTable();
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd);  // Execute command and return the results
-            adapter.Fill(dt);
-
-            con.Close();
-            return dt;
-        }
-
-        // Add new entry to the database
-        public static void AddNewEntry(Entry entry)
-        {
-            // Conenct to database
-            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
+            // Open the database
+            SQLiteConnection con = new SQLiteConnection(databaseLocation);
             con.Open();
 
-            // Insert into database
-            string queryInsert = "INSERT INTO entries Values(@date, @type, @name, @amount)";
+            // Create the delete command
+            SQLiteCommand cmd = new SQLiteCommand(deleteQuery, con);
+            cmd.Parameters.AddWithValue("@table_name", tableName);
+            cmd.Parameters.AddWithValue("@conditions", conditions);
 
-            SQLiteCommand insertToDb = new SQLiteCommand(queryInsert, con);
-            insertToDb.Parameters.Add(new SQLiteParameter("@date", entry._date.ToString("yyyy-MM-dd")));
-            insertToDb.Parameters.Add(new SQLiteParameter("@type", entry._type));
-            insertToDb.Parameters.Add(new SQLiteParameter("@name", entry._name));
-            insertToDb.Parameters.Add(new SQLiteParameter("@amount", entry._amount));
-            try
-            {
-                insertToDb.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-
-            con.Close();
-        }
-
-        // Edit an entry to the database
-        public static void EditEntry(Entry selectedEntry, Entry newEntry)
-        {
-            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
-            con.Open();
-
-            string queryUpdate = "UPDATE entries " +
-                "SET entry_date = @new_date, type = @new_type, name = @new_name, amount = @new_amount " +
-                "WHERE entry_date = @old_date AND type = @old_type AND name = @old_name AND amount = @old_amount";
-
-            // Create query command and fill parameters
-            SQLiteCommand updateToDb = new SQLiteCommand(queryUpdate, con);
-            updateToDb.Parameters.AddWithValue("@new_date", newEntry._date.ToString("yyyy-MM-dd"));
-            updateToDb.Parameters.AddWithValue("@new_type", newEntry._type);
-            updateToDb.Parameters.AddWithValue("@new_name", newEntry._name);
-            updateToDb.Parameters.AddWithValue("@new_amount", newEntry._amount);
-
-            updateToDb.Parameters.AddWithValue("@old_date", selectedEntry._date.ToString("yyyy-MM-dd"));
-            updateToDb.Parameters.AddWithValue("@old_type", selectedEntry._type);
-            updateToDb.Parameters.AddWithValue("@old_name", selectedEntry._name);
-            updateToDb.Parameters.AddWithValue("@old_amount", selectedEntry._amount);
-
-            // Execute the query
-            updateToDb.ExecuteNonQuery();
-            con.Close();
-        }
-
-        // Delete an entry in the database
-        public  static void DeleteEntry(Entry entry)
-        {
-            // Open connection to database
-            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
-            con.Open();
-
-            // Create query for deletion
-            string queryDelete = "DELETE FROM entries \r\n" +
-                "WHERE entry_date = @date AND name = @name AND " +
-                "amount = @amount AND " +
-                "type = @type";
-
-            SQLiteCommand deleteRowDb = new SQLiteCommand(queryDelete, con);
-            deleteRowDb.Parameters.AddWithValue("@date", entry._date.ToString("yyyy-MM-dd"));
-            deleteRowDb.Parameters.AddWithValue("@name", entry._name);
-            deleteRowDb.Parameters.AddWithValue("@amount", entry._amount);
-            deleteRowDb.Parameters.AddWithValue("@type", entry._type);
-
-            // Delete row from query
-            deleteRowDb.ExecuteNonQuery();
-
-            con.Close();
-        }
-
-        // Entry types
-        // Returns all entry type names
-        public static List<string> GetEntryTypes()
-        {
-            List<string> entryTypes = new List<string>();
-
-            foreach (DataRow row in GetAllValuesFromTable("entry_types").Rows)
-            {
-                entryTypes.Add(row["types"].ToString());
-            }
-
-            return entryTypes;
-        }
-
-        // Adds a new entry type
-        public static void AddEntryType(string newType)
-        {
-            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
-            con.Open();
-
-            string queryAdd = "INSERT INTO entry_types (types) VALUES (@entry_type)";
-            SQLiteCommand cmd = new SQLiteCommand(queryAdd, con);
-            cmd.Parameters.AddWithValue("@entry_type", newType);
-
-            cmd.ExecuteNonQuery();
-
-            con.Close();
-        }
-
-        // Edits an entry type
-        public static void UpdateEntryType(string selectedType, string newType)
-        {
-            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
-            con.Open();
-
-            string queryAdd = "UPDATE entry_types " +
-                "SET types = @new_type " +
-                "WHERE types = @selected_type";
-            SQLiteCommand cmd = new SQLiteCommand(queryAdd, con);
-            cmd.Parameters.AddWithValue("@selected_type", selectedType);
-            cmd.Parameters.AddWithValue("@new_type", newType);
-
-            cmd.ExecuteNonQuery();
-
-            con.Close();
-        }
-
-        // Deletes the specific entry type on the database
-        public static void DeleteEntryTypes(string type)
-        {
-            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
-            con.Open();
-
-            string queryDelete = "DELETE FROM entry_types \r\n" +
-                "WHERE types = @type";
-
-            SQLiteCommand cmd = new SQLiteCommand(queryDelete, con);
-            cmd.Parameters.AddWithValue("@type", type);
             cmd.ExecuteNonQuery();
 
             con.Close();

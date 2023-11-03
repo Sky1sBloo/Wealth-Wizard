@@ -62,7 +62,7 @@ namespace Wealth_Wizard
             DataGridV_Subscriptions.DataSource = DatabaseHandler.GetValuesFromTable("subscriptions", subscriptionColumns);
 
             // Display Entries
-            DataGridV_Display.DataSource = DatabaseHandler.GetEntries(DatePick_FilterStartDate.Value,
+            DataGridV_Display.DataSource = EntriesHandler.GetEntries(DatePick_FilterStartDate.Value,
                 DatePick_FilterEndDate.Value, selectedFilterType);
 
             // Disable or enable buttons when selection is available
@@ -80,7 +80,7 @@ namespace Wealth_Wizard
                 // Set combo boxes items
                 ComboB_EntryType.Items.Clear();
                 ComboB_FilterType.Items.Clear();
-                foreach (string entryType in DatabaseHandler.GetEntryTypes())
+                foreach (string entryType in EntryTypesHandler.GetEntryTypes())
                 {
                     ComboB_EntryType.Items.Add(entryType);
                     ComboB_FilterType.Items.Add(entryType);
@@ -116,8 +116,8 @@ namespace Wealth_Wizard
             if (deleteChoice == DialogResult.No) return;
 
             // Delete the entry in the database handler
-            
-            DatabaseHandler.DeleteEntry(entryToBeDeleted);
+
+            EntriesHandler.DeleteEntry(entryToBeDeleted);
         }
 
         // Events
@@ -184,7 +184,7 @@ namespace Wealth_Wizard
             if (ChkB_Expenses.Checked) finalAmount *= -1;
 
             Entry newEntry = new Entry(DatePick_EntryDate.Value, ComboB_EntryType.Text, TxtB_EntryName.Text, finalAmount);
-            DatabaseHandler.AddNewEntry(newEntry);
+            EntriesHandler.AddNewEntry(newEntry);
             RefreshInformation();  // Refresh table
         }
 
@@ -206,9 +206,9 @@ namespace Wealth_Wizard
             {
                 // Store new values
                 Entry newEntry = editEntryForm.GetEntryValues();
-                
+
                 // Edit the database
-                DatabaseHandler.EditEntry(selectedEntry, newEntry);
+                EntriesHandler.EditEntry(selectedEntry, newEntry);
             }
 
             // Refresh the table
@@ -247,6 +247,7 @@ namespace Wealth_Wizard
         // Menu Items
         private void PreferencesMenu_Click(object sender, EventArgs e)
         {
+            // Opens the preference window
             PreferencesForm preferenceWindow = new PreferencesForm();
             preferenceWindow.ShowDialog();
 
@@ -274,8 +275,8 @@ namespace Wealth_Wizard
             RefreshInformation(true);  // Refresh the page
         }
 
-        //
-        private void Btn_ManageSubscriptions_Click(object sender, EventArgs e)
+        // Opens subscription
+        private void ManageSubscriptions_Click(object sender, EventArgs e)
         {
             ManageSubscriptionsForm subscriptionsForm = new ManageSubscriptionsForm();
             subscriptionsForm.ShowDialog();

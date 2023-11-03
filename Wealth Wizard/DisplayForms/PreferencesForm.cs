@@ -27,7 +27,7 @@ namespace Wealth_Wizard
         {
             ListB_EntryTypes.Items.Clear();
             // Initialize entry types to the list box
-            foreach (string entryType in DatabaseHandler.GetEntryTypes())
+            foreach (string entryType in EntryTypesHandler.GetEntryTypes())
             {
                 ListB_EntryTypes.Items.Add(entryType);
             }
@@ -69,7 +69,7 @@ namespace Wealth_Wizard
             InputMessageBox entryTypeValue = new InputMessageBox("New Type Name");
             if (entryTypeValue.ShowDialog() == DialogResult.OK)
             {
-                DatabaseHandler.AddEntryType(entryTypeValue._value);
+                EntryTypesHandler.AddEntryType(entryTypeValue._value);
             }
 
             LoadComboBoxTypes();
@@ -84,7 +84,7 @@ namespace Wealth_Wizard
 
             if (entryTypeValue.ShowDialog() == DialogResult.OK)
             {
-                DatabaseHandler.UpdateEntryType(ListB_EntryTypes.GetItemText(ListB_EntryTypes.SelectedItem), 
+                EntryTypesHandler.UpdateEntryType(ListB_EntryTypes.GetItemText(ListB_EntryTypes.SelectedItem), 
                     entryTypeValue._value);
             }
 
@@ -93,12 +93,11 @@ namespace Wealth_Wizard
 
         private void Btn_DeleteEntryType_Click(object sender, EventArgs e)
         {
-            DatabaseHandler.DeleteEntryTypes(ListB_EntryTypes.GetItemText(ListB_EntryTypes.SelectedItem));
+            EntryTypesHandler.DeleteEntryTypes(ListB_EntryTypes.GetItemText(ListB_EntryTypes.SelectedItem));
             LoadComboBoxTypes();
         }
 
         // Ok, cancel, apply
-
         private void Btn_Apply_Click(object sender, EventArgs e)
         {
             SavePreferences();

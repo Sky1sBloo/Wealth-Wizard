@@ -8,6 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wealth_Wizard.Tools;
 
 namespace Wealth_Wizard
 {
@@ -18,7 +19,7 @@ namespace Wealth_Wizard
             InitializeComponent();
 
             // Initialize tpye
-            foreach (string type in DatabaseHandler.GetEntryTypes())
+            foreach (string type in EntryTypesHandler.GetEntryTypes())
             {
                 ComboB_Types.Items.Add(type);
             }

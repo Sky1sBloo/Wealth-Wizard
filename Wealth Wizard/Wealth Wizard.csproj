@@ -105,6 +105,8 @@
     <Compile Include="HelperForms\InputMessageBox.Designer.cs">
       <DependentUpon>InputMessageBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\EntriesHandler.cs" />
+    <Compile Include="Tools\EntryTypesHandler.cs" />
     <Compile Include="Tools\Preferences.cs" />
     <Compile Include="Tools\DatabaseHandler.cs" />
     <Compile Include="DisplayForms\Display.cs">

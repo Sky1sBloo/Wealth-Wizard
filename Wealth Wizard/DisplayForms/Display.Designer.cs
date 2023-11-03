@@ -60,6 +60,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.Lbl_A = new System.Windows.Forms.Label();
             this.DatePick_EntryDate = new System.Windows.Forms.DateTimePicker();
+            this.NumTxtB_EntryAmount = new NumericTextBox();
             this.Lbl_AmountDisplay = new System.Windows.Forms.Label();
             this.ChkB_Income = new System.Windows.Forms.CheckBox();
             this.ChkB_Expenses = new System.Windows.Forms.CheckBox();
@@ -75,14 +76,13 @@
             this.Lbl_DatabaseName = new System.Windows.Forms.Label();
             this.Lbl_DatabaseNameDisplay = new System.Windows.Forms.Label();
             this.sqLiteCommandBuilder1 = new System.Data.SQLite.SQLiteCommandBuilder();
-            this.NumTxtB_EntryAmount = new NumericTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Display)).BeginInit();
             this.Panel_Filter.SuspendLayout();
             this.MenuStrip_Display.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Subscriptions)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).BeginInit();
             this.SuspendLayout();
             // 
             // DataGridV_Display
@@ -344,6 +344,7 @@
             this.manageSubscriptionsToolStripMenuItem.Name = "manageSubscriptionsToolStripMenuItem";
             this.manageSubscriptionsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.manageSubscriptionsToolStripMenuItem.Text = "Manage Subscriptions";
+            this.manageSubscriptionsToolStripMenuItem.Click += new System.EventHandler(this.ManageSubscriptions_Click);
             // 
             // manageGoalsToolStripMenuItem
             // 
@@ -390,6 +391,19 @@
             this.DatePick_EntryDate.Name = "DatePick_EntryDate";
             this.DatePick_EntryDate.Size = new System.Drawing.Size(167, 20);
             this.DatePick_EntryDate.TabIndex = 13;
+            // 
+            // NumTxtB_EntryAmount
+            // 
+            this.NumTxtB_EntryAmount.DecimalPlaces = 2;
+            this.NumTxtB_EntryAmount.Location = new System.Drawing.Point(61, 111);
+            this.NumTxtB_EntryAmount.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            0});
+            this.NumTxtB_EntryAmount.Name = "NumTxtB_EntryAmount";
+            this.NumTxtB_EntryAmount.Size = new System.Drawing.Size(167, 20);
+            this.NumTxtB_EntryAmount.TabIndex = 8;
             // 
             // Lbl_AmountDisplay
             // 
@@ -487,7 +501,7 @@
             this.Btn_ManageSubscriptions.TabIndex = 7;
             this.Btn_ManageSubscriptions.Text = "Manage Subscriptions";
             this.Btn_ManageSubscriptions.UseVisualStyleBackColor = true;
-            this.Btn_ManageSubscriptions.Click += new System.EventHandler(this.Btn_ManageSubscriptions_Click);
+            this.Btn_ManageSubscriptions.Click += new System.EventHandler(this.ManageSubscriptions_Click);
             // 
             // DataGridV_Subscriptions
             // 
@@ -534,19 +548,6 @@
             this.sqLiteCommandBuilder1.DataAdapter = null;
             this.sqLiteCommandBuilder1.QuoteSuffix = "]";
             // 
-            // NumTxtB_EntryAmount
-            // 
-            this.NumTxtB_EntryAmount.DecimalPlaces = 2;
-            this.NumTxtB_EntryAmount.Location = new System.Drawing.Point(61, 111);
-            this.NumTxtB_EntryAmount.Maximum = new decimal(new int[] {
-            -1,
-            -1,
-            -1,
-            0});
-            this.NumTxtB_EntryAmount.Name = "NumTxtB_EntryAmount";
-            this.NumTxtB_EntryAmount.Size = new System.Drawing.Size(167, 20);
-            this.NumTxtB_EntryAmount.TabIndex = 8;
-            // 
             // Display
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -568,10 +569,10 @@
             this.MenuStrip_Display.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Subscriptions)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
