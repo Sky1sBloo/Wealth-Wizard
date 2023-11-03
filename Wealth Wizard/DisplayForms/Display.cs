@@ -19,7 +19,7 @@ namespace Wealth_Wizard
 {
     public partial class Display : Form
     {
-        private int entrySelectionRowIndex = 0;
+        private List<int> entrySelectionRowIndex = new List<int>();
         private string selectedFilterType;
 
         public Display()
@@ -28,7 +28,7 @@ namespace Wealth_Wizard
 
             // Check if default database location exists
             string fileLocation = (PreferencesHandler.LoadPreferences().defaultDatabase).Replace(@"data source=", "");
-            
+
             if (File.Exists(fileLocation))
             {
                 DatabaseHandler.databaseLocation = PreferencesHandler.LoadPreferences().defaultDatabase;
@@ -37,7 +37,7 @@ namespace Wealth_Wizard
             {
                 // File location doesn't exist promt the user to create a new database to set it to default
                 NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
-                
+
                 if (newDatabaseForm.ShowDialog() != DialogResult.OK)
                 {
                     System.Environment.Exit(1);
@@ -58,7 +58,7 @@ namespace Wealth_Wizard
         public void RefreshInformation(bool refreshDatabaseSettings = false)
         {
             // Display all subscriptions
-            string[] subscriptionColumns = { "amount AS 'Amount'", "billing_cycle AS 'Billing Cycle'"};
+            string[] subscriptionColumns = { "amount AS 'Amount'", "billing_cycle AS 'Billing Cycle'" };
             DataGridV_Subscriptions.DataSource = DatabaseHandler.GetValuesFromTable("subscriptions", subscriptionColumns);
 
             // Display Entries
@@ -68,7 +68,7 @@ namespace Wealth_Wizard
             // Disable or enable buttons when selection is available
             Btn_Delete.Enabled = (DataGridV_Display.Rows.Count > 0 && DataGridV_Display.Rows != null);
             Btn_EditEntry.Enabled = (DataGridV_Display.Rows.Count > 0 && DataGridV_Display.Rows != null);
-            
+
 
             // Set combo box items list and database name when refreshSelection is true
             // Usually used when loading a new database
@@ -109,14 +109,7 @@ namespace Wealth_Wizard
 
             Entry entryToBeDeleted = new Entry(selectedDate, selectedType, selectedName, (float)selectedAmount);
 
-            DialogResult deleteChoice = MessageBox.Show("Would you want to delete entry: " + selectedDate.ToString("yyyy/MM/dd") + ", "+ selectedName + "?", "Warning", 
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            // Create final warning
-            if (deleteChoice == DialogResult.No) return;
-
             // Delete the entry in the database handler
-
             EntriesHandler.DeleteEntry(entryToBeDeleted);
         }
 
@@ -144,7 +137,7 @@ namespace Wealth_Wizard
                 case 1:
                     // Get current month
                     startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                    endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 
+                    endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month,
                         DateTime.DaysInMonth(startDate.Year, startDate.Month));
                     break;
                 case 2:
@@ -192,7 +185,7 @@ namespace Wealth_Wizard
         private void Btn_EditEntry_Click(object sender, EventArgs e)
         {
             // Get old values
-            DataRow selectedRow = ((DataRowView)DataGridV_Display.Rows[entrySelectionRowIndex].DataBoundItem).Row;
+            DataRow selectedRow = ((DataRowView)DataGridV_Display.Rows[entrySelectionRowIndex[0]].DataBoundItem).Row;
             Entry selectedEntry = new Entry(selectedRow.Field<DateTime>("Date"),
                 selectedRow.Field<string>("Type"),
                 selectedRow.Field<string>("Name"),
@@ -218,7 +211,17 @@ namespace Wealth_Wizard
         // Delete selected row
         private void Btn_Delete_Click(object sender, EventArgs e)
         {
-            DeleteRowEntry(entrySelectionRowIndex);
+            DialogResult deleteChoice = MessageBox.Show("Would you want to delete " + entrySelectionRowIndex.Count.ToString() + " enties?", "Warning",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            // Create final warning
+            if (deleteChoice == DialogResult.No) return;
+
+            for (int i = 0; i < entrySelectionRowIndex.Count; i++)
+            {
+                DeleteRowEntry(entrySelectionRowIndex[i]);
+            }
+
             RefreshInformation();
         }
 
@@ -236,7 +239,12 @@ namespace Wealth_Wizard
         private void SetCurrentSelection(object sender, EventArgs e)
         {
             if (DataGridV_Display.CurrentCell == null) return;
-            entrySelectionRowIndex = DataGridV_Display.CurrentCell.RowIndex;
+
+            entrySelectionRowIndex.Clear();
+            for (int i = 0; i < DataGridV_Display.SelectedCells.Count; i++)
+            {
+                entrySelectionRowIndex.Add(DataGridV_Display.SelectedCells[i].RowIndex);
+            }
         }
 
         private void ComboB_FilterType_SelectedValueChanged(object sender, EventArgs e)
