@@ -93,6 +93,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DisplayForms\ManageSubscriptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DisplayForms\ManageSubscriptionsForm.Designer.cs">
+      <DependentUpon>ManageSubscriptionsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="HelperForms\InputMessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +140,9 @@
     <Compile Include="Tools\PreferencesHandler.cs" />
     <EmbeddedResource Include="DisplayForms\Display.resx">
       <DependentUpon>Display.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DisplayForms\ManageSubscriptionsForm.resx">
+      <DependentUpon>ManageSubscriptionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HelperForms\InputMessageBox.resx">
       <DependentUpon>InputMessageBox.cs</DependentUpon>

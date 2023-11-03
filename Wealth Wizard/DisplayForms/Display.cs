@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using Wealth_Wizard.Tools;
+using Wealth_Wizard.DisplayForms;
 
 namespace Wealth_Wizard
 {
@@ -50,23 +51,32 @@ namespace Wealth_Wizard
                 PreferencesHandler.SavePreferences(preferences);
             }
 
-            DisplayEntries(true);  // Refresh the page
+            RefreshInformation(true);  // Refresh the page with all the information
         }
 
         // Display purchases on the table with the filters
-        public void DisplayEntries(bool refreshDatabaseSettings = false)
+        public void RefreshInformation(bool refreshDatabaseSettings = false)
         {
+            // Display all subscriptions
+            string[] subscriptionColumns = { "amount AS 'Amount'", "billing_cycle AS 'Billing Cycle'"};
+            DataGridV_Subscriptions.DataSource = DatabaseHandler.GetValuesFromTable("subscriptions", subscriptionColumns);
+
+            // Display Entries
             DataGridV_Display.DataSource = DatabaseHandler.GetEntries(DatePick_FilterStartDate.Value,
-            DatePick_FilterEndDate.Value, selectedFilterType);
+                DatePick_FilterEndDate.Value, selectedFilterType);
 
             // Disable or enable buttons when selection is available
             Btn_Delete.Enabled = (DataGridV_Display.Rows.Count > 0 && DataGridV_Display.Rows != null);
             Btn_EditEntry.Enabled = (DataGridV_Display.Rows.Count > 0 && DataGridV_Display.Rows != null);
+            
 
             // Set combo box items list and database name when refreshSelection is true
             // Usually used when loading a new database
             if (refreshDatabaseSettings)
             {
+                // Set Database Information
+                Lbl_DatabaseName.Text = Path.GetFileName(DatabaseHandler.databaseLocation);
+
                 // Set combo boxes items
                 ComboB_EntryType.Items.Clear();
                 ComboB_FilterType.Items.Clear();
@@ -110,9 +120,10 @@ namespace Wealth_Wizard
             DatabaseHandler.DeleteEntry(entryToBeDeleted);
         }
 
+        // Events
         private void RefreshBtn_Clicked(object sender, EventArgs e)
         {
-            DisplayEntries();
+            RefreshInformation();
         }
 
         // Update the date time filters
@@ -154,7 +165,7 @@ namespace Wealth_Wizard
         // Refresh the page
         private void DateUpdated(object sender, EventArgs e)
         {
-            DisplayEntries();
+            RefreshInformation();
         }
 
         // Add button click
@@ -174,7 +185,7 @@ namespace Wealth_Wizard
 
             Entry newEntry = new Entry(DatePick_EntryDate.Value, ComboB_EntryType.Text, TxtB_EntryName.Text, finalAmount);
             DatabaseHandler.AddNewEntry(newEntry);
-            DisplayEntries();  // Refresh table
+            RefreshInformation();  // Refresh table
         }
 
         // Edit entry
@@ -201,14 +212,14 @@ namespace Wealth_Wizard
             }
 
             // Refresh the table
-            DisplayEntries();
+            RefreshInformation();
         }
 
         // Delete selected row
         private void Btn_Delete_Click(object sender, EventArgs e)
         {
             DeleteRowEntry(entrySelectionRowIndex);
-            DisplayEntries();
+            RefreshInformation();
         }
 
         // Alternate between expenses and income
@@ -239,7 +250,7 @@ namespace Wealth_Wizard
             PreferencesForm preferenceWindow = new PreferencesForm();
             preferenceWindow.ShowDialog();
 
-            DisplayEntries(true);
+            RefreshInformation(true);
         }
 
         private void OpenDatabaseMenu_Click(object sender, EventArgs e)
@@ -252,7 +263,7 @@ namespace Wealth_Wizard
                 DatabaseHandler.databaseLocation = @"data source=" + databaseDialog.FileName;
             }
 
-            DisplayEntries(true);  // Refresh the page
+            RefreshInformation(true);  // Refresh the page
         }
 
         private void NewDatabaseMenu_Click(object sender, EventArgs e)
@@ -260,12 +271,14 @@ namespace Wealth_Wizard
             NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
             newDatabaseForm.ShowDialog();
 
-            DisplayEntries(true);  // Refresh the page
+            RefreshInformation(true);  // Refresh the page
         }
 
-        private void Display_Load(object sender, EventArgs e)
+        //
+        private void Btn_ManageSubscriptions_Click(object sender, EventArgs e)
         {
-
+            ManageSubscriptionsForm subscriptionsForm = new ManageSubscriptionsForm();
+            subscriptionsForm.ShowDialog();
         }
     }
 }

@@ -49,8 +49,16 @@ namespace Wealth_Wizard
             string queryCreateEntryTypesTable = "CREATE TABLE entry_types( " +
                 "types VARCHAR(30) PRIMARY KEY NOT NULL)";
 
+            string queryCreateSubscriptionsTable = "CREATE TABLE subscriptions(" +
+                "entry_date DATE NOT NULL, " +
+                "entry_type VARCHAR(30), " +
+                "name VARCHAR(30), " +
+                "amount FLOAT, " + 
+                "billing_cycle VARCHAR(30), " +
+                "PRIMARY KEY (entry_type, entry_type, name, amount), " +
+                "FOREIGN KEY (entry_type) REFERENCES entry_type(types) ON DELETE SET NULL)";
 
-            // Create 2 tables: "entries" and "entry_types"
+            // Create 3 tables: "entries", "entry_types", and "subscriptions"
             SQLiteCommand cmd = new SQLiteCommand(queryCreateEntryTypesTable, con);
             cmd.ExecuteNonQuery();
 
@@ -65,6 +73,10 @@ namespace Wealth_Wizard
                 cmd.Parameters.AddWithValue("@type", entryType);
                 cmd.ExecuteNonQuery();
             }
+
+            cmd = new SQLiteCommand(queryCreateSubscriptionsTable, con);
+            cmd.ExecuteNonQuery();
+
             con.Close();
         }
 
@@ -93,29 +105,73 @@ namespace Wealth_Wizard
         // Conditions are query based
         public static DataTable GetValuesFromTable(string tableName, string[] columns = null, string conditions = null)
         {
-            // 
             string columnQuery = "*";
-            string querySelection = "SELECT @columns FROM " + tableName;
-
-            // Get return columns
-            for (int i = 0; i < columns.Length; i++)
+            
+            // This condition checks if the user wants to return a specific column
+            if (columns != null)
             {
-                if (i == 0) columnQuery = columns[i];
-                else columnQuery += ", " + columns[i];
+                // Get return columns
+                for (int i = 0; i < columns.Length; i++)
+                {
+                    if (i == 0) columnQuery = columns[i];
+                    else columnQuery += ", " + columns[i];
+                }
             }
 
-            if (conditions != null) querySelection += "\r\n WHERE @conditions";
+            string querySelection = "SELECT " + columnQuery + " FROM " + tableName;
+
+            if (conditions != null) querySelection += "\r\n WHERE " + conditions;
 
             // Open the database
             SQLiteConnection con = new SQLiteConnection(databaseLocation);
             con.Open();
 
             SQLiteCommand cmd = new SQLiteCommand(querySelection, con);
+
+            DataTable dataTable = new DataTable();
+            SQLiteDataAdapter sQLiteDataAdapter = new SQLiteDataAdapter(cmd);
+            sQLiteDataAdapter.Fill(dataTable);
+
+            con.Close();
+            return dataTable;
+        }
+
+        // Returns the number of count
+        public static int GetNumberOfRowsOnTable(string tableName, string[] columns = null, string conditions = null)
+        {
+            string columnQuery = "*";
+            string querySelection = "SELECT COUNT(@columns) FROM " + tableName;
+
+            // This condition checks if the user wants to return a specific column
+            if (columns != null)
+            {
+                // Get return columns
+                for (int i = 0; i < columns.Length; i++)
+                {
+                    if (i == 0) columnQuery = columns[i];
+                    else columnQuery += ", " + columns[i];
+                }
+            }
+
+            // This condition checks if the user wants to add any conditions
+            if (conditions != null)
+            {
+                querySelection += "\r\n WHERE @conditions";
+            }
+
+            // Open the database
+            SQLiteConnection con = new SQLiteConnection(databaseLocation);
+            con.Open();
+
+            // Create the command
+            SQLiteCommand cmd = new SQLiteCommand(querySelection, con);
             cmd.Parameters.Add(new SQLiteParameter("@columns", columnQuery));
             cmd.Parameters.Add(new SQLiteParameter("@conditions", conditions));
 
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
             con.Close();
-            return null;
+
+            return count;
         }
 
         // Returns all entries from "purchases" table in database

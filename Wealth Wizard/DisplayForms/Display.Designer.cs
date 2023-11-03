@@ -58,6 +58,7 @@
             this.manageSubscriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageGoalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Lbl_A = new System.Windows.Forms.Label();
             this.DatePick_EntryDate = new System.Windows.Forms.DateTimePicker();
             this.Lbl_AmountDisplay = new System.Windows.Forms.Label();
             this.ChkB_Income = new System.Windows.Forms.CheckBox();
@@ -68,14 +69,19 @@
             this.Lbl_TypeDisplay = new System.Windows.Forms.Label();
             this.Lbl_DateDisplay = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.Btn_ManageSubscriptions = new System.Windows.Forms.Button();
+            this.DataGridV_Subscriptions = new System.Windows.Forms.DataGridView();
+            this.Lbl_Subscriptions = new System.Windows.Forms.Label();
             this.Lbl_DatabaseName = new System.Windows.Forms.Label();
             this.Lbl_DatabaseNameDisplay = new System.Windows.Forms.Label();
+            this.sqLiteCommandBuilder1 = new System.Data.SQLite.SQLiteCommandBuilder();
             this.NumTxtB_EntryAmount = new NumericTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Display)).BeginInit();
             this.Panel_Filter.SuspendLayout();
             this.MenuStrip_Display.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Subscriptions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).BeginInit();
             this.SuspendLayout();
             // 
@@ -106,7 +112,7 @@
             // Lbl_FilterDisplay
             // 
             this.Lbl_FilterDisplay.AutoSize = true;
-            this.Lbl_FilterDisplay.Location = new System.Drawing.Point(3, 17);
+            this.Lbl_FilterDisplay.Location = new System.Drawing.Point(5, 17);
             this.Lbl_FilterDisplay.Name = "Lbl_FilterDisplay";
             this.Lbl_FilterDisplay.Size = new System.Drawing.Size(32, 13);
             this.Lbl_FilterDisplay.TabIndex = 2;
@@ -203,7 +209,7 @@
             // 
             // Btn_AddEntry
             // 
-            this.Btn_AddEntry.Location = new System.Drawing.Point(9, 139);
+            this.Btn_AddEntry.Location = new System.Drawing.Point(18, 159);
             this.Btn_AddEntry.Name = "Btn_AddEntry";
             this.Btn_AddEntry.Size = new System.Drawing.Size(59, 23);
             this.Btn_AddEntry.TabIndex = 0;
@@ -213,7 +219,7 @@
             // 
             // Btn_EditEntry
             // 
-            this.Btn_EditEntry.Location = new System.Drawing.Point(74, 139);
+            this.Btn_EditEntry.Location = new System.Drawing.Point(83, 159);
             this.Btn_EditEntry.Name = "Btn_EditEntry";
             this.Btn_EditEntry.Size = new System.Drawing.Size(60, 23);
             this.Btn_EditEntry.TabIndex = 1;
@@ -223,7 +229,7 @@
             // 
             // Btn_Delete
             // 
-            this.Btn_Delete.Location = new System.Drawing.Point(140, 139);
+            this.Btn_Delete.Location = new System.Drawing.Point(149, 159);
             this.Btn_Delete.Name = "Btn_Delete";
             this.Btn_Delete.Size = new System.Drawing.Size(61, 23);
             this.Btn_Delete.TabIndex = 2;
@@ -347,6 +353,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.Lbl_A);
             this.panel1.Controls.Add(this.DatePick_EntryDate);
             this.panel1.Controls.Add(this.NumTxtB_EntryAmount);
             this.panel1.Controls.Add(this.Lbl_AmountDisplay);
@@ -360,24 +367,34 @@
             this.panel1.Controls.Add(this.ComboB_EntryType);
             this.panel1.Controls.Add(this.Lbl_TypeDisplay);
             this.panel1.Controls.Add(this.Lbl_DateDisplay);
-            this.panel1.Location = new System.Drawing.Point(12, 267);
+            this.panel1.Location = new System.Drawing.Point(12, 253);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(240, 171);
+            this.panel1.Size = new System.Drawing.Size(240, 185);
             this.panel1.TabIndex = 6;
+            // 
+            // Lbl_A
+            // 
+            this.Lbl_A.AutoSize = true;
+            this.Lbl_A.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_A.Location = new System.Drawing.Point(94, 14);
+            this.Lbl_A.Name = "Lbl_A";
+            this.Lbl_A.Size = new System.Drawing.Size(46, 13);
+            this.Lbl_A.TabIndex = 14;
+            this.Lbl_A.Text = "Entries";
             // 
             // DatePick_EntryDate
             // 
             this.DatePick_EntryDate.CustomFormat = "yyyy/MM/dd";
             this.DatePick_EntryDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.DatePick_EntryDate.Location = new System.Drawing.Point(52, 10);
+            this.DatePick_EntryDate.Location = new System.Drawing.Point(61, 30);
             this.DatePick_EntryDate.Name = "DatePick_EntryDate";
-            this.DatePick_EntryDate.Size = new System.Drawing.Size(176, 20);
+            this.DatePick_EntryDate.Size = new System.Drawing.Size(167, 20);
             this.DatePick_EntryDate.TabIndex = 13;
             // 
             // Lbl_AmountDisplay
             // 
             this.Lbl_AmountDisplay.AutoSize = true;
-            this.Lbl_AmountDisplay.Location = new System.Drawing.Point(3, 93);
+            this.Lbl_AmountDisplay.Location = new System.Drawing.Point(12, 113);
             this.Lbl_AmountDisplay.Name = "Lbl_AmountDisplay";
             this.Lbl_AmountDisplay.Size = new System.Drawing.Size(46, 13);
             this.Lbl_AmountDisplay.TabIndex = 11;
@@ -386,7 +403,7 @@
             // ChkB_Income
             // 
             this.ChkB_Income.AutoSize = true;
-            this.ChkB_Income.Location = new System.Drawing.Point(84, 116);
+            this.ChkB_Income.Location = new System.Drawing.Point(93, 136);
             this.ChkB_Income.Name = "ChkB_Income";
             this.ChkB_Income.Size = new System.Drawing.Size(61, 17);
             this.ChkB_Income.TabIndex = 10;
@@ -399,7 +416,7 @@
             this.ChkB_Expenses.AutoSize = true;
             this.ChkB_Expenses.Checked = true;
             this.ChkB_Expenses.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ChkB_Expenses.Location = new System.Drawing.Point(6, 116);
+            this.ChkB_Expenses.Location = new System.Drawing.Point(15, 136);
             this.ChkB_Expenses.Name = "ChkB_Expenses";
             this.ChkB_Expenses.Size = new System.Drawing.Size(72, 17);
             this.ChkB_Expenses.TabIndex = 9;
@@ -409,15 +426,15 @@
             // 
             // TxtB_EntryName
             // 
-            this.TxtB_EntryName.Location = new System.Drawing.Point(52, 62);
+            this.TxtB_EntryName.Location = new System.Drawing.Point(61, 82);
             this.TxtB_EntryName.Name = "TxtB_EntryName";
-            this.TxtB_EntryName.Size = new System.Drawing.Size(176, 20);
+            this.TxtB_EntryName.Size = new System.Drawing.Size(167, 20);
             this.TxtB_EntryName.TabIndex = 7;
             // 
             // Lbl_NameDisplay
             // 
             this.Lbl_NameDisplay.AutoSize = true;
-            this.Lbl_NameDisplay.Location = new System.Drawing.Point(3, 65);
+            this.Lbl_NameDisplay.Location = new System.Drawing.Point(12, 85);
             this.Lbl_NameDisplay.Name = "Lbl_NameDisplay";
             this.Lbl_NameDisplay.Size = new System.Drawing.Size(38, 13);
             this.Lbl_NameDisplay.TabIndex = 7;
@@ -427,15 +444,15 @@
             // 
             this.ComboB_EntryType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboB_EntryType.FormattingEnabled = true;
-            this.ComboB_EntryType.Location = new System.Drawing.Point(52, 36);
+            this.ComboB_EntryType.Location = new System.Drawing.Point(61, 56);
             this.ComboB_EntryType.Name = "ComboB_EntryType";
-            this.ComboB_EntryType.Size = new System.Drawing.Size(176, 21);
+            this.ComboB_EntryType.Size = new System.Drawing.Size(167, 21);
             this.ComboB_EntryType.TabIndex = 6;
             // 
             // Lbl_TypeDisplay
             // 
             this.Lbl_TypeDisplay.AutoSize = true;
-            this.Lbl_TypeDisplay.Location = new System.Drawing.Point(3, 39);
+            this.Lbl_TypeDisplay.Location = new System.Drawing.Point(12, 59);
             this.Lbl_TypeDisplay.Name = "Lbl_TypeDisplay";
             this.Lbl_TypeDisplay.Size = new System.Drawing.Size(34, 13);
             this.Lbl_TypeDisplay.TabIndex = 5;
@@ -444,7 +461,7 @@
             // Lbl_DateDisplay
             // 
             this.Lbl_DateDisplay.AutoSize = true;
-            this.Lbl_DateDisplay.Location = new System.Drawing.Point(3, 15);
+            this.Lbl_DateDisplay.Location = new System.Drawing.Point(12, 35);
             this.Lbl_DateDisplay.Name = "Lbl_DateDisplay";
             this.Lbl_DateDisplay.Size = new System.Drawing.Size(33, 13);
             this.Lbl_DateDisplay.TabIndex = 3;
@@ -452,17 +469,51 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.Btn_ManageSubscriptions);
+            this.panel2.Controls.Add(this.DataGridV_Subscriptions);
+            this.panel2.Controls.Add(this.Lbl_Subscriptions);
             this.panel2.Controls.Add(this.Lbl_DatabaseName);
             this.panel2.Controls.Add(this.Lbl_DatabaseNameDisplay);
             this.panel2.Location = new System.Drawing.Point(12, 27);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(240, 234);
+            this.panel2.Size = new System.Drawing.Size(240, 220);
             this.panel2.TabIndex = 7;
+            // 
+            // Btn_ManageSubscriptions
+            // 
+            this.Btn_ManageSubscriptions.Location = new System.Drawing.Point(52, 197);
+            this.Btn_ManageSubscriptions.Name = "Btn_ManageSubscriptions";
+            this.Btn_ManageSubscriptions.Size = new System.Drawing.Size(128, 23);
+            this.Btn_ManageSubscriptions.TabIndex = 7;
+            this.Btn_ManageSubscriptions.Text = "Manage Subscriptions";
+            this.Btn_ManageSubscriptions.UseVisualStyleBackColor = true;
+            this.Btn_ManageSubscriptions.Click += new System.EventHandler(this.Btn_ManageSubscriptions_Click);
+            // 
+            // DataGridV_Subscriptions
+            // 
+            this.DataGridV_Subscriptions.AllowUserToAddRows = false;
+            this.DataGridV_Subscriptions.AllowUserToDeleteRows = false;
+            this.DataGridV_Subscriptions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DataGridV_Subscriptions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridV_Subscriptions.Location = new System.Drawing.Point(9, 42);
+            this.DataGridV_Subscriptions.Name = "DataGridV_Subscriptions";
+            this.DataGridV_Subscriptions.Size = new System.Drawing.Size(219, 152);
+            this.DataGridV_Subscriptions.TabIndex = 6;
+            // 
+            // Lbl_Subscriptions
+            // 
+            this.Lbl_Subscriptions.AutoSize = true;
+            this.Lbl_Subscriptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_Subscriptions.Location = new System.Drawing.Point(74, 26);
+            this.Lbl_Subscriptions.Name = "Lbl_Subscriptions";
+            this.Lbl_Subscriptions.Size = new System.Drawing.Size(83, 13);
+            this.Lbl_Subscriptions.TabIndex = 5;
+            this.Lbl_Subscriptions.Text = "Subscriptions";
             // 
             // Lbl_DatabaseName
             // 
             this.Lbl_DatabaseName.AutoSize = true;
-            this.Lbl_DatabaseName.Location = new System.Drawing.Point(71, 16);
+            this.Lbl_DatabaseName.Location = new System.Drawing.Point(74, 13);
             this.Lbl_DatabaseName.Name = "Lbl_DatabaseName";
             this.Lbl_DatabaseName.Size = new System.Drawing.Size(10, 13);
             this.Lbl_DatabaseName.TabIndex = 1;
@@ -471,24 +522,29 @@
             // Lbl_DatabaseNameDisplay
             // 
             this.Lbl_DatabaseNameDisplay.AutoSize = true;
-            this.Lbl_DatabaseNameDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_DatabaseNameDisplay.Location = new System.Drawing.Point(9, 16);
+            this.Lbl_DatabaseNameDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_DatabaseNameDisplay.Location = new System.Drawing.Point(12, 13);
             this.Lbl_DatabaseNameDisplay.Name = "Lbl_DatabaseNameDisplay";
-            this.Lbl_DatabaseNameDisplay.Size = new System.Drawing.Size(65, 13);
+            this.Lbl_DatabaseNameDisplay.Size = new System.Drawing.Size(56, 13);
             this.Lbl_DatabaseNameDisplay.TabIndex = 0;
             this.Lbl_DatabaseNameDisplay.Text = "Database:";
+            // 
+            // sqLiteCommandBuilder1
+            // 
+            this.sqLiteCommandBuilder1.DataAdapter = null;
+            this.sqLiteCommandBuilder1.QuoteSuffix = "]";
             // 
             // NumTxtB_EntryAmount
             // 
             this.NumTxtB_EntryAmount.DecimalPlaces = 2;
-            this.NumTxtB_EntryAmount.Location = new System.Drawing.Point(52, 91);
+            this.NumTxtB_EntryAmount.Location = new System.Drawing.Point(61, 111);
             this.NumTxtB_EntryAmount.Maximum = new decimal(new int[] {
             -1,
             -1,
             -1,
             0});
             this.NumTxtB_EntryAmount.Name = "NumTxtB_EntryAmount";
-            this.NumTxtB_EntryAmount.Size = new System.Drawing.Size(176, 20);
+            this.NumTxtB_EntryAmount.Size = new System.Drawing.Size(167, 20);
             this.NumTxtB_EntryAmount.TabIndex = 8;
             // 
             // Display
@@ -505,7 +561,6 @@
             this.MainMenuStrip = this.MenuStrip_Display;
             this.Name = "Display";
             this.Text = "Wealth Wizard";
-            this.Load += new System.EventHandler(this.Display_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Display)).EndInit();
             this.Panel_Filter.ResumeLayout(false);
             this.Panel_Filter.PerformLayout();
@@ -515,6 +570,7 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Subscriptions)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -566,6 +622,11 @@
         private System.Windows.Forms.ToolStripMenuItem queriesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem1;
         private System.Windows.Forms.Label Lbl_DatabaseName;
+        private System.Windows.Forms.Label Lbl_Subscriptions;
+        private System.Windows.Forms.DataGridView DataGridV_Subscriptions;
+        private System.Windows.Forms.Label Lbl_A;
+        private System.Data.SQLite.SQLiteCommandBuilder sqLiteCommandBuilder1;
+        private System.Windows.Forms.Button Btn_ManageSubscriptions;
     }
 }
 
