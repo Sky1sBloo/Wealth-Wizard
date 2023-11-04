@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.SQLite;
 using System.Drawing;
 using System.Dynamic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using Wealth_Wizard.HelperForms;
 using Wealth_Wizard.Tools;
 
 namespace Wealth_Wizard.DisplayForms
 {
     public partial class ManageSubscriptionsForm : Form
     {
-        public List<int> selectedRowIdx = new List<int>();
+        private List<int> selectedRowIdx = new List<int>();
         public ManageSubscriptionsForm()
         {
             InitializeComponent();
@@ -47,8 +52,7 @@ namespace Wealth_Wizard.DisplayForms
 
 
         // Add new subscription to database
-        public void AddSubscriptionToDatabase(DateTime startDate, DateTime endDate, string entryType, string name, 
-            float amount, string billingCycle)
+        public void AddSubscriptionToDatabase(Subscription subscription) 
         {
             // In the future will move this to Subscriptions Handler
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
@@ -57,40 +61,60 @@ namespace Wealth_Wizard.DisplayForms
             string queryInsert = "INSERT INTO subscriptions VALUES(@start_date, @end_date, @type, @name, @amount, @billing_cycle)";
 
             SQLiteCommand cmd = new SQLiteCommand(queryInsert, con);
-            cmd.Parameters.AddWithValue("@start_date", startDate);
-            cmd.Parameters.AddWithValue("@end_date", endDate);
-            cmd.Parameters.AddWithValue("@type", entryType);
-            cmd.Parameters.AddWithValue("@name", name);
-            cmd.Parameters.AddWithValue("@amount", amount);
-            cmd.Parameters.AddWithValue("@billing_cycle", billingCycle);
+            cmd.Parameters.AddWithValue("@start_date", subscription._startDate);
+            cmd.Parameters.AddWithValue("@end_date", subscription._endDate);
+            cmd.Parameters.AddWithValue("@type", subscription._type);
+            cmd.Parameters.AddWithValue("@name", subscription._name);
+            cmd.Parameters.AddWithValue("@amount", subscription._amount);
+            cmd.Parameters.AddWithValue("@billing_cycle", subscription._billingCycle);
 
             cmd.ExecuteNonQuery();
 
             con.Close();
         }
 
-        public void DeleteSubscriptionOnDatabase(int rowIdx)
+        public void DeleteSubscriptionOnDatabase(Subscription sub)
         {
-            // Selected values for deletion
-            DataRow selectedRow = ((DataRowView)DataGridV_Subscriptions.Rows[rowIdx].DataBoundItem).Row;
-            Subscription selectedSub = new Subscription(selectedRow.Field<string>("Type"),
-               selectedRow.Field<string>("Name"),
-               (float)selectedRow.Field<double>("Amount"),
-               selectedRow.Field<string>("Billing Cycle"));
-
-
-            // Execute command on database
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
             con.Open();
 
             string queryDelete = "DELETE FROM subscriptions " +
-                "WHERE entry_type = @type AND name = @name AND amount = @amount AND billing_cycle = @cycle";
+                "WHERE entry_type = @type AND name = @name AND amount = @amount AND billing_cycle = @billing_cycle";
 
             SQLiteCommand cmd = new SQLiteCommand(queryDelete, con);
-            cmd.Parameters.AddWithValue("@type", selectedSub._type);
-            cmd.Parameters.AddWithValue("@name", selectedSub._name);
-            cmd.Parameters.AddWithValue("@amount", selectedSub._amount);
-            cmd.Parameters.AddWithValue("@cycle", selectedSub._billingCycle);
+            cmd.Parameters.AddWithValue("@type", sub._type);
+            cmd.Parameters.AddWithValue("@name", sub._name);
+            cmd.Parameters.AddWithValue("@amount", sub._amount);
+            cmd.Parameters.AddWithValue("@billing_cycle", sub._billingCycle);
+
+            cmd.ExecuteNonQuery();
+
+            con.Close();
+        }
+
+        public void EditSubscriptionOnDatabase(Subscription oldSub, Subscription newSub)
+        {
+            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
+            con.Open();
+
+            string queryUpdate = "UPDATE subscriptions " +
+                "SET start_date = @new_start_date, end_date = @new_end_date, entry_type = @new_type, name = @new_name, " +
+                "amount = @new_amount, billing_cycle = @new_billing_cycle " +
+                "WHERE entry_type = @old_type AND name = @old_name AND amount = @old_amount AND " +
+                "billing_cycle = @old_billing_cycle";
+
+            SQLiteCommand cmd = new SQLiteCommand(queryUpdate, con);
+            cmd.Parameters.AddWithValue("@new_start_date", newSub._startDate);
+            cmd.Parameters.AddWithValue("@new_end_date", newSub._endDate);
+            cmd.Parameters.AddWithValue("@new_type", newSub._type);
+            cmd.Parameters.AddWithValue("@new_name", newSub._name);
+            cmd.Parameters.AddWithValue("@new_amount", newSub._amount);
+            cmd.Parameters.AddWithValue("@new_billing_cycle", newSub._billingCycle);
+
+            cmd.Parameters.AddWithValue("@old_type", oldSub._type);
+            cmd.Parameters.AddWithValue("@old_name", oldSub._name);
+            cmd.Parameters.AddWithValue("@old_amount", oldSub._amount);
+            cmd.Parameters.AddWithValue("@old_billing_cycle", oldSub._billingCycle);
 
             cmd.ExecuteNonQuery();
 
@@ -109,15 +133,44 @@ namespace Wealth_Wizard.DisplayForms
                 MessageBox.Show("Subscription Name field is empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            AddSubscriptionToDatabase(DateT_StartDate.Value, DateT_EndDate.Value, ComboB_Type.Text, TxtB_EntryName.Text,
-                (float)NumTxtB_Amount.Value, ComboB_BillingCycle.Text);
+
+            Subscription newSub;
+            if (ChkB_HasEndDate.Checked)
+            {
+                newSub = new Subscription(DateT_StartDate.Value, DateT_EndDate.Value, ComboB_Type.Text, TxtB_EntryName.Text,
+                    (float)NumTxtB_Amount.Value, ComboB_BillingCycle.Text);
+            }
+            else
+            {
+                newSub = new Subscription(DateT_StartDate.Value, ComboB_Type.Text, TxtB_EntryName.Text,
+                    (float)NumTxtB_Amount.Value, ComboB_BillingCycle.Text);
+            }
+            
+            AddSubscriptionToDatabase(newSub);
 
             RefreshTable();
         }
 
         private void Btn_Edit_Click(object sender, EventArgs e)
         {
+            DataRow selectedRow = ((DataRowView)DataGridV_Subscriptions.Rows[selectedRowIdx[0]].DataBoundItem).Row;
 
+            Subscription selectedSub = new Subscription(selectedRow.Field<DateTime>("Start Date"),
+               selectedRow.Field<Nullable<DateTime>>("End Date"),
+               selectedRow.Field<string>("Type"),
+               selectedRow.Field<string>("Name"),
+               (float)selectedRow.Field<double>("Amount"),
+               selectedRow.Field<string>("Billing Cycle"));
+
+            EditSubscriptionForm editSubscriptionForm = new EditSubscriptionForm(selectedSub);
+            editSubscriptionForm.ShowDialog();
+
+            if (editSubscriptionForm.DialogResult == DialogResult.OK)
+            {
+                EditSubscriptionOnDatabase(selectedSub, editSubscriptionForm.subscription);
+            }
+
+            RefreshTable();
         }
 
         private void Btn_Delete_Click(object sender, EventArgs e)
@@ -125,7 +178,13 @@ namespace Wealth_Wizard.DisplayForms
             // Get selected value
             foreach (int idx in selectedRowIdx)
             {
-                DeleteSubscriptionOnDatabase(idx);
+                DataRow selectedRow = ((DataRowView)DataGridV_Subscriptions.Rows[idx].DataBoundItem).Row;
+                Subscription selectedSub = new Subscription(selectedRow.Field<string>("Type"),
+                   selectedRow.Field<string>("Name"),
+                   (float)selectedRow.Field<double>("Amount"),
+                   selectedRow.Field<string>("Billing Cycle"));
+
+                DeleteSubscriptionOnDatabase(selectedSub);
             }
             
             RefreshTable();

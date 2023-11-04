@@ -40,3 +40,4 @@ E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Threading.Tasks.Ext
 E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.ValueTuple.xml
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.HelperForms.InputMessageBox.resources
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.DisplayForms.ManageSubscriptionsForm.resources
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.HelperForms.EditSubscriptionForm.resources

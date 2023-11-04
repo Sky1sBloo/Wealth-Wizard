@@ -47,17 +47,17 @@
             this.Lbl_From = new System.Windows.Forms.Label();
             this.Lbl_To = new System.Windows.Forms.Label();
             this.Panel_Subscription = new System.Windows.Forms.Panel();
+            this.NumTxtB_Amount = new NumericTextBox();
             this.Panel_EndDate = new System.Windows.Forms.Panel();
             this.ChkB_HasEndDate = new System.Windows.Forms.CheckBox();
             this.Panel_FromDate = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.NumTxtB_Amount = new NumericTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Subscriptions)).BeginInit();
             this.Panel_Subscription.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_Amount)).BeginInit();
             this.Panel_EndDate.SuspendLayout();
             this.Panel_FromDate.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_Amount)).BeginInit();
             this.SuspendLayout();
             // 
             // Lbl_SubscriptionsDisplay
@@ -247,6 +247,19 @@
             this.Panel_Subscription.Size = new System.Drawing.Size(190, 140);
             this.Panel_Subscription.TabIndex = 21;
             // 
+            // NumTxtB_Amount
+            // 
+            this.NumTxtB_Amount.DecimalPlaces = 2;
+            this.NumTxtB_Amount.Location = new System.Drawing.Point(64, 57);
+            this.NumTxtB_Amount.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            0});
+            this.NumTxtB_Amount.Name = "NumTxtB_Amount";
+            this.NumTxtB_Amount.Size = new System.Drawing.Size(112, 20);
+            this.NumTxtB_Amount.TabIndex = 17;
+            // 
             // Panel_EndDate
             // 
             this.Panel_EndDate.Controls.Add(this.DateT_EndDate);
@@ -288,19 +301,6 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(196, 251);
             this.flowLayoutPanel1.TabIndex = 24;
             // 
-            // NumTxtB_Amount
-            // 
-            this.NumTxtB_Amount.DecimalPlaces = 2;
-            this.NumTxtB_Amount.Location = new System.Drawing.Point(64, 57);
-            this.NumTxtB_Amount.Maximum = new decimal(new int[] {
-            -1,
-            -1,
-            -1,
-            0});
-            this.NumTxtB_Amount.Name = "NumTxtB_Amount";
-            this.NumTxtB_Amount.Size = new System.Drawing.Size(112, 20);
-            this.NumTxtB_Amount.TabIndex = 17;
-            // 
             // ManageSubscriptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -311,16 +311,17 @@
             this.Controls.Add(this.DataGridV_Subscriptions);
             this.Controls.Add(this.Lbl_SubscriptionsDisplay);
             this.Name = "ManageSubscriptionsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Manage Subscriptions";
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Subscriptions)).EndInit();
             this.Panel_Subscription.ResumeLayout(false);
             this.Panel_Subscription.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_Amount)).EndInit();
             this.Panel_EndDate.ResumeLayout(false);
             this.Panel_EndDate.PerformLayout();
             this.Panel_FromDate.ResumeLayout(false);
             this.Panel_FromDate.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_Amount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
