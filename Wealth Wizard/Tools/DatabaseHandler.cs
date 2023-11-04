@@ -58,18 +58,18 @@ namespace Wealth_Wizard
                 "types VARCHAR(30) PRIMARY KEY NOT NULL)";
 
             string queryCreateSubscriptionsTable = "CREATE TABLE subscriptions(" +
-                "entry_date DATE NOT NULL, " +
+                "start_date DATE NOT NULL, " +
+                "end_date DATE, " +
                 "entry_type VARCHAR(30), " +
                 "name VARCHAR(30), " +
                 "amount FLOAT, " + 
                 "billing_cycle VARCHAR(30), " +
-                "PRIMARY KEY (entry_type, entry_type, name, amount), " +
+                "PRIMARY KEY (entry_type, name, amount, billing_cycle), " +
                 "FOREIGN KEY (entry_type) REFERENCES entry_type(types) ON DELETE SET NULL)";
 
-            // Create 3 tables: "entries", "entry_types", and "subscriptions"
             SQLiteCommand cmd = new SQLiteCommand(queryCreateEntryTypesTable, con);
             cmd.ExecuteNonQuery();
-
+            
             cmd = new SQLiteCommand(queryCreateEntriesTable, con);
             cmd.ExecuteNonQuery();
 
@@ -150,10 +150,9 @@ namespace Wealth_Wizard
             string columnQuery = "*";
             string querySelection = "SELECT COUNT(@columns) FROM " + tableName;
 
-            // This condition checks if the user wants to return a specific column
+            // Returns a specific column
             if (columns != null)
             {
-                // Get return columns
                 for (int i = 0; i < columns.Length; i++)
                 {
                     if (i == 0) columnQuery = columns[i];
