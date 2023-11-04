@@ -9,9 +9,14 @@ using System.Xml.Linq;
 
 namespace Wealth_Wizard
 {
+    /// <summary>
+    /// A utility class for managing SQLite databases and performing database operations.
+    /// </summary>
     public static class DatabaseHandler
     {
-        // In the future check if database location exists
+        /// <summary>
+        /// Location of the SQLite database file.
+        /// </summary>
         public static string databaseLocation;
 
         public static string[] defaultEntryTypes = {
@@ -34,7 +39,12 @@ namespace Wealth_Wizard
             "Yearly"
         };
 
-        // Creates a new database
+        /// <summary>
+        /// Creates a new SQLite database with the specified name and location.
+        /// </summary>
+        /// <param name="name">Name of the database.</param>
+        /// <param name="fileLocation">File location where the database will be created.</param>
+        /// <param name="openDatabase">Flag to load the database after creating.</param>
         public static void CreateDatabase(string name, string fileLocation, bool openDatabase = false)
         {
             SQLiteConnection.CreateFile(fileLocation + "\\" + name + ".wwiz");
@@ -88,7 +98,11 @@ namespace Wealth_Wizard
             con.Close();
         }
 
-        // Returns all the values from the specified table
+        /// <summary>
+        /// Retrieves all the values from a specified table and returns them in a DataTable.
+        /// </summary>
+        /// <param name="tableName">Name of the table to retrieve data from.</param>
+        /// <returns>A DataTable containing the retrieved data.</returns>
         public static DataTable GetAllValuesFromTable(string tableName)
         {
             // Result variable
@@ -108,9 +122,17 @@ namespace Wealth_Wizard
             return result;
         }
 
-        // Get values from the table that can be specified by columns and conditions
-        // Columns can be used like: column AS type
-        // Conditions are query based
+        /// <summary>
+        /// Retrieves specific values from a table based on columns and conditions and returns them in a DataTable.
+        /// </summary>
+        /// <param name="tableName">Name of the table to retrieve data from.</param>
+        /// <param name="columns">Array of columns to select (optional). 
+        /// You can create custom names of the column by {'column_name AS 'Column New Name'}
+        /// </param>
+        /// <param name="conditions">Conditions for filtering (optional).
+        /// Conditions are query based and are in SQL Langfuage
+        /// </param>
+        /// <returns>A DataTable containing the retrieved data.</returns>
         public static DataTable GetValuesFromTable(string tableName, string[] columns = null, string conditions = null)
         {
             string columnQuery = "*";
@@ -144,16 +166,20 @@ namespace Wealth_Wizard
             return dataTable;
         }
 
-        // Returns the number of count
+        /// <summary>
+        /// Retrieves the number of rows in a table based on columns and conditions.
+        /// </summary>
+        /// <param name="tableName">Name of the table to count rows from.</param>
+        /// <param name="columns">Array of columns to count (optional).</param>
+        /// <param name="conditions">Conditions for filtering (optional).</param>
+        /// <returns>The number of rows that meet the specified criteria.</returns>
         public static int GetNumberOfRowsOnTable(string tableName, string[] columns = null, string conditions = null)
         {
             string columnQuery = "*";
             string querySelection = "SELECT COUNT(@columns) FROM " + tableName;
 
-            // This condition checks if the user wants to return a specific column
             if (columns != null)
             {
-                // Get return columns
                 for (int i = 0; i < columns.Length; i++)
                 {
                     if (i == 0) columnQuery = columns[i];
@@ -161,17 +187,14 @@ namespace Wealth_Wizard
                 }
             }
 
-            // This condition checks if the user wants to add any conditions
             if (conditions != null)
             {
                 querySelection += "\r\n WHERE @conditions";
             }
 
-            // Open the database
             SQLiteConnection con = new SQLiteConnection(databaseLocation);
             con.Open();
 
-            // Create the command
             SQLiteCommand cmd = new SQLiteCommand(querySelection, con);
             cmd.Parameters.Add(new SQLiteParameter("@columns", columnQuery));
             cmd.Parameters.Add(new SQLiteParameter("@conditions", conditions));
@@ -182,7 +205,11 @@ namespace Wealth_Wizard
             return count;
         }
 
-        // Deletes selected items on table
+        /// <summary>
+        /// Deletes selected rows from a specified database table based on optional conditions.
+        /// </summary>
+        /// <param name="tableName">Name of the table from which rows will be deleted.</param>
+        /// <param name="conditions">Optional conditions for row deletion. If not specified, all rows in the table will be deleted.</param>
         public static void DeleteRowFromTable(string tableName, string conditions = null)
         {
             string deleteQuery = "DELETE * FROM @table_name";
@@ -191,11 +218,9 @@ namespace Wealth_Wizard
                 deleteQuery += " WHERE @conditions";
             }
 
-            // Open the database
             SQLiteConnection con = new SQLiteConnection(databaseLocation);
             con.Open();
 
-            // Create the delete command
             SQLiteCommand cmd = new SQLiteCommand(deleteQuery, con);
             cmd.Parameters.AddWithValue("@table_name", tableName);
             cmd.Parameters.AddWithValue("@conditions", conditions);

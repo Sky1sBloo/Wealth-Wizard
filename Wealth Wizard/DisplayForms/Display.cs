@@ -17,6 +17,9 @@ using Wealth_Wizard.DisplayForms;
 
 namespace Wealth_Wizard
 {
+    /// <summary>
+    /// The main form for displaying and managing entries and subscriptions in the Wealth Wizard application.
+    /// </summary>
     public partial class Display : Form
     {
         private List<int> entrySelectionRowIndex = new List<int>();
@@ -54,7 +57,10 @@ namespace Wealth_Wizard
             RefreshInformation(true);  // Refresh the page with all the information
         }
 
-        // Display purchases on the table with the filters
+        /// <summary>
+        /// Refreshes the information displayed on the form based on selected filters and settings.
+        /// </summary>
+        /// <param name="refreshDatabaseSettings">A flag indicating whether to refresh database settings. Use when loading a new database.</param>
         public void RefreshInformation(bool refreshDatabaseSettings = false)
         {
             // Display all subscriptions
@@ -97,7 +103,10 @@ namespace Wealth_Wizard
             }
         }
 
-        // Delete a database row
+        /// <summary>
+        /// Deletes a selected row from the entries table in the database.
+        /// </summary>
+        /// <param name="rowIndex">The index of the row to be deleted.</param>
         public void DeleteRowEntry(int rowIndex)
         {
             // Store selected row into variables
@@ -114,12 +123,18 @@ namespace Wealth_Wizard
         }
 
         // Events
+
+        /// <summary>
+        /// Handles the click event for the "Refresh" button.
+        /// </summary>
         private void RefreshBtn_Clicked(object sender, EventArgs e)
         {
             RefreshInformation();
         }
 
-        // Update the date time filters
+        /// <summary>
+        /// Sets the date-time filters based on the selected filter preset in the combo box.
+        /// </summary>
         private void _SetFilter(object sender, EventArgs e)
         {
             ComboBox filterPreset = (ComboBox)sender;
@@ -155,13 +170,17 @@ namespace Wealth_Wizard
             DatePick_FilterEndDate.Value = endDate;
         }
 
-        // Refresh the page
+        /// <summary>
+        /// Handles the event when the date is updated.
+        /// </summary>
         private void DateUpdated(object sender, EventArgs e)
         {
             RefreshInformation();
         }
 
-        // Add button click
+        /// <summary>
+        /// Handles the click event for the "Add Entry" button.
+        /// </summary>
         private void Btn_AddEntry_Click(object sender, EventArgs e)
         {
             // IN THE FUTURE, ENSURE THAT YOU CHECK IF SOME SPACES ARE BLANK
@@ -181,7 +200,9 @@ namespace Wealth_Wizard
             RefreshInformation();  // Refresh table
         }
 
-        // Edit entry
+        /// <summary>
+        /// Handles the click event for the "Edit Entry" button.
+        /// </summary>
         private void Btn_EditEntry_Click(object sender, EventArgs e)
         {
             // Get old values
@@ -208,7 +229,9 @@ namespace Wealth_Wizard
             RefreshInformation();
         }
 
-        // Delete selected row
+        /// <summary>
+        /// Handles the click event for the "Delete" button.
+        /// </summary>
         private void Btn_Delete_Click(object sender, EventArgs e)
         {
             DialogResult deleteChoice = MessageBox.Show("Would you want to delete " + entrySelectionRowIndex.Count.ToString() + " enties?", "Warning",
@@ -225,17 +248,24 @@ namespace Wealth_Wizard
             RefreshInformation();
         }
 
-        // Alternate between expenses and income
+        /// <summary>
+        /// Handles the CheckedChanged event for the "Expenses" checkbox.
+        /// </summary>
         private void ChkB_Expenses_CheckedChanged(object sender, EventArgs e)
         {
             ChkB_Income.Checked = !ChkB_Expenses.Checked;
         }
+        /// <summary>
+        /// Handles the CheckedChanged event for the "Income" checkbox.
+        /// </summary>
         private void ChkB_Income_CheckedChanged(object sender, EventArgs e)
         {
             ChkB_Expenses.Checked = !ChkB_Income.Checked;
         }
 
-        // Updates the row of the current selection
+        /// <summary>
+        /// Updates the row of the current selection in the DataGridV_Display.
+        /// </summary>
         private void SetCurrentSelection(object sender, EventArgs e)
         {
             if (DataGridV_Display.CurrentCell == null) return;
@@ -247,12 +277,17 @@ namespace Wealth_Wizard
             }
         }
 
+        /// <summary>
+        /// Handles the SelectedValueChanged event for the "Filter Type" combo box.
+        /// </summary>
         private void ComboB_FilterType_SelectedValueChanged(object sender, EventArgs e)
         {
             selectedFilterType = ComboB_FilterType.SelectedItem.ToString();
         }
 
-        // Menu Items
+        /// <summary>
+        /// Handles the click event for the "Preferences" menu item.
+        /// </summary>
         private void PreferencesMenu_Click(object sender, EventArgs e)
         {
             // Opens the preference window
@@ -262,6 +297,9 @@ namespace Wealth_Wizard
             RefreshInformation(true);
         }
 
+        /// <summary>
+        /// Handles the click event for the "Open Database" menu item.
+        /// </summary>
         private void OpenDatabaseMenu_Click(object sender, EventArgs e)
         {
             OpenFileDialog databaseDialog = new OpenFileDialog();
@@ -275,6 +313,9 @@ namespace Wealth_Wizard
             RefreshInformation(true);  // Refresh the page
         }
 
+        /// <summary>
+        /// Handles the click event for the "New Database" menu item.
+        /// </summary>
         private void NewDatabaseMenu_Click(object sender, EventArgs e)
         {
             NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
@@ -283,7 +324,9 @@ namespace Wealth_Wizard
             RefreshInformation(true);  // Refresh the page
         }
 
-        // Opens subscription
+        /// <summary>
+        /// Handles the click event for the "Manage Subscriptions" menu item.
+        /// </summary>
         private void ManageSubscriptions_Click(object sender, EventArgs e)
         {
             ManageSubscriptionsForm subscriptionsForm = new ManageSubscriptionsForm();

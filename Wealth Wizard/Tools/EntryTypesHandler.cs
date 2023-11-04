@@ -8,10 +8,14 @@ using System.Threading.Tasks;
 
 namespace Wealth_Wizard.Tools
 {
+    /// <summary>
+    /// Provides methods for managing entry types in the Wealth Wizard application.
+    /// </summary>
     public class EntryTypesHandler
     {
-        // Entry types
-        // Returns all entry type names
+        /// <summary>
+        /// Returns a list of all available entry type names.
+        /// </summary>
         public static List<string> GetEntryTypes()
         {
             List<string> entryTypes = new List<string>();
@@ -24,7 +28,10 @@ namespace Wealth_Wizard.Tools
             return entryTypes;
         }
 
-        // Adds a new entry type
+        /// <summary>
+        /// Adds a new entry type to the database.
+        /// </summary>
+        /// <param name="newType">The name of the new entry type to be added.</param>
         public static void AddEntryType(string newType)
         {
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
@@ -39,7 +46,11 @@ namespace Wealth_Wizard.Tools
             con.Close();
         }
 
-        // Edits an entry type
+        /// <summary>
+        /// Updates the name of an existing entry type in the database.
+        /// </summary>
+        /// <param name="selectedType">The current name of the entry type to be updated.</param>
+        /// <param name="newType">The new name for the entry type.</param>
         public static void UpdateEntryType(string selectedType, string newType)
         {
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
@@ -57,7 +68,10 @@ namespace Wealth_Wizard.Tools
             con.Close();
         }
 
-        // Deletes the specific entry type on the database
+        /// <summary>
+        /// Deletes a specific entry type from the database.
+        /// </summary>
+        /// <param name="type">The name of the entry type to be deleted.</param>
         public static void DeleteEntryTypes(string type)
         {
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);

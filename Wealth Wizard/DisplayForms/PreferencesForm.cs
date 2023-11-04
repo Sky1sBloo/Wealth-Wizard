@@ -23,6 +23,9 @@ namespace Wealth_Wizard
             LoadPreferences();
         }
 
+        /// <summary>
+        /// Loads and initializes the available entry types into a list box.
+        /// </summary>
         public void LoadComboBoxTypes()
         {
             ListB_EntryTypes.Items.Clear();
@@ -33,7 +36,9 @@ namespace Wealth_Wizard
             }
         }
 
-        // Save preferences from json
+        /// <summary>
+        /// Saves user preferences to a JSON file.
+        /// </summary>
         public void SavePreferences()
         {
             preferences.defaultDatabase = @"data source=" + TxtB_DefaultDatabase.Text;
@@ -41,14 +46,18 @@ namespace Wealth_Wizard
             PreferencesHandler.SavePreferences(preferences);
         }
 
-        // Load preferences from json
+        /// <summary>
+        /// Loads user preferences from a JSON file and updates the form controls accordingly.
+        /// </summary>
         public void LoadPreferences()
         {
             preferences = PreferencesHandler.LoadPreferences();
             TxtB_DefaultDatabase.Text = preferences.defaultDatabase.Replace(@"data source=", "");
         }
 
-        // Selected the default database
+        /// <summary>
+        /// Handles the event when the "Browse Database" button is clicked to select the default database file.
+        /// </summary>
         private void Btn_BrowseDatabase_Click(object sender, EventArgs e)
         {
             OpenFileDialog defaultDatabaseDialog = new OpenFileDialog();
@@ -62,7 +71,9 @@ namespace Wealth_Wizard
         }
 
         // Entry types
-        // Adds a new entry type
+        /// <summary>
+        /// Adds a new entry type to the list of available entry types.
+        /// </summary>
         private void Btn_AddEntryType_Click(object sender, EventArgs e)
         {
             // Opens a dialogue box that receives a text value
@@ -75,7 +86,9 @@ namespace Wealth_Wizard
             LoadComboBoxTypes();
         }
 
-        // Updates an entry type
+        /// <summary>
+        /// Updates an existing entry type in the list of available entry types.
+        /// </summary>
         private void Btn_EditEntryType_Click(object sender, EventArgs e)
         {
             // Opens a dialogue box that receives a text value
@@ -91,6 +104,9 @@ namespace Wealth_Wizard
             LoadComboBoxTypes();
         }
 
+        /// <summary>
+        /// Deletes the selected entry type from the list of available entry types.
+        /// </summary>
         private void Btn_DeleteEntryType_Click(object sender, EventArgs e)
         {
             EntryTypesHandler.DeleteEntryTypes(ListB_EntryTypes.GetItemText(ListB_EntryTypes.SelectedItem));
@@ -117,7 +133,5 @@ namespace Wealth_Wizard
             
             Close();
         }
-
-        
     }
 }
