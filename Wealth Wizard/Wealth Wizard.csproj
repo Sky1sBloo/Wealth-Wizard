@@ -150,6 +150,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\PreferencesHandler.cs" />
     <Compile Include="Tools\Subscription.cs" />
+    <Compile Include="Tools\SubscriptionsHandler.cs" />
     <EmbeddedResource Include="DisplayForms\Display.resx">
       <DependentUpon>Display.cs</DependentUpon>
     </EmbeddedResource>
