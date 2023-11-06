@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Wealth_Wizard.Handlers
 {
@@ -57,6 +58,13 @@ namespace Wealth_Wizard.Handlers
             try
             {
                 insertToDb.ExecuteNonQuery();
+            }
+            catch (SQLiteException)
+            {
+                DialogResult existingEntryError = MessageBox.Show("Entry matches an existing entry", 
+                    "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
             }
             catch (Exception ex)
             {

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Wealth_Wizard.Handlers
 {
@@ -41,7 +42,17 @@ namespace Wealth_Wizard.Handlers
             SQLiteCommand cmd = new SQLiteCommand(queryAdd, con);
             cmd.Parameters.AddWithValue("@entry_type", newType);
 
-            cmd.ExecuteNonQuery();
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (SQLiteException)
+            {
+                DialogResult existingEntryError = MessageBox.Show("Entry matches an existing type",
+                    "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
 
             con.Close();
         }
