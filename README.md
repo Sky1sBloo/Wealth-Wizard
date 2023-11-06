@@ -1,2 +1,2 @@
 # Wealth-Wizard
-Wealth Wizard is a Finance Tracker APP that uses SQLite3 as its database.
+Wealth Wizard is a Finance Tracker app that uses SQLite3 as its database.
