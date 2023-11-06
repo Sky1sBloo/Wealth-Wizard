@@ -280,6 +280,8 @@ namespace Wealth_Wizard
         {
             ManageSubscriptionsForm subscriptionsForm = new ManageSubscriptionsForm();
             subscriptionsForm.ShowDialog();
+
+            RefreshInformation(true);
         }
     }
 }

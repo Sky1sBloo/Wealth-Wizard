@@ -18,9 +18,17 @@ using Wealth_Wizard.Tools;
 
 namespace Wealth_Wizard.DisplayForms
 {
+    // NOTE TO FUTURE, DOUBLE CHECK DOCUMENTATION SINCE I COPIED THIS FROM CHATGPT
+    /// <summary>
+    /// This form lets you manage your subscriptions
+    /// </summary>
     public partial class ManageSubscriptionsForm : Form
     {
         private List<int> selectedRowIdx = new List<int>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ManageSubscriptionsForm"/> class.
+        /// </summary>
         public ManageSubscriptionsForm()
         {
             InitializeComponent();
@@ -43,6 +51,9 @@ namespace Wealth_Wizard.DisplayForms
             ComboB_BillingCycle.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Refreshes the data grid view with subscription data from the database.
+        /// </summary>
         public void RefreshTable()
         {
             string[] columns = { "start_date AS 'Start Date'", "end_date AS 'End Date'", "entry_type AS 'Type'", "name AS 'Name'",
@@ -51,7 +62,10 @@ namespace Wealth_Wizard.DisplayForms
         }
 
 
-        // Add new subscription to database
+        /// <summary>
+        /// Adds a new subscription to the subscriptions database.
+        /// </summary>
+        /// <param name="subscription">The subscription to be added.</param>
         public void AddSubscriptionToDatabase(Subscription subscription) 
         {
             // In the future will move this to Subscriptions Handler
@@ -73,6 +87,10 @@ namespace Wealth_Wizard.DisplayForms
             con.Close();
         }
 
+        /// <summary>
+        /// Deletes a subscription from the subscriptions database.
+        /// </summary>
+        /// <param name="sub">The subscription to be deleted.</param>
         public void DeleteSubscriptionOnDatabase(Subscription sub)
         {
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
@@ -92,6 +110,11 @@ namespace Wealth_Wizard.DisplayForms
             con.Close();
         }
 
+        /// <summary>
+        /// Edits a subscription in the subscriptions database.
+        /// </summary>
+        /// <param name="oldSub">The old subscription to be replaced.</param>
+        /// <param name="newSub">The new subscription to replace the old one.</param>
         public void EditSubscriptionOnDatabase(Subscription oldSub, Subscription newSub)
         {
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
