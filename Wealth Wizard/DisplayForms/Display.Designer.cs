@@ -91,6 +91,7 @@
             this.DataGridV_Display.AllowUserToDeleteRows = false;
             this.DataGridV_Display.AllowUserToResizeRows = false;
             this.DataGridV_Display.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DataGridV_Display.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.DataGridV_Display.Location = new System.Drawing.Point(258, 95);
             this.DataGridV_Display.Name = "DataGridV_Display";
             this.DataGridV_Display.ReadOnly = true;
@@ -509,6 +510,7 @@
             this.DataGridV_Subscriptions.AllowUserToDeleteRows = false;
             this.DataGridV_Subscriptions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DataGridV_Subscriptions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridV_Subscriptions.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.DataGridV_Subscriptions.Location = new System.Drawing.Point(9, 42);
             this.DataGridV_Subscriptions.Name = "DataGridV_Subscriptions";
             this.DataGridV_Subscriptions.Size = new System.Drawing.Size(219, 152);
