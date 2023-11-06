@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wealth_Wizard.Tools
+namespace Wealth_Wizard.Handlers
 {
     /// <summary>
     /// Class for setting and retrieving entries on the database

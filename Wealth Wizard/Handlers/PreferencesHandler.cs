@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Wealth_Wizard.Tools
+namespace Wealth_Wizard.Handlers
 {
     /// <summary>
     /// Class that manages the preferences

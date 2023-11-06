@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SQLite;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Xml.Linq;
-using Wealth_Wizard.Tools;
+using Wealth_Wizard.Handlers;
+using Wealth_Wizard.HelperForms;
 using Wealth_Wizard.DisplayForms;
 
 namespace Wealth_Wizard

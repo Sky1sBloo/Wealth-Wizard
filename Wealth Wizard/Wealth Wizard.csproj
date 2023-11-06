@@ -114,10 +114,10 @@
     <Compile Include="HelperForms\InputMessageBox.Designer.cs">
       <DependentUpon>InputMessageBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tools\EntriesHandler.cs" />
-    <Compile Include="Tools\EntryTypesHandler.cs" />
-    <Compile Include="Tools\Preferences.cs" />
-    <Compile Include="Tools\DatabaseHandler.cs" />
+    <Compile Include="Handlers\EntriesHandler.cs" />
+    <Compile Include="Handlers\EntryTypesHandler.cs" />
+    <Compile Include="Tables\Preferences.cs" />
+    <Compile Include="Handlers\DatabaseHandler.cs" />
     <Compile Include="DisplayForms\Display.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,7 +130,7 @@
     <Compile Include="HelperForms\EditEntryForm.Designer.cs">
       <DependentUpon>EditEntryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tools\Entry.cs" />
+    <Compile Include="Tables\Entry.cs" />
     <Compile Include="HelperForms\NewDatabaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,8 +148,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\PreferencesHandler.cs" />
-    <Compile Include="Tools\Subscription.cs" />
+    <Compile Include="Handlers\PreferencesHandler.cs" />
+    <Compile Include="Tables\Subscription.cs" />
     <EmbeddedResource Include="DisplayForms\Display.resx">
       <DependentUpon>Display.cs</DependentUpon>
     </EmbeddedResource>

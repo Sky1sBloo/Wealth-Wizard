@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wealth_Wizard.Tools
+namespace Wealth_Wizard
 {
     /// <summary>
     /// Class that can store subscriptions from the database

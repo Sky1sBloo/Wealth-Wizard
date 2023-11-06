@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Wealth_Wizard
+namespace Wealth_Wizard.Handlers
 {
     /// <summary>
     /// A utility class for managing SQLite databases and performing database operations.
