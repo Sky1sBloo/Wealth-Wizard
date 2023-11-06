@@ -102,6 +102,7 @@
     <Compile Include="DisplayForms\ManageSubscriptionsForm.Designer.cs">
       <DependentUpon>ManageSubscriptionsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\SubscriptionsHandler.cs" />
     <Compile Include="HelperForms\EditSubscriptionForm.cs">
       <SubType>Form</SubType>
     </Compile>

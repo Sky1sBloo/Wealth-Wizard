@@ -61,89 +61,6 @@ namespace Wealth_Wizard.DisplayForms
             DataGridV_Subscriptions.DataSource = DatabaseHandler.GetValuesFromTable("subscriptions", columns);
         }
 
-
-        /// <summary>
-        /// Adds a new subscription to the subscriptions database.
-        /// </summary>
-        /// <param name="subscription">The subscription to be added.</param>
-        public void AddSubscriptionToDatabase(Subscription subscription) 
-        {
-            // In the future will move this to Subscriptions Handler
-            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
-            con.Open();
-
-            string queryInsert = "INSERT INTO subscriptions VALUES(@start_date, @end_date, @type, @name, @amount, @billing_cycle)";
-
-            SQLiteCommand cmd = new SQLiteCommand(queryInsert, con);
-            cmd.Parameters.AddWithValue("@start_date", subscription._startDate);
-            cmd.Parameters.AddWithValue("@end_date", subscription._endDate);
-            cmd.Parameters.AddWithValue("@type", subscription._type);
-            cmd.Parameters.AddWithValue("@name", subscription._name);
-            cmd.Parameters.AddWithValue("@amount", subscription._amount);
-            cmd.Parameters.AddWithValue("@billing_cycle", subscription._billingCycle);
-
-            cmd.ExecuteNonQuery();
-
-            con.Close();
-        }
-
-        /// <summary>
-        /// Deletes a subscription from the subscriptions database.
-        /// </summary>
-        /// <param name="sub">The subscription to be deleted.</param>
-        public void DeleteSubscriptionOnDatabase(Subscription sub)
-        {
-            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
-            con.Open();
-
-            string queryDelete = "DELETE FROM subscriptions " +
-                "WHERE entry_type = @type AND name = @name AND amount = @amount AND billing_cycle = @billing_cycle";
-
-            SQLiteCommand cmd = new SQLiteCommand(queryDelete, con);
-            cmd.Parameters.AddWithValue("@type", sub._type);
-            cmd.Parameters.AddWithValue("@name", sub._name);
-            cmd.Parameters.AddWithValue("@amount", sub._amount);
-            cmd.Parameters.AddWithValue("@billing_cycle", sub._billingCycle);
-
-            cmd.ExecuteNonQuery();
-
-            con.Close();
-        }
-
-        /// <summary>
-        /// Edits a subscription in the subscriptions database.
-        /// </summary>
-        /// <param name="oldSub">The old subscription to be replaced.</param>
-        /// <param name="newSub">The new subscription to replace the old one.</param>
-        public void EditSubscriptionOnDatabase(Subscription oldSub, Subscription newSub)
-        {
-            SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
-            con.Open();
-
-            string queryUpdate = "UPDATE subscriptions " +
-                "SET start_date = @new_start_date, end_date = @new_end_date, entry_type = @new_type, name = @new_name, " +
-                "amount = @new_amount, billing_cycle = @new_billing_cycle " +
-                "WHERE entry_type = @old_type AND name = @old_name AND amount = @old_amount AND " +
-                "billing_cycle = @old_billing_cycle";
-
-            SQLiteCommand cmd = new SQLiteCommand(queryUpdate, con);
-            cmd.Parameters.AddWithValue("@new_start_date", newSub._startDate);
-            cmd.Parameters.AddWithValue("@new_end_date", newSub._endDate);
-            cmd.Parameters.AddWithValue("@new_type", newSub._type);
-            cmd.Parameters.AddWithValue("@new_name", newSub._name);
-            cmd.Parameters.AddWithValue("@new_amount", newSub._amount);
-            cmd.Parameters.AddWithValue("@new_billing_cycle", newSub._billingCycle);
-
-            cmd.Parameters.AddWithValue("@old_type", oldSub._type);
-            cmd.Parameters.AddWithValue("@old_name", oldSub._name);
-            cmd.Parameters.AddWithValue("@old_amount", oldSub._amount);
-            cmd.Parameters.AddWithValue("@old_billing_cycle", oldSub._billingCycle);
-
-            cmd.ExecuteNonQuery();
-
-            con.Close();
-        }
-
         // Events
         // Subscription buttons events
 
@@ -169,7 +86,7 @@ namespace Wealth_Wizard.DisplayForms
                     (float)NumTxtB_Amount.Value, ComboB_BillingCycle.Text);
             }
             
-            AddSubscriptionToDatabase(newSub);
+            SubscriptionsHandler.AddNewSubscription(newSub);
 
             RefreshTable();
         }
@@ -190,7 +107,7 @@ namespace Wealth_Wizard.DisplayForms
 
             if (editSubscriptionForm.DialogResult == DialogResult.OK)
             {
-                EditSubscriptionOnDatabase(selectedSub, editSubscriptionForm.subscription);
+                SubscriptionsHandler.EditSubscription(selectedSub, editSubscriptionForm.subscription);
             }
 
             RefreshTable();
@@ -207,7 +124,7 @@ namespace Wealth_Wizard.DisplayForms
                    (float)selectedRow.Field<double>("Amount"),
                    selectedRow.Field<string>("Billing Cycle"));
 
-                DeleteSubscriptionOnDatabase(selectedSub);
+                SubscriptionsHandler.DeleteSubscription(selectedSub);
             }
             
             RefreshTable();
