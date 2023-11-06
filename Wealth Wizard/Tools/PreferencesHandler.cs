@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Wealth_Wizard.Tools
 {
+    /// <summary>
+    /// Class that manages the preferences
+    /// </summary>
     public static class PreferencesHandler
     {
         public static void SavePreferences(Preferences preferences)

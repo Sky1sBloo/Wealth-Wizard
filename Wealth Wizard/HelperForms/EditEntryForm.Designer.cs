@@ -1,6 +1,6 @@
 ﻿namespace Wealth_Wizard
 {
-    partial class EditEntry
+    partial class EditEntryForm
     {
         /// <summary>
         /// Required designer variable.
@@ -149,18 +149,23 @@
             // 
             // NumTxtB_EntryAmount
             // 
-            this.NumTxtB_EntryAmount.DecimalPlaces = 6;
+            this.NumTxtB_EntryAmount.DecimalPlaces = 2;
             this.NumTxtB_EntryAmount.Increment = new decimal(new int[] {
             1,
             0,
             0,
             327680});
             this.NumTxtB_EntryAmount.Location = new System.Drawing.Point(66, 87);
+            this.NumTxtB_EntryAmount.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            0});
             this.NumTxtB_EntryAmount.Name = "NumTxtB_EntryAmount";
             this.NumTxtB_EntryAmount.Size = new System.Drawing.Size(120, 20);
             this.NumTxtB_EntryAmount.TabIndex = 12;
             // 
-            // EditEntry
+            // EditEntryForm
             // 
             this.AcceptButton = this.Btn_Apply;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -179,7 +184,7 @@
             this.Controls.Add(this.Lbl_Type);
             this.Controls.Add(this.DateT_Date);
             this.Controls.Add(this.Lbl_Date);
-            this.Name = "EditEntry";
+            this.Name = "EditEntryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit Entry";
             ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).EndInit();

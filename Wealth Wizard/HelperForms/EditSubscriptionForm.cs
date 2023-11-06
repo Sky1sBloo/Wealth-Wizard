@@ -11,6 +11,9 @@ using Wealth_Wizard.Tools;
 
 namespace Wealth_Wizard.HelperForms
 {
+    /// <summary>
+    /// Form that opens a window to edit subscriptions
+    /// </summary>
     public partial class EditSubscriptionForm : Form
     {
         public Subscription subscription;

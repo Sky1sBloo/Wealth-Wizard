@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Wealth_Wizard
 {
+    /// <summary>
+    /// Class that can hold information of entries from the database
+    /// </summary>
     public class Entry
     {
         public DateTime _date { get; private set; }

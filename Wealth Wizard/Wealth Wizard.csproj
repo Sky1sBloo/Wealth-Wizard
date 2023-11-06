@@ -124,11 +124,11 @@
     <Compile Include="DisplayForms\Display.Designer.cs">
       <DependentUpon>Display.cs</DependentUpon>
     </Compile>
-    <Compile Include="HelperForms\EditEntry.cs">
+    <Compile Include="HelperForms\EditEntryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HelperForms\EditEntry.Designer.cs">
-      <DependentUpon>EditEntry.cs</DependentUpon>
+    <Compile Include="HelperForms\EditEntryForm.Designer.cs">
+      <DependentUpon>EditEntryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Tools\Entry.cs" />
     <Compile Include="HelperForms\NewDatabaseForm.cs">
@@ -162,8 +162,8 @@
     <EmbeddedResource Include="HelperForms\InputMessageBox.resx">
       <DependentUpon>InputMessageBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HelperForms\EditEntry.resx">
-      <DependentUpon>EditEntry.cs</DependentUpon>
+    <EmbeddedResource Include="HelperForms\EditEntryForm.resx">
+      <DependentUpon>EditEntryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HelperForms\NewDatabaseForm.resx">
       <DependentUpon>NewDatabaseForm.cs</DependentUpon>

@@ -38,7 +38,6 @@ namespace Wealth_Wizard
             }
             else
             {
-                // File location doesn't exist promt the user to create a new database to set it to default
                 NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
 
                 if (newDatabaseForm.ShowDialog() != DialogResult.OK)
@@ -80,10 +79,8 @@ namespace Wealth_Wizard
             // Usually used when loading a new database
             if (refreshDatabaseSettings)
             {
-                // Set Database Information
                 Lbl_DatabaseName.Text = Path.GetFileName(DatabaseHandler.databaseLocation);
 
-                // Set combo boxes items
                 ComboB_EntryType.Items.Clear();
                 ComboB_FilterType.Items.Clear();
                 foreach (string entryType in EntryTypesHandler.GetEntryTypes())
@@ -94,13 +91,51 @@ namespace Wealth_Wizard
 
                 ComboB_FilterType.Items.Add("All");
 
-                // Set the default values of the combo boxes
-                // Initialize defaults
                 ComboB_FilterPreset.SelectedIndex = 0;
 
                 ComboB_FilterType.SelectedIndex = ComboB_FilterType.Items.Count - 1;
                 if (ComboB_EntryType.Items.Count != 0) ComboB_EntryType.SelectedIndex = 0;
             }
+        }
+
+        /// <summary>
+        /// Checks if all add entry fields are completed
+        /// </summary>
+        public bool IsEntryDataUploadable(Entry entry)
+        {
+            // Check if some of the input fields are empty
+            if (entry._name == "")
+            {
+                MessageBox.Show("Add Entry Error, 'Name' field is empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Edits the entry based on selection on table
+        /// </summary>
+        public void EditEntry()
+        {
+            // Get old values
+            DataRow selectedRow = ((DataRowView)DataGridV_Display.Rows[entrySelectionRowIndex[0]].DataBoundItem).Row;
+            Entry selectedEntry = new Entry(selectedRow.Field<DateTime>("Date"),
+                selectedRow.Field<string>("Type"),
+                selectedRow.Field<string>("Name"),
+                (float)selectedRow.Field<double>("Amount"));
+
+            EditEntryForm editEntryForm = new EditEntryForm(selectedEntry);
+            editEntryForm.ShowDialog();
+
+            if (editEntryForm.DialogResult == DialogResult.OK)
+            {
+                Entry newEntry = editEntryForm.GetEntryValues();
+
+                EntriesHandler.EditEntry(selectedEntry, newEntry);
+            }
+
+            RefreshInformation();
         }
 
         /// <summary>
@@ -183,21 +218,15 @@ namespace Wealth_Wizard
         /// </summary>
         private void Btn_AddEntry_Click(object sender, EventArgs e)
         {
-            // IN THE FUTURE, ENSURE THAT YOU CHECK IF SOME SPACES ARE BLANK
-            // Check if some of the input fields are empty
-            if (TxtB_EntryName.Text == "")
-            {
-                MessageBox.Show("Add Entry Error, 'Name' field is empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // Logic for expenses or income
             float finalAmount = (float)NumTxtB_EntryAmount.Value;
             if (ChkB_Expenses.Checked) finalAmount *= -1;
 
             Entry newEntry = new Entry(DatePick_EntryDate.Value, ComboB_EntryType.Text, TxtB_EntryName.Text, finalAmount);
+
+            if (!IsEntryDataUploadable(newEntry)) return;
+
             EntriesHandler.AddNewEntry(newEntry);
-            RefreshInformation();  // Refresh table
+            RefreshInformation();
         }
 
         /// <summary>
@@ -205,28 +234,7 @@ namespace Wealth_Wizard
         /// </summary>
         private void Btn_EditEntry_Click(object sender, EventArgs e)
         {
-            // Get old values
-            DataRow selectedRow = ((DataRowView)DataGridV_Display.Rows[entrySelectionRowIndex[0]].DataBoundItem).Row;
-            Entry selectedEntry = new Entry(selectedRow.Field<DateTime>("Date"),
-                selectedRow.Field<string>("Type"),
-                selectedRow.Field<string>("Name"),
-                (float)selectedRow.Field<double>("Amount"));
-
-            EditEntry editEntryForm = new EditEntry(selectedEntry);
-            editEntryForm.ShowDialog();
-
-            // Check if the entry is accepted
-            if (editEntryForm.DialogResult == DialogResult.OK)
-            {
-                // Store new values
-                Entry newEntry = editEntryForm.GetEntryValues();
-
-                // Edit the database
-                EntriesHandler.EditEntry(selectedEntry, newEntry);
-            }
-
-            // Refresh the table
-            RefreshInformation();
+            EditEntry();
         }
 
         /// <summary>
@@ -285,9 +293,6 @@ namespace Wealth_Wizard
             selectedFilterType = ComboB_FilterType.SelectedItem.ToString();
         }
 
-        /// <summary>
-        /// Handles the click event for the "Preferences" menu item.
-        /// </summary>
         private void PreferencesMenu_Click(object sender, EventArgs e)
         {
             // Opens the preference window
@@ -297,9 +302,6 @@ namespace Wealth_Wizard
             RefreshInformation(true);
         }
 
-        /// <summary>
-        /// Handles the click event for the "Open Database" menu item.
-        /// </summary>
         private void OpenDatabaseMenu_Click(object sender, EventArgs e)
         {
             OpenFileDialog databaseDialog = new OpenFileDialog();
@@ -313,15 +315,29 @@ namespace Wealth_Wizard
             RefreshInformation(true);  // Refresh the page
         }
 
-        /// <summary>
-        /// Handles the click event for the "New Database" menu item.
-        /// </summary>
         private void NewDatabaseMenu_Click(object sender, EventArgs e)
         {
             NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
             newDatabaseForm.ShowDialog();
 
-            RefreshInformation(true);  // Refresh the page
+            RefreshInformation(true); 
+        }
+
+        private void NewEntryMenu_Click(object sender, EventArgs e)
+        {
+            EditEntryForm editEntryForm = new EditEntryForm();
+            editEntryForm.ShowDialog();
+
+            if (editEntryForm.DialogResult == DialogResult.Cancel) return;
+            
+            Entry newEntry = editEntryForm.GetEntryValues();
+            EntriesHandler.AddNewEntry(newEntry);
+            RefreshInformation();
+        }
+
+        private void EditEntryMenu_Click(object sender, EventArgs e)
+        {
+            EditEntry();
         }
 
         /// <summary>

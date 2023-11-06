@@ -17,7 +17,6 @@ E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth Wizard.csproj.CoreC
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth Wizard.csproj.CopyComplete
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth Wizard.exe
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth Wizard.pdb
-E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.EditEntry.resources
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.PreferencesForm.resources
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.NewDatabaseForm.resources
 E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
@@ -41,3 +40,4 @@ E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.ValueTuple.xml
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.HelperForms.InputMessageBox.resources
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.DisplayForms.ManageSubscriptionsForm.resources
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.HelperForms.EditSubscriptionForm.resources
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.EditEntryForm.resources

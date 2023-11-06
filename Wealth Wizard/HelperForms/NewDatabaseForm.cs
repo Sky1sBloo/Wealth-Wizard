@@ -11,6 +11,9 @@ using System.Windows.Forms;
 
 namespace Wealth_Wizard
 {
+    /// <summary>
+    /// Form for creating a new database
+    /// </summary>
     public partial class NewDatabaseForm : Form
     {
         public NewDatabaseForm()

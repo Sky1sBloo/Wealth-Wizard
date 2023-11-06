@@ -12,13 +12,21 @@ using Wealth_Wizard.Tools;
 
 namespace Wealth_Wizard
 {
-    public partial class EditEntry : Form
+    /// <summary>
+    /// Form that creates the edit entry
+    /// </summary>
+    public partial class EditEntryForm : Form
     {
-        public EditEntry(Entry defaultValues)
+        /// <summary>
+        /// Initialize edit entry form with default values
+        /// Generally used for editing entries
+        /// </summary>
+        /// <param name="defaultValues"></param>
+        public EditEntryForm(Entry defaultValues)
         {
             InitializeComponent();
 
-            // Initialize tpye
+            // Initialize type
             foreach (string type in EntryTypesHandler.GetEntryTypes())
             {
                 ComboB_Types.Items.Add(type);
@@ -33,6 +41,19 @@ namespace Wealth_Wizard
             ChkB_Income.Checked = defaultValues._amount >= 0;
 
             NumTxtB_EntryAmount.Value = Math.Abs((decimal)defaultValues._amount);
+        }
+
+        /// <summary>
+        /// Constructor for entry forms
+        /// </summary>
+        public EditEntryForm()
+        {
+            InitializeComponent();
+
+            foreach (string type in EntryTypesHandler.GetEntryTypes())
+            {
+                ComboB_Types.Items.Add(type);
+            }
         }
 
         // Setters and getters

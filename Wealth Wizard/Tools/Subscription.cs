@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Wealth_Wizard.Tools
 {
+    /// <summary>
+    /// Class that can store subscriptions from the database
+    /// </summary>
     public class Subscription
     {
         public DateTime _startDate { get; private set; }

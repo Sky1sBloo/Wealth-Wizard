@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Wealth_Wizard.Tools
 {
     /// <summary>
-    /// Provides methods for managing entry types in the Wealth Wizard application.
+    /// Provides methods for setting and retrieving entry types
     /// </summary>
     public class EntryTypesHandler
     {

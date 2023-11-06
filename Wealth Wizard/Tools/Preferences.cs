@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Wealth_Wizard
 {
+    /// <summary>
+    /// Class that contains all preferences
+    /// </summary>
     public class Preferences
     {
         public string defaultDatabase { get; set; }
