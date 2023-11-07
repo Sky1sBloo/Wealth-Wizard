@@ -50,6 +50,8 @@ namespace Wealth_Wizard
                 // Save into preferences
                 Settings.Default.DefaultDatabase = DatabaseHandler.databaseLocation;
             }
+            
+
 
             RefreshInformation(true);  // Refresh the page with all the information
         }

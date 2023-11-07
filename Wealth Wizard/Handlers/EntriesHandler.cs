@@ -121,5 +121,13 @@ namespace Wealth_Wizard.Handlers
 
             con.Close();
         }
+
+        /// <summary>
+        /// Adds entries from the subscription from last opened
+        /// </summary>
+        public static void AddEntryFromSubscriptions()
+        {
+            
+        }
     }
 }

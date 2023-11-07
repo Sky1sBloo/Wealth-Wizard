@@ -54,13 +54,15 @@ namespace Wealth_Wizard
         /// <summary>
         /// Constructor with all the values
         /// </summary>
-        /// <param name="startDate">Starting date of the subscription. All weekly, monthly, yearly subscription will base on this</param>
+        /// <param name="startDate">Starting date of the subscription. All weekly, monthly, yearly subscription 
+        /// will base on this</param>
         /// <param name="endDate">Final day of subscription</param>
         /// <param name="type">The entry type listed on entry_types table</param>
         /// <param name="name"><Name of the subscription/param>
         /// <param name="amount"></param>
         /// <param name="billingCycle">ycle of daily, weekly, monthly, or yearly</param>
-        public Subscription(DateTime startDate, Nullable<DateTime> endDate, string type, string name, float amount, string billingCycle)
+        public Subscription(DateTime startDate, Nullable<DateTime> endDate, string type, string name, float amount, 
+            string billingCycle)
         {
             _startDate = startDate;
             _endDate = endDate;

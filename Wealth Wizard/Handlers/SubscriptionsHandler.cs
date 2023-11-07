@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
@@ -103,6 +104,32 @@ namespace Wealth_Wizard.Handlers
             cmd.ExecuteNonQuery();
 
             con.Close();
+        }
+
+        /// <summary>
+        /// Retrieves all subscriptions in the database
+        /// </summary>
+        /// <returns>Returns a list of subscriptions</returns>
+        public static List<Subscription> GetAllSubscriptions() 
+        {
+            DataTable subsTable = DatabaseHandler.GetAllValuesFromTable("subscriptions");
+            List<Subscription> subs = new List<Subscription>();
+
+            foreach (DataRow row in subsTable.Rows)
+            {
+                Subscription sub = new Subscription(
+                    row.Field<DateTime>("start_date"),
+                    row.Field<DateTime>("end_date"),
+                    row.Field<string>("entry_type"),
+                    row.Field<string>("name"),
+                    (float)row.Field<double>("amount"),
+                    row.Field<string>("billing_cycle")
+                    );
+
+                subs.Add(sub);
+            }
+
+            return subs;
         }
     }
 }
