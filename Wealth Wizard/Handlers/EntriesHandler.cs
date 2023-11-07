@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wealth_Wizard.Properties;
 
 namespace Wealth_Wizard.Handlers
 {
@@ -14,9 +15,16 @@ namespace Wealth_Wizard.Handlers
     /// </summary>
     public static class EntriesHandler
     {
-        // Returns all entries from "purchases" table in database
-        // filterSpecificType parameters can accept "ALL" or null if you want all types to be displayed
-        public static DataTable GetEntries(DateTime startDate, DateTime endDate, string filterSpecificType)
+        /// <summary>
+        /// Returns all entries from "purchases" table in database
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="filterSpecificType">
+        /// can accept "ALL" or null if you want all types to be displayed
+        /// </param>
+        /// <returns>Returns a DataTable containing the entries</returns>
+        public static DataTable GetEntriesAsTable(DateTime startDate, DateTime endDate, string filterSpecificType = null)
         {
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
             con.Open();
@@ -42,7 +50,38 @@ namespace Wealth_Wizard.Handlers
             return dt;
         }
 
-        // Add new entry to the database
+        /// <summary>
+        /// Returns all entries from "purchases" table in database
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="filterSpecificType">
+        /// can accept "ALL" or null if you want all types to be displayed
+        /// </param>
+        /// <returns>Returns a List containing the entries</returns>
+        public static List<Entry> GetEntries(DateTime startDate, DateTime endDate, string filterSpecificType = null)
+        { 
+            List<Entry> selectedEntries = new List<Entry>();
+            foreach (DataRow row in GetEntriesAsTable(startDate, endDate, filterSpecificType).Rows)
+            {
+                Entry selectedEntry = new Entry(
+                    row.Field<DateTime>("entry_date"),
+                    row.Field<string>("type"),
+                    row.Field<string>("name"),
+                    (float)row.Field<double>("amount")
+                    );
+
+                selectedEntries.Add(selectedEntry);
+            }
+            return selectedEntries;
+        }
+        
+
+        /// <summary>
+        /// Creates a new entry on the database on tables entries
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <exception cref="Exception"></exception>
         public static void AddNewEntry(Entry entry)
         {
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
@@ -55,26 +94,17 @@ namespace Wealth_Wizard.Handlers
             insertToDb.Parameters.Add(new SQLiteParameter("@type", entry._type));
             insertToDb.Parameters.Add(new SQLiteParameter("@name", entry._name));
             insertToDb.Parameters.Add(new SQLiteParameter("@amount", entry._amount));
-            try
-            {
-                insertToDb.ExecuteNonQuery();
-            }
-            catch (SQLiteException)
-            {
-                DialogResult existingEntryError = MessageBox.Show("Entry matches an existing entry", 
-                    "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+
+            insertToDb.ExecuteNonQuery();
 
             con.Close();
         }
 
-        // Edit an entry to the database
+        /// <summary>
+        /// Modifies an entry on the database
+        /// </summary>
+        /// <param name="selectedEntry">Entry to be changed</param>
+        /// <param name="newEntry">New values of the entry</param>
         public static void EditEntry(Entry selectedEntry, Entry newEntry)
         {
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
@@ -99,7 +129,10 @@ namespace Wealth_Wizard.Handlers
             con.Close();
         }
 
-        // Delete an entry in the database
+        /// <summary>
+        /// Removes an entry on the database
+        /// </summary>
+        /// <param name="entry"></param>
         public static void DeleteEntry(Entry entry)
         {
             SQLiteConnection con = new SQLiteConnection(DatabaseHandler.databaseLocation);
@@ -116,18 +149,59 @@ namespace Wealth_Wizard.Handlers
             deleteRowDb.Parameters.AddWithValue("@amount", entry._amount);
             deleteRowDb.Parameters.AddWithValue("@type", entry._type);
 
-            // Delete row from query
             deleteRowDb.ExecuteNonQuery();
 
             con.Close();
         }
 
         /// <summary>
+        /// Checks if an entry exists in the database
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <returns></returns>
+        public static bool EntryExists(Entry entry)
+        {
+            return GetEntries(entry._date, entry._date).Count == 0;
+        }
+
+        /// <summary>
         /// Adds entries from the subscription from last opened
         /// </summary>
-        public static void AddEntryFromSubscriptions()
+        public static void AddEntriesFromSubscriptions()
         {
-            
+            foreach (Subscription sub in SubscriptionsHandler.GetAllSubscriptions())
+            {
+                TimeSpan timeSinceLastOpened = DateTime.Now.Subtract(Settings.Default.LastOpened);
+
+                switch (sub._billingCycle)
+                {
+                    case "Daily":
+                        for (int i = 0; i < timeSinceLastOpened.Days; i++)
+                        {
+                            DateTime newSubDate = Settings.Default.LastOpened.AddDays(i);
+
+                            Entry subEntry = new Entry(
+                                newSubDate,
+                                sub._type, sub._name, sub._amount);
+
+                            if (EntryExists(subEntry))
+                            {
+                                AddNewEntry(subEntry);
+                            }
+                        }
+                        break;
+                    case "Weekly":
+                        for (int i = 0; i < timeSinceLastOpened.Days / 7; i += 7)
+                        {
+                            DateTime newSubDate = Settings.Default.LastOpened.AddDays(i);
+                        }
+                        break;
+                    case "Monthly":
+                        break;
+                    case "Yearly":
+                        break;
+                }
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Wealth_Wizard.Handlers
 {
     /// <summary>
@@ -34,17 +35,7 @@ namespace Wealth_Wizard.Handlers
             cmd.Parameters.AddWithValue("@amount", subscription._amount);
             cmd.Parameters.AddWithValue("@billing_cycle", subscription._billingCycle);
 
-            try 
-            {
-                cmd.ExecuteNonQuery();
-            }
-            catch (SQLiteException )
-            {
-                DialogResult existingEntryError = MessageBox.Show("Subscription matches an existing entry",
-                    "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            
+            cmd.ExecuteNonQuery();
 
             con.Close();
         }

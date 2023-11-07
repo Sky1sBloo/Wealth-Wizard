@@ -54,17 +54,33 @@ namespace Wealth_Wizard.DisplayForms
         /// <summary>
         /// Refreshes the data grid view with subscription data from the database.
         /// </summary>
-        public void RefreshTable()
+        private void RefreshTable()
         {
             string[] columns = { "start_date AS 'Start Date'", "end_date AS 'End Date'", "entry_type AS 'Type'", "name AS 'Name'",
                 "amount AS 'Amount'", "billing_cycle AS 'Billing Cycle'"};
             DataGridV_Subscriptions.DataSource = DatabaseHandler.GetValuesFromTable("subscriptions", columns);
         }
 
+        /// <summary>
+        /// Adds new subscription with message box dialog type checking
+        /// </summary>
+        /// <param name="newSub"></param>
+        private void AddSubscription(Subscription newSub)
+        {
+            try
+            {
+                SubscriptionsHandler.AddNewSubscription(newSub);
+            }
+            catch (SQLiteException)
+            {
+                DialogResult existingEntryError = MessageBox.Show("Subscription matches an existing entry",
+                    "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         // Events
         // Subscription buttons events
-
-        // Add new subscription to the table
         private void Btn_AddSub_Click(object sender, EventArgs e)
         {
             // Check if all forms have been completed to avoid query errors
@@ -86,7 +102,7 @@ namespace Wealth_Wizard.DisplayForms
                     (float)NumTxtB_Amount.Value, ComboB_BillingCycle.Text);
             }
             
-            SubscriptionsHandler.AddNewSubscription(newSub);
+            AddSubscription(newSub);
 
             RefreshTable();
         }

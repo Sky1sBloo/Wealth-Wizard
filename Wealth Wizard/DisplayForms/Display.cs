@@ -15,6 +15,7 @@ using Wealth_Wizard.Handlers;
 using Wealth_Wizard.HelperForms;
 using Wealth_Wizard.DisplayForms;
 using Wealth_Wizard.Properties;
+using System.Data.SQLite;
 
 namespace Wealth_Wizard
 {
@@ -67,7 +68,7 @@ namespace Wealth_Wizard
             DataGridV_Subscriptions.DataSource = DatabaseHandler.GetValuesFromTable("subscriptions", subscriptionColumns);
 
             // Display Entries
-            DataGridV_Display.DataSource = EntriesHandler.GetEntries(DatePick_FilterStartDate.Value,
+            DataGridV_Display.DataSource = EntriesHandler.GetEntriesAsTable(DatePick_FilterStartDate.Value,
                 DatePick_FilterEndDate.Value, selectedFilterType);
 
             // Disable or enable buttons when selection is available
@@ -111,6 +112,29 @@ namespace Wealth_Wizard
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Adds new entry with message dialog
+        /// </summary>
+        /// <param name="newEntry"></param>
+        /// <exception cref="Exception"></exception>
+        private void AddEntry(Entry newEntry)
+        {
+            try
+            {
+                EntriesHandler.AddNewEntry(newEntry);
+            }
+            catch (SQLiteException)
+            {
+                DialogResult existingEntryError = MessageBox.Show("Entry matches an existing entry",
+                    "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         /// <summary>
@@ -225,7 +249,7 @@ namespace Wealth_Wizard
 
             if (!IsEntryDataUploadable(newEntry)) return;
 
-            EntriesHandler.AddNewEntry(newEntry);
+            AddEntry(newEntry);
             RefreshInformation();
         }
 
@@ -331,7 +355,7 @@ namespace Wealth_Wizard
             if (editEntryForm.DialogResult == DialogResult.Cancel) return;
             
             Entry newEntry = editEntryForm.GetEntryValues();
-            EntriesHandler.AddNewEntry(newEntry);
+            AddEntry(newEntry);
             RefreshInformation();
         }
 

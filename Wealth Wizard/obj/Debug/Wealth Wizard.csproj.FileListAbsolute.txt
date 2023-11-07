@@ -25,7 +25,6 @@ E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Memory.dll
 E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Numerics.Vectors.dll
 E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
 E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Text.Encodings.Web.dll
-E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Text.Json.dll
 E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Threading.Tasks.Extensions.dll
 E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.ValueTuple.dll
 E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
@@ -34,7 +33,6 @@ E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Memory.xml
 E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Numerics.Vectors.xml
 E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Text.Encodings.Web.xml
-E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Text.Json.xml
 E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.Threading.Tasks.Extensions.xml
 E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Debug\System.ValueTuple.xml
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.HelperForms.InputMessageBox.resources
