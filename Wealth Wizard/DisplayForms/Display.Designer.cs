@@ -60,6 +60,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.Lbl_A = new System.Windows.Forms.Label();
             this.DatePick_EntryDate = new System.Windows.Forms.DateTimePicker();
+            this.NumTxtB_EntryAmount = new NumericTextBox();
             this.Lbl_AmountDisplay = new System.Windows.Forms.Label();
             this.ChkB_Income = new System.Windows.Forms.CheckBox();
             this.ChkB_Expenses = new System.Windows.Forms.CheckBox();
@@ -75,14 +76,13 @@
             this.Lbl_DatabaseName = new System.Windows.Forms.Label();
             this.Lbl_DatabaseNameDisplay = new System.Windows.Forms.Label();
             this.sqLiteCommandBuilder1 = new System.Data.SQLite.SQLiteCommandBuilder();
-            this.NumTxtB_EntryAmount = new NumericTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Display)).BeginInit();
             this.Panel_Filter.SuspendLayout();
             this.MenuStrip_Display.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Subscriptions)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).BeginInit();
             this.SuspendLayout();
             // 
             // DataGridV_Display
@@ -264,21 +264,21 @@
             // newDatabaseToolStripMenuItem
             // 
             this.newDatabaseToolStripMenuItem.Name = "newDatabaseToolStripMenuItem";
-            this.newDatabaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newDatabaseToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.newDatabaseToolStripMenuItem.Text = "New Database";
             this.newDatabaseToolStripMenuItem.Click += new System.EventHandler(this.NewDatabaseMenu_Click);
             // 
             // openDatabaseToolStripMenuItem
             // 
             this.openDatabaseToolStripMenuItem.Name = "openDatabaseToolStripMenuItem";
-            this.openDatabaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openDatabaseToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.openDatabaseToolStripMenuItem.Text = "Open Database";
             this.openDatabaseToolStripMenuItem.Click += new System.EventHandler(this.OpenDatabaseMenu_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // editToolStripMenuItem
@@ -295,27 +295,27 @@
             // NewEntryMenu
             // 
             this.NewEntryMenu.Name = "NewEntryMenu";
-            this.NewEntryMenu.Size = new System.Drawing.Size(180, 22);
+            this.NewEntryMenu.Size = new System.Drawing.Size(135, 22);
             this.NewEntryMenu.Text = "New Entry";
             this.NewEntryMenu.Click += new System.EventHandler(this.NewEntryMenu_Click);
             // 
             // EditEntryMenu
             // 
             this.EditEntryMenu.Name = "EditEntryMenu";
-            this.EditEntryMenu.Size = new System.Drawing.Size(180, 22);
+            this.EditEntryMenu.Size = new System.Drawing.Size(135, 22);
             this.EditEntryMenu.Text = "Edit Entry";
             this.EditEntryMenu.Click += new System.EventHandler(this.EditEntryMenu_Click);
             // 
             // queriesToolStripMenuItem
             // 
             this.queriesToolStripMenuItem.Name = "queriesToolStripMenuItem";
-            this.queriesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.queriesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.queriesToolStripMenuItem.Text = "Queries";
             // 
             // PreferencesMenu
             // 
             this.PreferencesMenu.Name = "PreferencesMenu";
-            this.PreferencesMenu.Size = new System.Drawing.Size(180, 22);
+            this.PreferencesMenu.Size = new System.Drawing.Size(135, 22);
             this.PreferencesMenu.Text = "Preferences";
             this.PreferencesMenu.Click += new System.EventHandler(this.PreferencesMenu_Click);
             // 
@@ -394,6 +394,19 @@
             this.DatePick_EntryDate.Name = "DatePick_EntryDate";
             this.DatePick_EntryDate.Size = new System.Drawing.Size(167, 20);
             this.DatePick_EntryDate.TabIndex = 13;
+            // 
+            // NumTxtB_EntryAmount
+            // 
+            this.NumTxtB_EntryAmount.DecimalPlaces = 2;
+            this.NumTxtB_EntryAmount.Location = new System.Drawing.Point(61, 111);
+            this.NumTxtB_EntryAmount.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            0});
+            this.NumTxtB_EntryAmount.Name = "NumTxtB_EntryAmount";
+            this.NumTxtB_EntryAmount.Size = new System.Drawing.Size(167, 20);
+            this.NumTxtB_EntryAmount.TabIndex = 8;
             // 
             // Lbl_AmountDisplay
             // 
@@ -539,19 +552,6 @@
             this.sqLiteCommandBuilder1.DataAdapter = null;
             this.sqLiteCommandBuilder1.QuoteSuffix = "]";
             // 
-            // NumTxtB_EntryAmount
-            // 
-            this.NumTxtB_EntryAmount.DecimalPlaces = 2;
-            this.NumTxtB_EntryAmount.Location = new System.Drawing.Point(61, 111);
-            this.NumTxtB_EntryAmount.Maximum = new decimal(new int[] {
-            -1,
-            -1,
-            -1,
-            0});
-            this.NumTxtB_EntryAmount.Name = "NumTxtB_EntryAmount";
-            this.NumTxtB_EntryAmount.Size = new System.Drawing.Size(167, 20);
-            this.NumTxtB_EntryAmount.TabIndex = 8;
-            // 
             // Display
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -566,6 +566,7 @@
             this.MainMenuStrip = this.MenuStrip_Display;
             this.Name = "Display";
             this.Text = "Wealth Wizard";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Display_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Display)).EndInit();
             this.Panel_Filter.ResumeLayout(false);
             this.Panel_Filter.PerformLayout();
@@ -573,10 +574,10 @@
             this.MenuStrip_Display.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Subscriptions)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumTxtB_EntryAmount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

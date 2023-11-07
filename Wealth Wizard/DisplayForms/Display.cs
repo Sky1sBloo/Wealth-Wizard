@@ -348,5 +348,11 @@ namespace Wealth_Wizard
 
             RefreshInformation(true);
         }
+
+        private void Display_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Settings.Default.LastOpened = DateTime.Now;
+            Settings.Default.Save();
+        }
     }
 }

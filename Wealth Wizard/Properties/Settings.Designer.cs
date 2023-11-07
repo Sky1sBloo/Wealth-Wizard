@@ -34,5 +34,16 @@ namespace Wealth_Wizard.Properties {
                 this["DefaultDatabase"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime LastOpened {
+            get {
+                return ((global::System.DateTime)(this["LastOpened"]));
+            }
+            set {
+                this["LastOpened"] = value;
+            }
+        }
     }
 }
