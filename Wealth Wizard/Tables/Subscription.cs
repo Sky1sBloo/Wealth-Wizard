@@ -12,12 +12,12 @@ namespace Wealth_Wizard
     /// </summary>
     public class Subscription
     {
-        public DateTime _startDate { get; private set; }
-        public Nullable<DateTime> _endDate { get; private set; }
-        public string _type { get; private set; }
-        public string _name { get; private set; }
-        public float _amount { get; private set; }
-        public string _billingCycle { get; private set; }
+        public DateTime StartDate { get; private set; }
+        public Nullable<DateTime> EndDate { get; private set; }
+        public string Type { get; private set; }
+        public string Name { get; private set; }
+        public float Amount { get; private set; }
+        public string BillingCycle { get; private set; }
 
         /// <summary>
         /// Constructor with primary keys, generally used for searching rows
@@ -28,10 +28,10 @@ namespace Wealth_Wizard
         /// <param name="billingCycle">Cycle of daily, weekly, monthly, or yearly</param>
         public Subscription(string type, string name, float amount, string billingCycle)
         {
-            _type = type;
-            _name = name;
-            _amount = amount;
-            _billingCycle = billingCycle;
+            Type = type;
+            Name = name;
+            Amount = amount;
+            BillingCycle = billingCycle;
         }
 
         /// <summary>
@@ -44,11 +44,11 @@ namespace Wealth_Wizard
         /// <param name="billingCycle">ycle of daily, weekly, monthly, or yearly</param>
         public Subscription(DateTime startDate, string type, string name, float amount, string billingCycle)
         {
-            _startDate = startDate;
-            _type = type;
-            _name = name;
-            _amount = amount;
-            _billingCycle = billingCycle;
+            StartDate = startDate;
+            Type = type;
+            Name = name;
+            Amount = amount;
+            BillingCycle = billingCycle;
         }
 
         /// <summary>
@@ -64,12 +64,12 @@ namespace Wealth_Wizard
         public Subscription(DateTime startDate, Nullable<DateTime> endDate, string type, string name, float amount, 
             string billingCycle)
         {
-            _startDate = startDate;
-            _endDate = endDate;
-            _type = type;
-            _name = name;
-            _amount = amount;
-            _billingCycle = billingCycle;
+            StartDate = startDate;
+            EndDate = endDate;
+            Type = type;
+            Name = name;
+            Amount = amount;
+            BillingCycle = billingCycle;
         }
     }
 }

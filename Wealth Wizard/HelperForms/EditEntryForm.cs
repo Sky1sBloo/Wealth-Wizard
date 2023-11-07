@@ -33,14 +33,14 @@ namespace Wealth_Wizard
             }
 
             // Load default values
-            DateT_Date.Value = defaultValues._date;
-            ComboB_Types.Text = defaultValues._type;
-            TxtB_Name.Text = defaultValues._name;
+            DateT_Date.Value = defaultValues.Date;
+            ComboB_Types.Text = defaultValues.Type;
+            TxtB_Name.Text = defaultValues.Name;
 
-            ChkB_Expenses.Checked = defaultValues._amount < 0;
-            ChkB_Income.Checked = defaultValues._amount >= 0;
+            ChkB_Expenses.Checked = defaultValues.Amount < 0;
+            ChkB_Income.Checked = defaultValues.Amount >= 0;
 
-            NumTxtB_EntryAmount.Value = Math.Abs((decimal)defaultValues._amount);
+            NumTxtB_EntryAmount.Value = Math.Abs((decimal)defaultValues.Amount);
         }
 
         /// <summary>

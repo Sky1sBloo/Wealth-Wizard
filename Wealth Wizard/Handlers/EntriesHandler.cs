@@ -90,10 +90,10 @@ namespace Wealth_Wizard.Handlers
             string queryInsert = "INSERT INTO entries Values(@date, @type, @name, @amount)";
 
             SQLiteCommand insertToDb = new SQLiteCommand(queryInsert, con);
-            insertToDb.Parameters.Add(new SQLiteParameter("@date", entry._date.ToString("yyyy-MM-dd")));
-            insertToDb.Parameters.Add(new SQLiteParameter("@type", entry._type));
-            insertToDb.Parameters.Add(new SQLiteParameter("@name", entry._name));
-            insertToDb.Parameters.Add(new SQLiteParameter("@amount", entry._amount));
+            insertToDb.Parameters.Add(new SQLiteParameter("@date", entry.Date.ToString("yyyy-MM-dd")));
+            insertToDb.Parameters.Add(new SQLiteParameter("@type", entry.Type));
+            insertToDb.Parameters.Add(new SQLiteParameter("@name", entry.Name));
+            insertToDb.Parameters.Add(new SQLiteParameter("@amount", entry.Amount));
 
             insertToDb.ExecuteNonQuery();
 
@@ -115,15 +115,15 @@ namespace Wealth_Wizard.Handlers
                 "WHERE entry_date = @old_date AND type = @old_type AND name = @old_name AND amount = @old_amount";
 
             SQLiteCommand updateToDb = new SQLiteCommand(queryUpdate, con);
-            updateToDb.Parameters.AddWithValue("@new_date", newEntry._date.ToString("yyyy-MM-dd"));
-            updateToDb.Parameters.AddWithValue("@new_type", newEntry._type);
-            updateToDb.Parameters.AddWithValue("@new_name", newEntry._name);
-            updateToDb.Parameters.AddWithValue("@new_amount", newEntry._amount);
+            updateToDb.Parameters.AddWithValue("@new_date", newEntry.Date.ToString("yyyy-MM-dd"));
+            updateToDb.Parameters.AddWithValue("@new_type", newEntry.Type);
+            updateToDb.Parameters.AddWithValue("@new_name", newEntry.Name);
+            updateToDb.Parameters.AddWithValue("@new_amount", newEntry.Amount);
 
-            updateToDb.Parameters.AddWithValue("@old_date", selectedEntry._date.ToString("yyyy-MM-dd"));
-            updateToDb.Parameters.AddWithValue("@old_type", selectedEntry._type);
-            updateToDb.Parameters.AddWithValue("@old_name", selectedEntry._name);
-            updateToDb.Parameters.AddWithValue("@old_amount", selectedEntry._amount);
+            updateToDb.Parameters.AddWithValue("@old_date", selectedEntry.Date.ToString("yyyy-MM-dd"));
+            updateToDb.Parameters.AddWithValue("@old_type", selectedEntry.Type);
+            updateToDb.Parameters.AddWithValue("@old_name", selectedEntry.Name);
+            updateToDb.Parameters.AddWithValue("@old_amount", selectedEntry.Amount);
 
             updateToDb.ExecuteNonQuery();
             con.Close();
@@ -144,10 +144,10 @@ namespace Wealth_Wizard.Handlers
                 "type = @type";
 
             SQLiteCommand deleteRowDb = new SQLiteCommand(queryDelete, con);
-            deleteRowDb.Parameters.AddWithValue("@date", entry._date.ToString("yyyy-MM-dd"));
-            deleteRowDb.Parameters.AddWithValue("@name", entry._name);
-            deleteRowDb.Parameters.AddWithValue("@amount", entry._amount);
-            deleteRowDb.Parameters.AddWithValue("@type", entry._type);
+            deleteRowDb.Parameters.AddWithValue("@date", entry.Date.ToString("yyyy-MM-dd"));
+            deleteRowDb.Parameters.AddWithValue("@name", entry.Name);
+            deleteRowDb.Parameters.AddWithValue("@amount", entry.Amount);
+            deleteRowDb.Parameters.AddWithValue("@type", entry.Type);
 
             deleteRowDb.ExecuteNonQuery();
 
@@ -161,7 +161,7 @@ namespace Wealth_Wizard.Handlers
         /// <returns></returns>
         public static bool EntryExists(Entry entry)
         {
-            return GetEntries(entry._date, entry._date).Count == 0;
+            return GetEntries(entry.Date, entry.Date).Count == 0;
         }
 
         /// <summary>
@@ -171,22 +171,27 @@ namespace Wealth_Wizard.Handlers
         {
             foreach (Subscription sub in SubscriptionsHandler.GetAllSubscriptions())
             {
-                TimeSpan timeSinceLastOpened = DateTime.Now.Subtract(Settings.Default.LastOpened);
+                TimeSpan timeSinceLastOpened = SystemClock.Now.Subtract(Settings.Default.LastOpened);
 
-                switch (sub._billingCycle)
+                switch (sub.BillingCycle)
                 {
                     case "Daily":
                         for (int i = 0; i < timeSinceLastOpened.Days; i++)
                         {
                             DateTime newSubDate = Settings.Default.LastOpened.AddDays(i);
+                            if (sub.EndDate < newSubDate) return;
 
                             Entry subEntry = new Entry(
                                 newSubDate,
-                                sub._type, sub._name, sub._amount);
+                                sub.Type, sub.Name, sub.Amount);
 
-                            if (EntryExists(subEntry))
+                            try
                             {
                                 AddNewEntry(subEntry);
+                            }
+                            catch (SQLiteException)
+                            {
+                                continue;
                             }
                         }
                         break;
@@ -194,11 +199,43 @@ namespace Wealth_Wizard.Handlers
                         for (int i = 0; i < timeSinceLastOpened.Days / 7; i += 7)
                         {
                             DateTime newSubDate = Settings.Default.LastOpened.AddDays(i);
+                            if (sub.EndDate < newSubDate) return;
+
+                            Entry subEntry = new Entry(
+                                newSubDate,
+                                sub.Type, sub.Name, sub.Amount);
+                            try
+                            {
+                                AddNewEntry(subEntry);
+                            }
+                            catch (SQLiteException)
+                            {
+                                continue;
+                            }
                         }
                         break;
                     case "Monthly":
+                        
                         break;
                     case "Yearly":
+                        for (int i = 0; i <= SystemClock.Now.Year - Settings.Default.LastOpened.Year; i++)
+                        {
+                            DateTime newSubDate = sub.StartDate.AddYears(i);
+                            if (SystemClock.Now < newSubDate) return;
+
+                            Entry subEntry = new Entry(
+                                newSubDate,
+                                sub.Type, sub.Name, sub.Amount);
+
+                            try
+                            {
+                                AddNewEntry(subEntry);
+                            }
+                            catch (SQLiteException)
+                            {
+                                continue;
+                            }
+                        }
                         break;
                 }
             }

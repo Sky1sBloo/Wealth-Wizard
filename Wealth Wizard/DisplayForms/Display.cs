@@ -67,6 +67,8 @@ namespace Wealth_Wizard
             string[] subscriptionColumns = { "amount AS 'Amount'", "billing_cycle AS 'Billing Cycle'" };
             DataGridV_Subscriptions.DataSource = DatabaseHandler.GetValuesFromTable("subscriptions", subscriptionColumns);
 
+            EntriesHandler.AddEntriesFromSubscriptions();
+
             // Display Entries
             DataGridV_Display.DataSource = EntriesHandler.GetEntriesAsTable(DatePick_FilterStartDate.Value,
                 DatePick_FilterEndDate.Value, selectedFilterType);
@@ -105,7 +107,7 @@ namespace Wealth_Wizard
         public bool IsEntryDataUploadable(Entry entry)
         {
             // Check if some of the input fields are empty
-            if (entry._name == "")
+            if (entry.Name == "")
             {
                 MessageBox.Show("Add Entry Error, 'Name' field is empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -377,7 +379,7 @@ namespace Wealth_Wizard
 
         private void Display_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Settings.Default.LastOpened = DateTime.Now;
+            Settings.Default.LastOpened = SystemClock.Now;
             Settings.Default.Save();
         }
     }

@@ -24,14 +24,14 @@ namespace Wealth_Wizard.HelperForms
 
             LoadComboBoxItems();
 
-            DateT_StartDate.Value = defaultValues._startDate;
+            DateT_StartDate.Value = defaultValues.StartDate;
 
-            if (defaultValues._endDate != null)
+            if (defaultValues.EndDate != null)
             {
                 ChkB_HasEndDate.Checked = true;
                 Panel_EndDate.Visible = true;
 
-                DateT_EndDate.Value = defaultValues._endDate ?? DateTime.Now;
+                DateT_EndDate.Value = defaultValues.EndDate ?? DateTime.Now;
             }
             else
             {
@@ -40,9 +40,9 @@ namespace Wealth_Wizard.HelperForms
             }
 
             ComboB_Type.SelectedIndex = 0;
-            TxtB_EntryName.Text = defaultValues._name;
-            NumTxtB_Amount.Value = (decimal)defaultValues._amount;
-            ComboB_BillingCycle.Text = defaultValues._billingCycle;
+            TxtB_EntryName.Text = defaultValues.Name;
+            NumTxtB_Amount.Value = (decimal)defaultValues.Amount;
+            ComboB_BillingCycle.Text = defaultValues.BillingCycle;
 
 
             Panel_EndDate.Visible = ChkB_HasEndDate.Checked;

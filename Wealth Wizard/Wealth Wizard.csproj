@@ -100,6 +100,7 @@
       <DependentUpon>ManageSubscriptionsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Handlers\SubscriptionsHandler.cs" />
+    <Compile Include="Handlers\SystemClock.cs" />
     <Compile Include="HelperForms\EditSubscriptionForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -11,17 +11,17 @@ namespace Wealth_Wizard
     /// </summary>
     public class Entry
     {
-        public DateTime _date { get; private set; }
-        public string _type { get; private set; }
-        public string _name { get; private set; }
-        public float _amount { get; private set; }
+        public DateTime Date { get; private set; }
+        public string Type { get; private set; }
+        public string Name { get; private set; }
+        public float Amount { get; private set; }
 
         public Entry(DateTime date, string type, string name, float amount)
         {
-            _date = date;
-            _type = type;
-            _name = name;
-            _amount = amount;
+            Date = date;
+            Type = type;
+            Name = name;
+            Amount = amount;
         }
     }
 }
