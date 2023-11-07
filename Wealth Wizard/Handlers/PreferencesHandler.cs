@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
+using Wealth_Wizard.Properties;
 
 namespace Wealth_Wizard.Handlers
 {
@@ -15,18 +15,15 @@ namespace Wealth_Wizard.Handlers
     {
         public static void SavePreferences(Preferences preferences)
         {
-            // Save into json
-            var options = new JsonSerializerOptions();
-            options.WriteIndented = true;
-
-            string jsonPreferences = JsonSerializer.Serialize<Preferences>(preferences, options);
-            File.WriteAllText("preferences.json", jsonPreferences);
+            Settings.Default.DefaultDatabase = preferences._defaultDatabase;
+            Settings.Default.Save();
         }
 
         public static Preferences LoadPreferences()
         {
-            string jsonPreferences = File.ReadAllText("preferences.json");
-            return JsonSerializer.Deserialize<Preferences>(jsonPreferences);
+            Preferences preferences = new Preferences();
+            preferences._defaultDatabase = Settings.Default.DefaultDatabase;
+            return preferences;
         }
     }
 }

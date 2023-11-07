@@ -14,6 +14,7 @@ using System.Xml.Linq;
 using Wealth_Wizard.Handlers;
 using Wealth_Wizard.HelperForms;
 using Wealth_Wizard.DisplayForms;
+using Wealth_Wizard.Properties;
 
 namespace Wealth_Wizard
 {
@@ -30,11 +31,11 @@ namespace Wealth_Wizard
             InitializeComponent();
 
             // Check if default database location exists
-            string fileLocation = (PreferencesHandler.LoadPreferences().defaultDatabase).Replace(@"data source=", "");
+            string fileLocation = (Settings.Default.DefaultDatabase.Replace(@"data source=", ""));
 
             if (File.Exists(fileLocation))
             {
-                DatabaseHandler.databaseLocation = PreferencesHandler.LoadPreferences().defaultDatabase;
+                DatabaseHandler.databaseLocation = Settings.Default.DefaultDatabase;
             }
             else
             {
@@ -47,10 +48,7 @@ namespace Wealth_Wizard
                 }
 
                 // Save into preferences
-                Preferences preferences = PreferencesHandler.LoadPreferences();
-                preferences.defaultDatabase = DatabaseHandler.databaseLocation;
-
-                PreferencesHandler.SavePreferences(preferences);
+                Settings.Default.DefaultDatabase = DatabaseHandler.databaseLocation;
             }
 
             RefreshInformation(true);  // Refresh the page with all the information

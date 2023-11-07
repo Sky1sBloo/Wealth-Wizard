@@ -11,6 +11,6 @@ namespace Wealth_Wizard
     /// </summary>
     public class Preferences
     {
-        public string defaultDatabase { get; set; }
+        public string _defaultDatabase { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace Wealth_Wizard
         /// </summary>
         public void SavePreferences()
         {
-            preferences.defaultDatabase = @"data source=" + TxtB_DefaultDatabase.Text;
+            preferences._defaultDatabase = @"data source=" + TxtB_DefaultDatabase.Text;
 
             PreferencesHandler.SavePreferences(preferences);
         }
@@ -52,7 +52,7 @@ namespace Wealth_Wizard
         public void LoadPreferences()
         {
             preferences = PreferencesHandler.LoadPreferences();
-            TxtB_DefaultDatabase.Text = preferences.defaultDatabase.Replace(@"data source=", "");
+            TxtB_DefaultDatabase.Text = preferences._defaultDatabase.Replace(@"data source=", "");
         }
 
         /// <summary>
