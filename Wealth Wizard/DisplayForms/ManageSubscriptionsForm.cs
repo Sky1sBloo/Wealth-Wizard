@@ -49,6 +49,9 @@ namespace Wealth_Wizard.DisplayForms
                 ComboB_BillingCycle.Items.Add(billingCycle);
             }
             ComboB_BillingCycle.SelectedIndex = 0;
+
+            DateT_StartDate.Value = SystemClock.Now;
+            DateT_EndDate.Value = SystemClock.Now;
         }
 
         /// <summary>

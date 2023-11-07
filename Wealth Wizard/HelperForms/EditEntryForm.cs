@@ -54,6 +54,8 @@ namespace Wealth_Wizard
             {
                 ComboB_Types.Items.Add(type);
             }
+
+            DateT_Date.Value = SystemClock.Now;
         }
 
         // Setters and getters

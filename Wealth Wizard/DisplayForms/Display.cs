@@ -31,29 +31,6 @@ namespace Wealth_Wizard
         {
             InitializeComponent();
 
-            // Check if default database location exists
-            string fileLocation = (Settings.Default.DefaultDatabase.Replace(@"data source=", ""));
-
-            if (File.Exists(fileLocation))
-            {
-                DatabaseHandler.databaseLocation = Settings.Default.DefaultDatabase;
-            }
-            else
-            {
-                NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
-
-                if (newDatabaseForm.ShowDialog() != DialogResult.OK)
-                {
-                    System.Environment.Exit(1);
-                    return;
-                }
-
-                // Save into preferences
-                Settings.Default.DefaultDatabase = DatabaseHandler.databaseLocation;
-            }
-            
-
-
             RefreshInformation(true);  // Refresh the page with all the information
         }
 
@@ -82,6 +59,7 @@ namespace Wealth_Wizard
             // Usually used when loading a new database
             if (refreshDatabaseSettings)
             {
+                DatePick_EntryDate.Value = SystemClock.Now;
                 Lbl_DatabaseName.Text = Path.GetFileName(DatabaseHandler.databaseLocation);
 
                 ComboB_EntryType.Items.Clear();
@@ -91,6 +69,7 @@ namespace Wealth_Wizard
                     ComboB_EntryType.Items.Add(entryType);
                     ComboB_FilterType.Items.Add(entryType);
                 }
+                
 
                 ComboB_FilterType.Items.Add("All");
 
@@ -207,18 +186,18 @@ namespace Wealth_Wizard
             {
                 case 0:
                     // Get current year
-                    startDate = new DateTime(DateTime.Now.Year, 1, 1);
-                    endDate = new DateTime(DateTime.Now.Year, 12, 31);
+                    startDate = new DateTime(SystemClock.Now.Year, 1, 1);
+                    endDate = new DateTime(SystemClock.Now.Year, 12, 31);
                     break;
                 case 1:
                     // Get current month
-                    startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                    endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month,
+                    startDate = new DateTime(SystemClock.Now.Year, SystemClock.Now.Month, 1);
+                    endDate = new DateTime(SystemClock.Now.Year, SystemClock.Now.Month,
                         DateTime.DaysInMonth(startDate.Year, startDate.Month));
                     break;
                 case 2:
                     // Get current week
-                    startDate = DateTime.Now.AddDays(DayOfWeek.Sunday - DateTime.Now.DayOfWeek);
+                    startDate = SystemClock.Now.AddDays(DayOfWeek.Sunday - SystemClock.Now.DayOfWeek);
                     endDate = startDate.AddDays(7);
                     break;
                 default:

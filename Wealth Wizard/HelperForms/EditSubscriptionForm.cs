@@ -31,7 +31,7 @@ namespace Wealth_Wizard.HelperForms
                 ChkB_HasEndDate.Checked = true;
                 Panel_EndDate.Visible = true;
 
-                DateT_EndDate.Value = defaultValues.EndDate ?? DateTime.Now;
+                DateT_EndDate.Value = defaultValues.EndDate ?? SystemClock.Now;
             }
             else
             {

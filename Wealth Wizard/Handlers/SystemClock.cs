@@ -12,6 +12,6 @@ namespace Wealth_Wizard.Handlers
     /// </summary>
     public static class SystemClock
     {
-        public static DateTime Now { get { return DateTime.Now; } }
+        public static DateTime Now;
     }
 }
