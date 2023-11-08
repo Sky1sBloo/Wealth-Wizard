@@ -110,7 +110,7 @@ namespace Wealth_Wizard.Handlers
             {
                 Subscription sub = new Subscription(
                     row.Field<DateTime>("start_date"),
-                    row.Field<DateTime>("end_date"),
+                    row.Field<Nullable<DateTime>>("end_date"),
                     row.Field<string>("entry_type"),
                     row.Field<string>("name"),
                     (float)row.Field<double>("amount"),

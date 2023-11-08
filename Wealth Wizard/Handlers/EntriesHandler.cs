@@ -173,18 +173,21 @@ namespace Wealth_Wizard.Handlers
             {
                 TimeSpan timeSinceLastOpened = SystemClock.Now.Subtract(Settings.Default.LastOpened);
 
+                // We will add the new entry with this date
+                DateTime newSubDate = DateTime.Now;
                 switch (sub.BillingCycle)
                 {
                     case "Daily":
                         for (int i = 0; i < timeSinceLastOpened.Days; i++)
                         {
-                            DateTime newSubDate = Settings.Default.LastOpened.AddDays(i);
-                            if (sub.EndDate < newSubDate) return;
+                            newSubDate = Settings.Default.LastOpened.AddDays(i);
 
+                            if (sub.EndDate != null && sub.EndDate < newSubDate) return;
                             Entry subEntry = new Entry(
                                 newSubDate,
                                 sub.Type, sub.Name, sub.Amount);
 
+                            // This checks if the entry already exists, then ignore and continue
                             try
                             {
                                 AddNewEntry(subEntry);
@@ -198,12 +201,14 @@ namespace Wealth_Wizard.Handlers
                     case "Weekly":
                         for (int i = 0; i < timeSinceLastOpened.Days / 7; i += 7)
                         {
-                            DateTime newSubDate = Settings.Default.LastOpened.AddDays(i);
-                            if (sub.EndDate < newSubDate) return;
+                            newSubDate = Settings.Default.LastOpened.AddDays(i);
 
+                            if (sub.EndDate != null && sub.EndDate < newSubDate) return;
                             Entry subEntry = new Entry(
                                 newSubDate,
                                 sub.Type, sub.Name, sub.Amount);
+
+                            // This checks if the entry already exists, then ignore and continue
                             try
                             {
                                 AddNewEntry(subEntry);
@@ -215,18 +220,40 @@ namespace Wealth_Wizard.Handlers
                         }
                         break;
                     case "Monthly":
-                        
-                        break;
-                    case "Yearly":
-                        for (int i = 0; i <= SystemClock.Now.Year - Settings.Default.LastOpened.Year; i++)
+                        int totalMonths = 12 * (SystemClock.Now.Year - Settings.Default.LastOpened.Year);
+                        for (int i = 0; i < totalMonths; i++)
                         {
-                            DateTime newSubDate = sub.StartDate.AddYears(i);
-                            if (SystemClock.Now < newSubDate) return;
+                            newSubDate = Settings.Default.LastOpened.AddMonths(i);
 
+                            if (SystemClock.Now < newSubDate) return;
+                            if (sub.EndDate != null && sub.EndDate < newSubDate) return;
                             Entry subEntry = new Entry(
                                 newSubDate,
                                 sub.Type, sub.Name, sub.Amount);
 
+                            // This checks if the entry already exists, then ignore and continue
+                            try
+                            {
+                                AddNewEntry(subEntry);
+                            }
+                            catch (SQLiteException)
+                            {
+                                continue;
+                            }
+                        }
+                        break;
+                    case "Yearly":
+                        for (int i = 0; i <= SystemClock.Now.Year - Settings.Default.LastOpened.Year; i++)
+                        {
+                            newSubDate = Settings.Default.LastOpened.AddYears(i);
+                            if (SystemClock.Now < newSubDate) return;
+
+                            if (sub.EndDate != null && sub.EndDate < newSubDate) return;
+                            Entry subEntry = new Entry(
+                                newSubDate,
+                                sub.Type, sub.Name, sub.Amount);
+
+                            // This checks if the entry already exists, then ignore and continue
                             try
                             {
                                 AddNewEntry(subEntry);
@@ -239,6 +266,7 @@ namespace Wealth_Wizard.Handlers
                         break;
                 }
             }
+            
         }
     }
 }

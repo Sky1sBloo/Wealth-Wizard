@@ -44,8 +44,6 @@ namespace Wealth_Wizard
             string[] subscriptionColumns = { "amount AS 'Amount'", "billing_cycle AS 'Billing Cycle'" };
             DataGridV_Subscriptions.DataSource = DatabaseHandler.GetValuesFromTable("subscriptions", subscriptionColumns);
 
-            EntriesHandler.AddEntriesFromSubscriptions();
-
             // Display Entries
             DataGridV_Display.DataSource = EntriesHandler.GetEntriesAsTable(DatePick_FilterStartDate.Value,
                 DatePick_FilterEndDate.Value, selectedFilterType);
@@ -59,6 +57,10 @@ namespace Wealth_Wizard
             // Usually used when loading a new database
             if (refreshDatabaseSettings)
             {
+                // AddEntriesFromSubscriptions is here to prevent the entrieshandler for keeping adding
+                // these subscriptions after deleting
+                EntriesHandler.AddEntriesFromSubscriptions();
+
                 DatePick_EntryDate.Value = SystemClock.Now;
                 Lbl_DatabaseName.Text = Path.GetFileName(DatabaseHandler.databaseLocation);
 
@@ -69,7 +71,6 @@ namespace Wealth_Wizard
                     ComboB_EntryType.Items.Add(entryType);
                     ComboB_FilterType.Items.Add(entryType);
                 }
-                
 
                 ComboB_FilterType.Items.Add("All");
 
@@ -302,9 +303,10 @@ namespace Wealth_Wizard
         {
             // Opens the preference window
             PreferencesForm preferenceWindow = new PreferencesForm();
-            preferenceWindow.ShowDialog();
-
-            RefreshInformation(true);
+            if (preferenceWindow.ShowDialog() != DialogResult.Cancel)
+            {
+                RefreshInformation(true);
+            }
         }
 
         private void OpenDatabaseMenu_Click(object sender, EventArgs e)
@@ -351,9 +353,11 @@ namespace Wealth_Wizard
         private void ManageSubscriptions_Click(object sender, EventArgs e)
         {
             ManageSubscriptionsForm subscriptionsForm = new ManageSubscriptionsForm();
-            subscriptionsForm.ShowDialog();
 
-            RefreshInformation(true);
+            if (subscriptionsForm.ShowDialog() != DialogResult.Cancel)
+            {
+                RefreshInformation(true);
+            }
         }
 
         private void Display_FormClosing(object sender, FormClosingEventArgs e)
