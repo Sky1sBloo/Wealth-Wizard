@@ -15,6 +15,7 @@ using Wealth_Wizard.Handlers;
 using Wealth_Wizard.HelperForms;
 using Wealth_Wizard.DisplayForms;
 using Wealth_Wizard.Properties;
+using System.Data.SQLite;
 
 namespace Wealth_Wizard
 {
@@ -30,27 +31,6 @@ namespace Wealth_Wizard
         {
             InitializeComponent();
 
-            // Check if default database location exists
-            string fileLocation = (Settings.Default.DefaultDatabase.Replace(@"data source=", ""));
-
-            if (File.Exists(fileLocation))
-            {
-                DatabaseHandler.databaseLocation = Settings.Default.DefaultDatabase;
-            }
-            else
-            {
-                NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
-
-                if (newDatabaseForm.ShowDialog() != DialogResult.OK)
-                {
-                    System.Environment.Exit(1);
-                    return;
-                }
-
-                // Save into preferences
-                Settings.Default.DefaultDatabase = DatabaseHandler.databaseLocation;
-            }
-
             RefreshInformation(true);  // Refresh the page with all the information
         }
 
@@ -64,8 +44,10 @@ namespace Wealth_Wizard
             string[] subscriptionColumns = { "amount AS 'Amount'", "billing_cycle AS 'Billing Cycle'" };
             DataGridV_Subscriptions.DataSource = DatabaseHandler.GetValuesFromTable("subscriptions", subscriptionColumns);
 
+            EntriesHandler.AddEntriesFromSubscriptions();
+
             // Display Entries
-            DataGridV_Display.DataSource = EntriesHandler.GetEntries(DatePick_FilterStartDate.Value,
+            DataGridV_Display.DataSource = EntriesHandler.GetEntriesAsTable(DatePick_FilterStartDate.Value,
                 DatePick_FilterEndDate.Value, selectedFilterType);
 
             // Disable or enable buttons when selection is available
@@ -77,6 +59,7 @@ namespace Wealth_Wizard
             // Usually used when loading a new database
             if (refreshDatabaseSettings)
             {
+                DatePick_EntryDate.Value = SystemClock.Now;
                 Lbl_DatabaseName.Text = Path.GetFileName(DatabaseHandler.databaseLocation);
 
                 ComboB_EntryType.Items.Clear();
@@ -86,6 +69,7 @@ namespace Wealth_Wizard
                     ComboB_EntryType.Items.Add(entryType);
                     ComboB_FilterType.Items.Add(entryType);
                 }
+                
 
                 ComboB_FilterType.Items.Add("All");
 
@@ -102,13 +86,36 @@ namespace Wealth_Wizard
         public bool IsEntryDataUploadable(Entry entry)
         {
             // Check if some of the input fields are empty
-            if (entry._name == "")
+            if (entry.Name == "")
             {
                 MessageBox.Show("Add Entry Error, 'Name' field is empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Adds new entry with message dialog
+        /// </summary>
+        /// <param name="newEntry"></param>
+        /// <exception cref="Exception"></exception>
+        private void AddEntry(Entry newEntry)
+        {
+            try
+            {
+                EntriesHandler.AddNewEntry(newEntry);
+            }
+            catch (SQLiteException)
+            {
+                DialogResult existingEntryError = MessageBox.Show("Entry matches an existing entry",
+                    "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         /// <summary>
@@ -179,18 +186,18 @@ namespace Wealth_Wizard
             {
                 case 0:
                     // Get current year
-                    startDate = new DateTime(DateTime.Now.Year, 1, 1);
-                    endDate = new DateTime(DateTime.Now.Year, 12, 31);
+                    startDate = new DateTime(SystemClock.Now.Year, 1, 1);
+                    endDate = new DateTime(SystemClock.Now.Year, 12, 31);
                     break;
                 case 1:
                     // Get current month
-                    startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                    endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month,
+                    startDate = new DateTime(SystemClock.Now.Year, SystemClock.Now.Month, 1);
+                    endDate = new DateTime(SystemClock.Now.Year, SystemClock.Now.Month,
                         DateTime.DaysInMonth(startDate.Year, startDate.Month));
                     break;
                 case 2:
                     // Get current week
-                    startDate = DateTime.Now.AddDays(DayOfWeek.Sunday - DateTime.Now.DayOfWeek);
+                    startDate = SystemClock.Now.AddDays(DayOfWeek.Sunday - SystemClock.Now.DayOfWeek);
                     endDate = startDate.AddDays(7);
                     break;
                 default:
@@ -223,7 +230,7 @@ namespace Wealth_Wizard
 
             if (!IsEntryDataUploadable(newEntry)) return;
 
-            EntriesHandler.AddNewEntry(newEntry);
+            AddEntry(newEntry);
             RefreshInformation();
         }
 
@@ -329,7 +336,7 @@ namespace Wealth_Wizard
             if (editEntryForm.DialogResult == DialogResult.Cancel) return;
             
             Entry newEntry = editEntryForm.GetEntryValues();
-            EntriesHandler.AddNewEntry(newEntry);
+            AddEntry(newEntry);
             RefreshInformation();
         }
 
@@ -351,7 +358,7 @@ namespace Wealth_Wizard
 
         private void Display_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Settings.Default.LastOpened = DateTime.Now;
+            Settings.Default.LastOpened = SystemClock.Now;
             Settings.Default.Save();
         }
     }

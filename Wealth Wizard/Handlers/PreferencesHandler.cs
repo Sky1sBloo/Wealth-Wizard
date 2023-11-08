@@ -15,14 +15,14 @@ namespace Wealth_Wizard.Handlers
     {
         public static void SavePreferences(Preferences preferences)
         {
-            Settings.Default.DefaultDatabase = preferences._defaultDatabase;
+            Settings.Default.DefaultDatabase = preferences.DefaultDatabase;
             Settings.Default.Save();
         }
 
         public static Preferences LoadPreferences()
         {
             Preferences preferences = new Preferences();
-            preferences._defaultDatabase = Settings.Default.DefaultDatabase;
+            preferences.DefaultDatabase = Settings.Default.DefaultDatabase;
             return preferences;
         }
     }

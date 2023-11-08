@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace Wealth_Wizard.Handlers
 {
@@ -26,24 +28,14 @@ namespace Wealth_Wizard.Handlers
             string queryInsert = "INSERT INTO subscriptions VALUES(@start_date, @end_date, @type, @name, @amount, @billing_cycle)";
 
             SQLiteCommand cmd = new SQLiteCommand(queryInsert, con);
-            cmd.Parameters.AddWithValue("@start_date", subscription._startDate);
-            cmd.Parameters.AddWithValue("@end_date", subscription._endDate);
-            cmd.Parameters.AddWithValue("@type", subscription._type);
-            cmd.Parameters.AddWithValue("@name", subscription._name);
-            cmd.Parameters.AddWithValue("@amount", subscription._amount);
-            cmd.Parameters.AddWithValue("@billing_cycle", subscription._billingCycle);
+            cmd.Parameters.AddWithValue("@start_date", subscription.StartDate);
+            cmd.Parameters.AddWithValue("@end_date", subscription.EndDate);
+            cmd.Parameters.AddWithValue("@type", subscription.Type);
+            cmd.Parameters.AddWithValue("@name", subscription.Name);
+            cmd.Parameters.AddWithValue("@amount", subscription.Amount);
+            cmd.Parameters.AddWithValue("@billing_cycle", subscription.BillingCycle);
 
-            try 
-            {
-                cmd.ExecuteNonQuery();
-            }
-            catch (SQLiteException )
-            {
-                DialogResult existingEntryError = MessageBox.Show("Subscription matches an existing entry",
-                    "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            
+            cmd.ExecuteNonQuery();
 
             con.Close();
         }
@@ -65,17 +57,17 @@ namespace Wealth_Wizard.Handlers
                 "billing_cycle = @old_billing_cycle";
 
             SQLiteCommand cmd = new SQLiteCommand(queryUpdate, con);
-            cmd.Parameters.AddWithValue("@new_start_date", newSub._startDate);
-            cmd.Parameters.AddWithValue("@new_end_date", newSub._endDate);
-            cmd.Parameters.AddWithValue("@new_type", newSub._type);
-            cmd.Parameters.AddWithValue("@new_name", newSub._name);
-            cmd.Parameters.AddWithValue("@new_amount", newSub._amount);
-            cmd.Parameters.AddWithValue("@new_billing_cycle", newSub._billingCycle);
+            cmd.Parameters.AddWithValue("@new_start_date", newSub.StartDate);
+            cmd.Parameters.AddWithValue("@new_end_date", newSub.EndDate);
+            cmd.Parameters.AddWithValue("@new_type", newSub.Type);
+            cmd.Parameters.AddWithValue("@new_name", newSub.Name);
+            cmd.Parameters.AddWithValue("@new_amount", newSub.Amount);
+            cmd.Parameters.AddWithValue("@new_billing_cycle", newSub.BillingCycle);
 
-            cmd.Parameters.AddWithValue("@old_type", oldSub._type);
-            cmd.Parameters.AddWithValue("@old_name", oldSub._name);
-            cmd.Parameters.AddWithValue("@old_amount", oldSub._amount);
-            cmd.Parameters.AddWithValue("@old_billing_cycle", oldSub._billingCycle);
+            cmd.Parameters.AddWithValue("@old_type", oldSub.Type);
+            cmd.Parameters.AddWithValue("@old_name", oldSub.Name);
+            cmd.Parameters.AddWithValue("@old_amount", oldSub.Amount);
+            cmd.Parameters.AddWithValue("@old_billing_cycle", oldSub.BillingCycle);
 
             cmd.ExecuteNonQuery();
 
@@ -95,14 +87,40 @@ namespace Wealth_Wizard.Handlers
                 "WHERE entry_type = @type AND name = @name AND amount = @amount AND billing_cycle = @billing_cycle";
 
             SQLiteCommand cmd = new SQLiteCommand(queryDelete, con);
-            cmd.Parameters.AddWithValue("@type", sub._type);
-            cmd.Parameters.AddWithValue("@name", sub._name);
-            cmd.Parameters.AddWithValue("@amount", sub._amount);
-            cmd.Parameters.AddWithValue("@billing_cycle", sub._billingCycle);
+            cmd.Parameters.AddWithValue("@type", sub.Type);
+            cmd.Parameters.AddWithValue("@name", sub.Name);
+            cmd.Parameters.AddWithValue("@amount", sub.Amount);
+            cmd.Parameters.AddWithValue("@billing_cycle", sub.BillingCycle);
 
             cmd.ExecuteNonQuery();
 
             con.Close();
+        }
+
+        /// <summary>
+        /// Retrieves all subscriptions in the database
+        /// </summary>
+        /// <returns>Returns a list of subscriptions</returns>
+        public static List<Subscription> GetAllSubscriptions() 
+        {
+            DataTable subsTable = DatabaseHandler.GetAllValuesFromTable("subscriptions");
+            List<Subscription> subs = new List<Subscription>();
+
+            foreach (DataRow row in subsTable.Rows)
+            {
+                Subscription sub = new Subscription(
+                    row.Field<DateTime>("start_date"),
+                    row.Field<DateTime>("end_date"),
+                    row.Field<string>("entry_type"),
+                    row.Field<string>("name"),
+                    (float)row.Field<double>("amount"),
+                    row.Field<string>("billing_cycle")
+                    );
+
+                subs.Add(sub);
+            }
+
+            return subs;
         }
     }
 }

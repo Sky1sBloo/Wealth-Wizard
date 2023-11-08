@@ -42,17 +42,7 @@ namespace Wealth_Wizard.Handlers
             SQLiteCommand cmd = new SQLiteCommand(queryAdd, con);
             cmd.Parameters.AddWithValue("@entry_type", newType);
 
-            try
-            {
-                cmd.ExecuteNonQuery();
-            }
-            catch (SQLiteException)
-            {
-                DialogResult existingEntryError = MessageBox.Show("Entry matches an existing type",
-                    "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            
+            cmd.ExecuteNonQuery();
 
             con.Close();
         }

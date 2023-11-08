@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Wealth_Wizard.HelperForms;
 using Wealth_Wizard.Handlers;
+using System.Data.SQLite;
 
 namespace Wealth_Wizard
 {
@@ -41,7 +42,7 @@ namespace Wealth_Wizard
         /// </summary>
         public void SavePreferences()
         {
-            preferences._defaultDatabase = @"data source=" + TxtB_DefaultDatabase.Text;
+            preferences.DefaultDatabase = @"data source=" + TxtB_DefaultDatabase.Text;
 
             PreferencesHandler.SavePreferences(preferences);
         }
@@ -52,7 +53,7 @@ namespace Wealth_Wizard
         public void LoadPreferences()
         {
             preferences = PreferencesHandler.LoadPreferences();
-            TxtB_DefaultDatabase.Text = preferences._defaultDatabase.Replace(@"data source=", "");
+            TxtB_DefaultDatabase.Text = preferences.DefaultDatabase.Replace(@"data source=", "");
         }
 
         /// <summary>
@@ -80,7 +81,16 @@ namespace Wealth_Wizard
             InputMessageBox entryTypeValue = new InputMessageBox("New Type Name");
             if (entryTypeValue.ShowDialog() == DialogResult.OK)
             {
-                EntryTypesHandler.AddEntryType(entryTypeValue._value);
+                try
+                {
+                    EntryTypesHandler.AddEntryType(entryTypeValue._value);
+                }
+                catch (SQLiteException)
+                {
+                    DialogResult existingEntryError = MessageBox.Show("Entry matches an existing type",
+                        "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
             LoadComboBoxTypes();
