@@ -14,12 +14,12 @@ Open the .sln file and press F5.
 Executable file is in the bin folder.
 
 ## Testing
-**Running with different date**
-Open the Testing/TestDate.bat and enter the needed values.\
+**Running with different date**\
+Open the Testing/TestDate.bat and enter the needed values.
 Alternatively, you can pass arguments with: `-setdate [year] [month] [day]`
 
 
-## Contributioons
+## Contributions
 Any contributions are welcome in this project. If you want to suggest anything or report any bugs, you are free to add
 [Issues](https://github.com/Ultra8Gaming/Wealth-Wizard/issues) or contact me via email.
 Please make your suggestions clear and concise and ensure that all dependencies are properly documented.
