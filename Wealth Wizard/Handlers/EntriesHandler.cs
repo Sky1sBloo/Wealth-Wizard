@@ -30,7 +30,8 @@ namespace Wealth_Wizard.Handlers
             con.Open();
 
             string query = "SELECT entry_date AS 'Date', type AS 'Type', name AS 'Name', amount AS 'Amount' " +
-                "FROM entries;";
+                "FROM entries " +
+                "WHERE entry_date >= @start_date AND entry_date <= @end_date";
 
             if (filterSpecificType != "All" && filterSpecificType != null)
             {
