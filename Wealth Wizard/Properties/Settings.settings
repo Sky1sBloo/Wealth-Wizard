@@ -8,5 +8,14 @@
     <Setting Name="LastOpened" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="ExcelCellFormatStartX" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="ExcelCellFormatStartY" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="ExcelSheetName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Entries</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

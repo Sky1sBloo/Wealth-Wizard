@@ -28,34 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.GroupB_OnStart = new System.Windows.Forms.GroupBox();
             this.Btn_BrowseDatabase = new System.Windows.Forms.Button();
             this.TxtB_DefaultDatabase = new System.Windows.Forms.TextBox();
             this.Lbl_DefaultDatabase = new System.Windows.Forms.Label();
-            this.Lbl_Defaults = new System.Windows.Forms.Label();
-            this.Panel_EntryTypes = new System.Windows.Forms.Panel();
+            this.GroupB_EntryTypes = new System.Windows.Forms.GroupBox();
             this.Lbl_Notice = new System.Windows.Forms.Label();
-            this.Lbl_EntryTypesHeader = new System.Windows.Forms.Label();
-            this.Btn_DeleteEntryType = new System.Windows.Forms.Button();
             this.ListB_EntryTypes = new System.Windows.Forms.ListBox();
-            this.Btn_EditEntryType = new System.Windows.Forms.Button();
             this.Btn_AddEntryType = new System.Windows.Forms.Button();
+            this.Btn_DeleteEntryType = new System.Windows.Forms.Button();
+            this.Btn_EditEntryType = new System.Windows.Forms.Button();
             this.TabController = new System.Windows.Forms.TabControl();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.GroupB_Excel = new System.Windows.Forms.GroupBox();
+            this.Num_StartingCellY = new System.Windows.Forms.NumericUpDown();
+            this.Num_StartingCellX = new System.Windows.Forms.NumericUpDown();
+            this.Lbl_StartingCell = new System.Windows.Forms.Label();
             this.Btn_Ok = new System.Windows.Forms.Button();
             this.Btn_Cancel = new System.Windows.Forms.Button();
             this.Btn_Apply = new System.Windows.Forms.Button();
+            this.ToolTip_StartingInfo = new System.Windows.Forms.ToolTip(this.components);
+            this.Lbl_SheetName = new System.Windows.Forms.Label();
+            this.TxtB_SheetName = new System.Windows.Forms.TextBox();
             this.tabPage1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.Panel_EntryTypes.SuspendLayout();
+            this.GroupB_OnStart.SuspendLayout();
+            this.GroupB_EntryTypes.SuspendLayout();
             this.TabController.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.GroupB_Excel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Num_StartingCellY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Num_StartingCellX)).BeginInit();
             this.SuspendLayout();
             // 
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
-            this.tabPage1.Controls.Add(this.panel1);
-            this.tabPage1.Controls.Add(this.Panel_EntryTypes);
+            this.tabPage1.Controls.Add(this.GroupB_OnStart);
+            this.tabPage1.Controls.Add(this.GroupB_EntryTypes);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -64,20 +75,21 @@
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // panel1
+            // GroupB_OnStart
             // 
-            this.panel1.Controls.Add(this.Btn_BrowseDatabase);
-            this.panel1.Controls.Add(this.TxtB_DefaultDatabase);
-            this.panel1.Controls.Add(this.Lbl_DefaultDatabase);
-            this.panel1.Controls.Add(this.Lbl_Defaults);
-            this.panel1.Location = new System.Drawing.Point(6, 6);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(555, 131);
-            this.panel1.TabIndex = 7;
+            this.GroupB_OnStart.Controls.Add(this.Btn_BrowseDatabase);
+            this.GroupB_OnStart.Controls.Add(this.TxtB_DefaultDatabase);
+            this.GroupB_OnStart.Controls.Add(this.Lbl_DefaultDatabase);
+            this.GroupB_OnStart.Location = new System.Drawing.Point(4, 3);
+            this.GroupB_OnStart.Name = "GroupB_OnStart";
+            this.GroupB_OnStart.Size = new System.Drawing.Size(564, 65);
+            this.GroupB_OnStart.TabIndex = 9;
+            this.GroupB_OnStart.TabStop = false;
+            this.GroupB_OnStart.Text = "On Start";
             // 
             // Btn_BrowseDatabase
             // 
-            this.Btn_BrowseDatabase.Location = new System.Drawing.Point(466, 17);
+            this.Btn_BrowseDatabase.Location = new System.Drawing.Point(474, 19);
             this.Btn_BrowseDatabase.Name = "Btn_BrowseDatabase";
             this.Btn_BrowseDatabase.Size = new System.Drawing.Size(75, 23);
             this.Btn_BrowseDatabase.TabIndex = 3;
@@ -87,7 +99,7 @@
             // 
             // TxtB_DefaultDatabase
             // 
-            this.TxtB_DefaultDatabase.Location = new System.Drawing.Point(107, 17);
+            this.TxtB_DefaultDatabase.Location = new System.Drawing.Point(115, 19);
             this.TxtB_DefaultDatabase.Name = "TxtB_DefaultDatabase";
             this.TxtB_DefaultDatabase.Size = new System.Drawing.Size(353, 20);
             this.TxtB_DefaultDatabase.TabIndex = 2;
@@ -95,85 +107,47 @@
             // Lbl_DefaultDatabase
             // 
             this.Lbl_DefaultDatabase.AutoSize = true;
-            this.Lbl_DefaultDatabase.Location = new System.Drawing.Point(3, 22);
+            this.Lbl_DefaultDatabase.Location = new System.Drawing.Point(11, 24);
             this.Lbl_DefaultDatabase.Name = "Lbl_DefaultDatabase";
             this.Lbl_DefaultDatabase.Size = new System.Drawing.Size(98, 13);
             this.Lbl_DefaultDatabase.TabIndex = 1;
             this.Lbl_DefaultDatabase.Text = "Database on open:";
+            this.ToolTip_StartingInfo.SetToolTip(this.Lbl_DefaultDatabase, "Sets the default database on Open");
             // 
-            // Lbl_Defaults
+            // GroupB_EntryTypes
             // 
-            this.Lbl_Defaults.AutoSize = true;
-            this.Lbl_Defaults.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_Defaults.Location = new System.Drawing.Point(3, 0);
-            this.Lbl_Defaults.Name = "Lbl_Defaults";
-            this.Lbl_Defaults.Size = new System.Drawing.Size(54, 13);
-            this.Lbl_Defaults.TabIndex = 0;
-            this.Lbl_Defaults.Text = "Defaults";
-            // 
-            // Panel_EntryTypes
-            // 
-            this.Panel_EntryTypes.Controls.Add(this.Lbl_Notice);
-            this.Panel_EntryTypes.Controls.Add(this.Lbl_EntryTypesHeader);
-            this.Panel_EntryTypes.Controls.Add(this.Btn_DeleteEntryType);
-            this.Panel_EntryTypes.Controls.Add(this.ListB_EntryTypes);
-            this.Panel_EntryTypes.Controls.Add(this.Btn_EditEntryType);
-            this.Panel_EntryTypes.Controls.Add(this.Btn_AddEntryType);
-            this.Panel_EntryTypes.Location = new System.Drawing.Point(6, 143);
-            this.Panel_EntryTypes.Name = "Panel_EntryTypes";
-            this.Panel_EntryTypes.Size = new System.Drawing.Size(555, 105);
-            this.Panel_EntryTypes.TabIndex = 6;
+            this.GroupB_EntryTypes.Controls.Add(this.Lbl_Notice);
+            this.GroupB_EntryTypes.Controls.Add(this.ListB_EntryTypes);
+            this.GroupB_EntryTypes.Controls.Add(this.Btn_AddEntryType);
+            this.GroupB_EntryTypes.Controls.Add(this.Btn_DeleteEntryType);
+            this.GroupB_EntryTypes.Controls.Add(this.Btn_EditEntryType);
+            this.GroupB_EntryTypes.Location = new System.Drawing.Point(4, 74);
+            this.GroupB_EntryTypes.Name = "GroupB_EntryTypes";
+            this.GroupB_EntryTypes.Size = new System.Drawing.Size(564, 117);
+            this.GroupB_EntryTypes.TabIndex = 8;
+            this.GroupB_EntryTypes.TabStop = false;
+            this.GroupB_EntryTypes.Text = "Entry Types";
             // 
             // Lbl_Notice
             // 
             this.Lbl_Notice.AutoSize = true;
-            this.Lbl_Notice.Location = new System.Drawing.Point(83, 0);
+            this.Lbl_Notice.Location = new System.Drawing.Point(255, 19);
             this.Lbl_Notice.Name = "Lbl_Notice";
             this.Lbl_Notice.Size = new System.Drawing.Size(179, 13);
             this.Lbl_Notice.TabIndex = 6;
             this.Lbl_Notice.Text = "*EntryTypes is localized to Database";
             // 
-            // Lbl_EntryTypesHeader
-            // 
-            this.Lbl_EntryTypesHeader.AutoSize = true;
-            this.Lbl_EntryTypesHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_EntryTypesHeader.Location = new System.Drawing.Point(3, 0);
-            this.Lbl_EntryTypesHeader.Name = "Lbl_EntryTypesHeader";
-            this.Lbl_EntryTypesHeader.Size = new System.Drawing.Size(74, 13);
-            this.Lbl_EntryTypesHeader.TabIndex = 1;
-            this.Lbl_EntryTypesHeader.Text = "Entry Types";
-            // 
-            // Btn_DeleteEntryType
-            // 
-            this.Btn_DeleteEntryType.Location = new System.Drawing.Point(174, 75);
-            this.Btn_DeleteEntryType.Name = "Btn_DeleteEntryType";
-            this.Btn_DeleteEntryType.Size = new System.Drawing.Size(75, 23);
-            this.Btn_DeleteEntryType.TabIndex = 5;
-            this.Btn_DeleteEntryType.Text = "Delete";
-            this.Btn_DeleteEntryType.UseVisualStyleBackColor = true;
-            this.Btn_DeleteEntryType.Click += new System.EventHandler(this.Btn_DeleteEntryType_Click);
-            // 
             // ListB_EntryTypes
             // 
             this.ListB_EntryTypes.FormattingEnabled = true;
-            this.ListB_EntryTypes.Location = new System.Drawing.Point(6, 16);
+            this.ListB_EntryTypes.Location = new System.Drawing.Point(6, 19);
             this.ListB_EntryTypes.Name = "ListB_EntryTypes";
             this.ListB_EntryTypes.Size = new System.Drawing.Size(162, 82);
             this.ListB_EntryTypes.TabIndex = 2;
             // 
-            // Btn_EditEntryType
-            // 
-            this.Btn_EditEntryType.Location = new System.Drawing.Point(174, 46);
-            this.Btn_EditEntryType.Name = "Btn_EditEntryType";
-            this.Btn_EditEntryType.Size = new System.Drawing.Size(75, 23);
-            this.Btn_EditEntryType.TabIndex = 4;
-            this.Btn_EditEntryType.Text = "Edit";
-            this.Btn_EditEntryType.UseVisualStyleBackColor = true;
-            this.Btn_EditEntryType.Click += new System.EventHandler(this.Btn_EditEntryType_Click);
-            // 
             // Btn_AddEntryType
             // 
-            this.Btn_AddEntryType.Location = new System.Drawing.Point(174, 16);
+            this.Btn_AddEntryType.Location = new System.Drawing.Point(174, 19);
             this.Btn_AddEntryType.Name = "Btn_AddEntryType";
             this.Btn_AddEntryType.Size = new System.Drawing.Size(75, 23);
             this.Btn_AddEntryType.TabIndex = 3;
@@ -181,14 +155,114 @@
             this.Btn_AddEntryType.UseVisualStyleBackColor = true;
             this.Btn_AddEntryType.Click += new System.EventHandler(this.Btn_AddEntryType_Click);
             // 
+            // Btn_DeleteEntryType
+            // 
+            this.Btn_DeleteEntryType.Location = new System.Drawing.Point(174, 78);
+            this.Btn_DeleteEntryType.Name = "Btn_DeleteEntryType";
+            this.Btn_DeleteEntryType.Size = new System.Drawing.Size(75, 23);
+            this.Btn_DeleteEntryType.TabIndex = 5;
+            this.Btn_DeleteEntryType.Text = "Delete";
+            this.Btn_DeleteEntryType.UseVisualStyleBackColor = true;
+            this.Btn_DeleteEntryType.Click += new System.EventHandler(this.Btn_DeleteEntryType_Click);
+            // 
+            // Btn_EditEntryType
+            // 
+            this.Btn_EditEntryType.Location = new System.Drawing.Point(174, 49);
+            this.Btn_EditEntryType.Name = "Btn_EditEntryType";
+            this.Btn_EditEntryType.Size = new System.Drawing.Size(75, 23);
+            this.Btn_EditEntryType.TabIndex = 4;
+            this.Btn_EditEntryType.Text = "Edit";
+            this.Btn_EditEntryType.UseVisualStyleBackColor = true;
+            this.Btn_EditEntryType.Click += new System.EventHandler(this.Btn_EditEntryType_Click);
+            // 
             // TabController
             // 
             this.TabController.Controls.Add(this.tabPage1);
+            this.TabController.Controls.Add(this.tabPage2);
             this.TabController.Location = new System.Drawing.Point(12, 12);
             this.TabController.Name = "TabController";
             this.TabController.SelectedIndex = 0;
             this.TabController.Size = new System.Drawing.Size(582, 353);
             this.TabController.TabIndex = 0;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.GroupB_Excel);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(574, 327);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Export";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // GroupB_Excel
+            // 
+            this.GroupB_Excel.Controls.Add(this.TxtB_SheetName);
+            this.GroupB_Excel.Controls.Add(this.Lbl_SheetName);
+            this.GroupB_Excel.Controls.Add(this.Num_StartingCellY);
+            this.GroupB_Excel.Controls.Add(this.Num_StartingCellX);
+            this.GroupB_Excel.Controls.Add(this.Lbl_StartingCell);
+            this.GroupB_Excel.Location = new System.Drawing.Point(3, 6);
+            this.GroupB_Excel.Name = "GroupB_Excel";
+            this.GroupB_Excel.Size = new System.Drawing.Size(565, 82);
+            this.GroupB_Excel.TabIndex = 0;
+            this.GroupB_Excel.TabStop = false;
+            this.GroupB_Excel.Text = "Excel";
+            // 
+            // Num_StartingCellY
+            // 
+            this.Num_StartingCellY.Location = new System.Drawing.Point(119, 52);
+            this.Num_StartingCellY.Maximum = new decimal(new int[] {
+            16384,
+            0,
+            0,
+            0});
+            this.Num_StartingCellY.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.Num_StartingCellY.Name = "Num_StartingCellY";
+            this.Num_StartingCellY.Size = new System.Drawing.Size(34, 20);
+            this.Num_StartingCellY.TabIndex = 2;
+            this.Num_StartingCellY.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // Num_StartingCellX
+            // 
+            this.Num_StartingCellX.Location = new System.Drawing.Point(78, 52);
+            this.Num_StartingCellX.Maximum = new decimal(new int[] {
+            1048576,
+            0,
+            0,
+            0});
+            this.Num_StartingCellX.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.Num_StartingCellX.Name = "Num_StartingCellX";
+            this.Num_StartingCellX.Size = new System.Drawing.Size(35, 20);
+            this.Num_StartingCellX.TabIndex = 1;
+            this.Num_StartingCellX.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // Lbl_StartingCell
+            // 
+            this.Lbl_StartingCell.AutoSize = true;
+            this.Lbl_StartingCell.Location = new System.Drawing.Point(6, 54);
+            this.Lbl_StartingCell.Name = "Lbl_StartingCell";
+            this.Lbl_StartingCell.Size = new System.Drawing.Size(66, 13);
+            this.Lbl_StartingCell.TabIndex = 0;
+            this.Lbl_StartingCell.Text = "Starting Cell:";
+            this.ToolTip_StartingInfo.SetToolTip(this.Lbl_StartingCell, "Sets the starting top left cell of all your info uploaded to the Excel.");
             // 
             // Btn_Ok
             // 
@@ -220,6 +294,22 @@
             this.Btn_Apply.UseVisualStyleBackColor = true;
             this.Btn_Apply.Click += new System.EventHandler(this.Btn_Apply_Click);
             // 
+            // Lbl_SheetName
+            // 
+            this.Lbl_SheetName.AutoSize = true;
+            this.Lbl_SheetName.Location = new System.Drawing.Point(6, 29);
+            this.Lbl_SheetName.Name = "Lbl_SheetName";
+            this.Lbl_SheetName.Size = new System.Drawing.Size(69, 13);
+            this.Lbl_SheetName.TabIndex = 3;
+            this.Lbl_SheetName.Text = "Sheet Name:";
+            // 
+            // TxtB_SheetName
+            // 
+            this.TxtB_SheetName.Location = new System.Drawing.Point(78, 26);
+            this.TxtB_SheetName.Name = "TxtB_SheetName";
+            this.TxtB_SheetName.Size = new System.Drawing.Size(100, 20);
+            this.TxtB_SheetName.TabIndex = 4;
+            // 
             // PreferencesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -233,11 +323,16 @@
             this.Name = "PreferencesForm";
             this.Text = "Preferences";
             this.tabPage1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.Panel_EntryTypes.ResumeLayout(false);
-            this.Panel_EntryTypes.PerformLayout();
+            this.GroupB_OnStart.ResumeLayout(false);
+            this.GroupB_OnStart.PerformLayout();
+            this.GroupB_EntryTypes.ResumeLayout(false);
+            this.GroupB_EntryTypes.PerformLayout();
             this.TabController.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.GroupB_Excel.ResumeLayout(false);
+            this.GroupB_Excel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Num_StartingCellY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Num_StartingCellX)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -245,15 +340,11 @@
         #endregion
 
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Panel Panel_EntryTypes;
-        private System.Windows.Forms.Label Lbl_EntryTypesHeader;
         private System.Windows.Forms.Button Btn_DeleteEntryType;
         private System.Windows.Forms.ListBox ListB_EntryTypes;
         private System.Windows.Forms.Button Btn_EditEntryType;
         private System.Windows.Forms.Button Btn_AddEntryType;
         private System.Windows.Forms.TabControl TabController;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label Lbl_Defaults;
         private System.Windows.Forms.Label Lbl_DefaultDatabase;
         private System.Windows.Forms.TextBox TxtB_DefaultDatabase;
         private System.Windows.Forms.Button Btn_BrowseDatabase;
@@ -261,5 +352,15 @@
         private System.Windows.Forms.Button Btn_Cancel;
         private System.Windows.Forms.Button Btn_Apply;
         private System.Windows.Forms.Label Lbl_Notice;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.GroupBox GroupB_EntryTypes;
+        private System.Windows.Forms.GroupBox GroupB_OnStart;
+        private System.Windows.Forms.GroupBox GroupB_Excel;
+        private System.Windows.Forms.Label Lbl_StartingCell;
+        private System.Windows.Forms.ToolTip ToolTip_StartingInfo;
+        private System.Windows.Forms.NumericUpDown Num_StartingCellX;
+        private System.Windows.Forms.NumericUpDown Num_StartingCellY;
+        private System.Windows.Forms.Label Lbl_SheetName;
+        private System.Windows.Forms.TextBox TxtB_SheetName;
     }
 }

@@ -10,9 +10,12 @@ using System.Windows.Forms;
 
 namespace Wealth_Wizard.HelperForms
 {
+    /// <summary>
+    /// Creates a dialog message box that accepts a text
+    /// </summary>
     public partial class InputMessageBox : Form
     {
-        public string _value;
+        public string Value;
         public InputMessageBox(string message = "", string defaultValue = "", string title = "Message Box")
         {
             InitializeComponent();
@@ -24,7 +27,7 @@ namespace Wealth_Wizard.HelperForms
 
         private void Btn_Ok_Click(object sender, EventArgs e)
         {
-            _value = TxtB_Value.Text;
+            Value = TxtB_Value.Text;
             DialogResult = DialogResult.OK;
             Close();
         }

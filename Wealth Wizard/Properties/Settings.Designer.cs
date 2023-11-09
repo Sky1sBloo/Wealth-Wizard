@@ -45,5 +45,41 @@ namespace Wealth_Wizard.Properties {
                 this["LastOpened"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int ExcelCellFormatStartX {
+            get {
+                return ((int)(this["ExcelCellFormatStartX"]));
+            }
+            set {
+                this["ExcelCellFormatStartX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int ExcelCellFormatStartY {
+            get {
+                return ((int)(this["ExcelCellFormatStartY"]));
+            }
+            set {
+                this["ExcelCellFormatStartY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Entries")]
+        public string ExcelSheetName {
+            get {
+                return ((string)(this["ExcelSheetName"]));
+            }
+            set {
+                this["ExcelSheetName"] = value;
+            }
+        }
     }
 }

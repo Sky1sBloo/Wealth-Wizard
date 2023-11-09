@@ -16,6 +16,9 @@ namespace Wealth_Wizard.Handlers
         public static void SavePreferences(Preferences preferences)
         {
             Settings.Default.DefaultDatabase = preferences.DefaultDatabase;
+            Settings.Default.ExcelSheetName = preferences.ExcelSheetName;
+            Settings.Default.ExcelCellFormatStartX = preferences.ExcelStartX;
+            Settings.Default.ExcelCellFormatStartY = preferences.ExcelStartY;
             Settings.Default.Save();
         }
 
@@ -23,6 +26,9 @@ namespace Wealth_Wizard.Handlers
         {
             Preferences preferences = new Preferences();
             preferences.DefaultDatabase = Settings.Default.DefaultDatabase;
+            preferences.ExcelSheetName = Settings.Default.ExcelSheetName;
+            preferences.ExcelStartX = Settings.Default.ExcelCellFormatStartX;
+            preferences.ExcelStartY = Settings.Default.ExcelCellFormatStartY;
             return preferences;
         }
     }

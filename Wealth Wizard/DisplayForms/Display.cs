@@ -347,6 +347,19 @@ namespace Wealth_Wizard
             EditEntry();
         }
 
+        private void ExportToExcelMenu_Click(object sender, EventArgs e)
+        {
+            InputMessageBox inputMessageBox = new InputMessageBox("Sheet name", Settings.Default.ExcelSheetName, "Export to Excel");
+            
+
+            if (inputMessageBox.ShowDialog() == DialogResult.OK)
+            {
+                ExcelHandler.LoadEntries(EntriesHandler.GetEntriesAsTable(DatePick_FilterStartDate.Value,
+                DatePick_FilterEndDate.Value, selectedFilterType),
+                inputMessageBox.Value);
+            }
+        }
+
         /// <summary>
         /// Handles the click event for the "Manage Subscriptions" menu item.
         /// </summary>
@@ -365,5 +378,7 @@ namespace Wealth_Wizard
             Settings.Default.LastOpened = SystemClock.Now;
             Settings.Default.Save();
         }
+
+        
     }
 }
