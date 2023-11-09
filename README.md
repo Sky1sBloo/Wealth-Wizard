@@ -6,6 +6,7 @@ Wealth Wizard is a finance tracker app that simplifies the interface of your exp
 This application lets you:
  - Insert and manage entries within a database
  - Manage subscriptions that automatically adds entries
+ - Export listed entries to excel
 
 ## Run in Visual Studio
 Open the .sln file and press F5.
