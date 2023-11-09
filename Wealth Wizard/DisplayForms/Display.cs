@@ -303,10 +303,8 @@ namespace Wealth_Wizard
         {
             // Opens the preference window
             PreferencesForm preferenceWindow = new PreferencesForm();
-            if (preferenceWindow.ShowDialog() != DialogResult.Cancel)
-            {
-                RefreshInformation(true);
-            }
+            preferenceWindow.ShowDialog();
+            RefreshInformation(true);
         }
 
         private void OpenDatabaseMenu_Click(object sender, EventArgs e)

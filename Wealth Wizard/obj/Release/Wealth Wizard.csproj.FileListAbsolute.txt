@@ -1,6 +1,5 @@
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth Wizard.csproj.AssemblyReference.cache
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth_Wizard.Display.resources
-E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth_Wizard.Preferences.resources
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth_Wizard.Properties.Resources.resources
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth Wizard.csproj.GenerateResource.cache
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth Wizard.csproj.CoreCompileInputs.cache
@@ -18,3 +17,25 @@ E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.Data.SQLite.xml
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth Wizard.csproj.CopyComplete
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth Wizard.exe
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth Wizard.pdb
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\Microsoft.Bcl.AsyncInterfaces.dll
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.Buffers.dll
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.Memory.dll
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.Numerics.Vectors.dll
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.Text.Encodings.Web.dll
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.Threading.Tasks.Extensions.dll
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.ValueTuple.dll
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\Microsoft.Bcl.AsyncInterfaces.xml
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.Buffers.xml
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.Memory.xml
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.Numerics.Vectors.xml
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.Text.Encodings.Web.xml
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.Threading.Tasks.Extensions.xml
+E:\source\repos\Wealth Wizard\Wealth Wizard\bin\Release\System.ValueTuple.xml
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth_Wizard.DisplayForms.ManageSubscriptionsForm.resources
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth_Wizard.HelperForms.EditSubscriptionForm.resources
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth_Wizard.HelperForms.InputMessageBox.resources
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth_Wizard.EditEntryForm.resources
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth_Wizard.NewDatabaseForm.resources
+E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Release\Wealth_Wizard.PreferencesForm.resources

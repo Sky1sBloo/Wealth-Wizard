@@ -138,6 +138,7 @@ namespace Wealth_Wizard
 
         private void Btn_Ok_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.OK;
             SavePreferences();
             Close();
         }
@@ -146,8 +147,16 @@ namespace Wealth_Wizard
         {
             // Warning that you might not save your preferences
             DialogResult answer = MessageBox.Show("Do you want to save your changes?", "Alert", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (answer == DialogResult.Yes) SavePreferences();
-            
+            if (answer == DialogResult.Yes)
+            {
+                DialogResult = DialogResult.OK;
+                SavePreferences();
+            }
+            else
+            {
+                DialogResult = DialogResult.Cancel;
+            }
+
             Close();
         }
     }
