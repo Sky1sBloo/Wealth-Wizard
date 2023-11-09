@@ -347,6 +347,12 @@ namespace Wealth_Wizard
             EditEntry();
         }
 
+        private void ExportToExcelMenu_Click(object sender, EventArgs e)
+        {
+            ExcelHandler.LoadInfoInExcel(EntriesHandler.GetEntriesAsTable(DatePick_FilterStartDate.Value,
+                DatePick_FilterEndDate.Value, selectedFilterType));
+        }
+
         /// <summary>
         /// Handles the click event for the "Manage Subscriptions" menu item.
         /// </summary>
@@ -365,5 +371,7 @@ namespace Wealth_Wizard
             Settings.Default.LastOpened = SystemClock.Now;
             Settings.Default.Save();
         }
+
+        
     }
 }

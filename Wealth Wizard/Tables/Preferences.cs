@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Wealth_Wizard
 {
     /// <summary>
-    /// Class that contains all preferences
+    /// Class that contains all preferences settings
     /// </summary>
     public class Preferences
     {
         public string DefaultDatabase { get; set; }
+        public int ExcelStartingRowX { get; set; }
+        public int ExcelStartingRowY { get; set; }
     }
 }

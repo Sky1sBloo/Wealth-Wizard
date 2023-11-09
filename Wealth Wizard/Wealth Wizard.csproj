@@ -48,6 +48,10 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -93,12 +97,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DisplayForms\ExportToExcelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DisplayForms\ExportToExcelForm.Designer.cs">
+      <DependentUpon>ExportToExcelForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DisplayForms\ManageSubscriptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DisplayForms\ManageSubscriptionsForm.Designer.cs">
       <DependentUpon>ManageSubscriptionsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\ExcelHandler.cs" />
     <Compile Include="Handlers\SubscriptionsHandler.cs" />
     <Compile Include="Handlers\SystemClock.cs" />
     <Compile Include="HelperForms\EditSubscriptionForm.cs">
@@ -151,6 +162,9 @@
     <Compile Include="Tables\Subscription.cs" />
     <EmbeddedResource Include="DisplayForms\Display.resx">
       <DependentUpon>Display.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DisplayForms\ExportToExcelForm.resx">
+      <DependentUpon>ExportToExcelForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DisplayForms\ManageSubscriptionsForm.resx">
       <DependentUpon>ManageSubscriptionsForm.cs</DependentUpon>
