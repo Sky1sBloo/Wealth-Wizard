@@ -25,7 +25,7 @@ jobs:
         uses: NuGet/setup-nuget@v1.2.0
 
       - name: Restore Nuget packages
-        run: nuget restore Wealth Wizard.sln
+        run: nuget restore [Wealth Wizard.sln]
 
         # Builds the solution
       - name: Build Solution
