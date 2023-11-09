@@ -69,5 +69,17 @@ namespace Wealth_Wizard.Properties {
                 this["ExcelCellFormatStartY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Entries")]
+        public string ExcelSheetName {
+            get {
+                return ((string)(this["ExcelSheetName"]));
+            }
+            set {
+                this["ExcelSheetName"] = value;
+            }
+        }
     }
 }

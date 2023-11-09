@@ -13,6 +13,7 @@ namespace Wealth_Wizard
     public class Preferences
     {
         public string DefaultDatabase { get; set; }
+        public string ExcelSheetName { get; set; }
         public int ExcelStartX { get; set; }
         public int ExcelStartY { get; set; }
     }

@@ -43,6 +43,7 @@ namespace Wealth_Wizard
         public void SavePreferences()
         {
             preferences.DefaultDatabase = @"data source=" + TxtB_DefaultDatabase.Text;
+            preferences.ExcelSheetName = TxtB_SheetName.Text;
             preferences.ExcelStartX = (int)Num_StartingCellX.Value;
             preferences.ExcelStartY = (int)Num_StartingCellY.Value;
 
@@ -56,8 +57,10 @@ namespace Wealth_Wizard
         {
             preferences = PreferencesHandler.LoadPreferences();
             TxtB_DefaultDatabase.Text = preferences.DefaultDatabase.Replace(@"data source=", "");
+            TxtB_SheetName.Text = preferences.ExcelSheetName;
             Num_StartingCellX.Value = preferences.ExcelStartX;
             Num_StartingCellY.Value = preferences.ExcelStartY;
+            
         }
 
         /// <summary>
@@ -87,7 +90,7 @@ namespace Wealth_Wizard
             {
                 try
                 {
-                    EntryTypesHandler.AddEntryType(entryTypeValue._value);
+                    EntryTypesHandler.AddEntryType(entryTypeValue.Value);
                 }
                 catch (SQLiteException)
                 {
@@ -112,7 +115,7 @@ namespace Wealth_Wizard
             if (entryTypeValue.ShowDialog() == DialogResult.OK)
             {
                 EntryTypesHandler.UpdateEntryType(ListB_EntryTypes.GetItemText(ListB_EntryTypes.SelectedItem), 
-                    entryTypeValue._value);
+                    entryTypeValue.Value);
             }
 
             LoadComboBoxTypes();

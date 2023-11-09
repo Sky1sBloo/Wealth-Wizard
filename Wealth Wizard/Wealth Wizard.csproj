@@ -97,12 +97,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DisplayForms\ExportToExcelForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DisplayForms\ExportToExcelForm.Designer.cs">
-      <DependentUpon>ExportToExcelForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="DisplayForms\ManageSubscriptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,9 +156,6 @@
     <Compile Include="Tables\Subscription.cs" />
     <EmbeddedResource Include="DisplayForms\Display.resx">
       <DependentUpon>Display.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DisplayForms\ExportToExcelForm.resx">
-      <DependentUpon>ExportToExcelForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DisplayForms\ManageSubscriptionsForm.resx">
       <DependentUpon>ManageSubscriptionsForm.cs</DependentUpon>

@@ -349,8 +349,15 @@ namespace Wealth_Wizard
 
         private void ExportToExcelMenu_Click(object sender, EventArgs e)
         {
-            ExcelHandler.LoadInfoInExcel(EntriesHandler.GetEntriesAsTable(DatePick_FilterStartDate.Value,
-                DatePick_FilterEndDate.Value, selectedFilterType));
+            InputMessageBox inputMessageBox = new InputMessageBox("Sheet name", Settings.Default.ExcelSheetName, "Export to Excel");
+            
+
+            if (inputMessageBox.ShowDialog() == DialogResult.OK)
+            {
+                ExcelHandler.LoadEntries(EntriesHandler.GetEntriesAsTable(DatePick_FilterStartDate.Value,
+                DatePick_FilterEndDate.Value, selectedFilterType),
+                inputMessageBox.Value);
+            }
         }
 
         /// <summary>

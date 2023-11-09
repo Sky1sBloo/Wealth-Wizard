@@ -39,4 +39,3 @@ E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.HelperForms.
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.DisplayForms.ManageSubscriptionsForm.resources
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.HelperForms.EditSubscriptionForm.resources
 E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.EditEntryForm.resources
-E:\source\repos\Wealth Wizard\Wealth Wizard\obj\Debug\Wealth_Wizard.DisplayForms.ExportToExcelForm.resources
