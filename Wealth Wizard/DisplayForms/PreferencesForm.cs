@@ -43,8 +43,8 @@ namespace Wealth_Wizard
         public void SavePreferences()
         {
             preferences.DefaultDatabase = @"data source=" + TxtB_DefaultDatabase.Text;
-            preferences.ExcelStartingRowX = (int)Num_StartingCellX.Value;
-            preferences.ExcelStartingRowY = (int)Num_StartingCellY.Value;
+            preferences.ExcelStartX = (int)Num_StartingCellX.Value;
+            preferences.ExcelStartY = (int)Num_StartingCellY.Value;
 
             PreferencesHandler.SavePreferences(preferences);
         }
@@ -56,8 +56,8 @@ namespace Wealth_Wizard
         {
             preferences = PreferencesHandler.LoadPreferences();
             TxtB_DefaultDatabase.Text = preferences.DefaultDatabase.Replace(@"data source=", "");
-            Num_StartingCellX.Value = preferences.ExcelStartingRowX;
-            Num_StartingCellY.Value = preferences.ExcelStartingRowY;
+            Num_StartingCellX.Value = preferences.ExcelStartX;
+            Num_StartingCellY.Value = preferences.ExcelStartY;
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace Wealth_Wizard
     public class Preferences
     {
         public string DefaultDatabase { get; set; }
-        public int ExcelStartingRowX { get; set; }
-        public int ExcelStartingRowY { get; set; }
+        public int ExcelStartX { get; set; }
+        public int ExcelStartY { get; set; }
     }
 }

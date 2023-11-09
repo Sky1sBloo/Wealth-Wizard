@@ -31,7 +31,7 @@ namespace Wealth_Wizard.Handlers
             // Create the title headers
             for (int iCol = 0; iCol < info.Columns.Count; iCol++)
             {
-                sheet.Cells[iCol + 1][1] = info.Columns[iCol].ColumnName;  
+                sheet.Cells[iCol + startX][startY] = info.Columns[iCol].ColumnName;  
             }
             
             // List all the values
@@ -41,8 +41,8 @@ namespace Wealth_Wizard.Handlers
 
                 for (int iCol = 0; iCol < info.Columns.Count; iCol++)
                 {
-                    // Added + 2 to row since the first row is already filled
-                    sheet.Cells[iCol + 1][iRow + 2] = row[iCol];
+                    // Added + 1 to row since the first row is already filled
+                    sheet.Cells[iCol + startX][iRow + startY + 1] = row[iCol];
                 }
             }
 
