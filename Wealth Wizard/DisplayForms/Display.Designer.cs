@@ -48,14 +48,14 @@
             this.OpenDatabaseMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportToExcelMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExitMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewEntryMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.EditEntryMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.queriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PreferencesMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.subscriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manageSubscriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ManageSubscriptionsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Lbl_A = new System.Windows.Forms.Label();
             this.DatePick_EntryDate = new System.Windows.Forms.DateTimePicker();
@@ -255,7 +255,7 @@
             this.NewDatabaseMenu,
             this.OpenDatabaseMenu,
             this.ExportMenu,
-            this.exitToolStripMenuItem});
+            this.ExitMenu});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -263,37 +263,38 @@
             // NewDatabaseMenu
             // 
             this.NewDatabaseMenu.Name = "NewDatabaseMenu";
-            this.NewDatabaseMenu.Size = new System.Drawing.Size(154, 22);
+            this.NewDatabaseMenu.Size = new System.Drawing.Size(180, 22);
             this.NewDatabaseMenu.Text = "New Database";
-            this.NewDatabaseMenu.Click += new System.EventHandler(this.NewDatabaseMenu_Click);
+            this.NewDatabaseMenu.Click += new System.EventHandler(this.MenuItem_Click);
             // 
             // OpenDatabaseMenu
             // 
             this.OpenDatabaseMenu.Name = "OpenDatabaseMenu";
-            this.OpenDatabaseMenu.Size = new System.Drawing.Size(154, 22);
+            this.OpenDatabaseMenu.Size = new System.Drawing.Size(180, 22);
             this.OpenDatabaseMenu.Text = "Open Database";
-            this.OpenDatabaseMenu.Click += new System.EventHandler(this.OpenDatabaseMenu_Click);
+            this.OpenDatabaseMenu.Click += new System.EventHandler(this.MenuItem_Click);
             // 
             // ExportMenu
             // 
             this.ExportMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ExportToExcelMenu});
             this.ExportMenu.Name = "ExportMenu";
-            this.ExportMenu.Size = new System.Drawing.Size(154, 22);
+            this.ExportMenu.Size = new System.Drawing.Size(180, 22);
             this.ExportMenu.Text = "Export";
             // 
             // ExportToExcelMenu
             // 
             this.ExportToExcelMenu.Name = "ExportToExcelMenu";
-            this.ExportToExcelMenu.Size = new System.Drawing.Size(116, 22);
+            this.ExportToExcelMenu.Size = new System.Drawing.Size(180, 22);
             this.ExportToExcelMenu.Text = "To Excel";
-            this.ExportToExcelMenu.Click += new System.EventHandler(this.ExportToExcelMenu_Click);
+            this.ExportToExcelMenu.Click += new System.EventHandler(this.MenuItem_Click);
             // 
-            // exitToolStripMenuItem
+            // ExitMenu
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
+            this.ExitMenu.Name = "ExitMenu";
+            this.ExitMenu.Size = new System.Drawing.Size(180, 22);
+            this.ExitMenu.Text = "Exit";
+            this.ExitMenu.Click += new System.EventHandler(this.MenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -309,44 +310,44 @@
             // NewEntryMenu
             // 
             this.NewEntryMenu.Name = "NewEntryMenu";
-            this.NewEntryMenu.Size = new System.Drawing.Size(135, 22);
+            this.NewEntryMenu.Size = new System.Drawing.Size(180, 22);
             this.NewEntryMenu.Text = "New Entry";
-            this.NewEntryMenu.Click += new System.EventHandler(this.NewEntryMenu_Click);
+            this.NewEntryMenu.Click += new System.EventHandler(this.MenuItem_Click);
             // 
             // EditEntryMenu
             // 
             this.EditEntryMenu.Name = "EditEntryMenu";
-            this.EditEntryMenu.Size = new System.Drawing.Size(135, 22);
+            this.EditEntryMenu.Size = new System.Drawing.Size(180, 22);
             this.EditEntryMenu.Text = "Edit Entry";
-            this.EditEntryMenu.Click += new System.EventHandler(this.EditEntryMenu_Click);
+            this.EditEntryMenu.Click += new System.EventHandler(this.MenuItem_Click);
             // 
             // queriesToolStripMenuItem
             // 
             this.queriesToolStripMenuItem.Name = "queriesToolStripMenuItem";
-            this.queriesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.queriesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.queriesToolStripMenuItem.Text = "Queries";
             // 
             // PreferencesMenu
             // 
             this.PreferencesMenu.Name = "PreferencesMenu";
-            this.PreferencesMenu.Size = new System.Drawing.Size(135, 22);
+            this.PreferencesMenu.Size = new System.Drawing.Size(180, 22);
             this.PreferencesMenu.Text = "Preferences";
-            this.PreferencesMenu.Click += new System.EventHandler(this.PreferencesMenu_Click);
+            this.PreferencesMenu.Click += new System.EventHandler(this.MenuItem_Click);
             // 
             // subscriptionsToolStripMenuItem
             // 
             this.subscriptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.manageSubscriptionsToolStripMenuItem});
+            this.ManageSubscriptionsMenu});
             this.subscriptionsToolStripMenuItem.Name = "subscriptionsToolStripMenuItem";
             this.subscriptionsToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
             this.subscriptionsToolStripMenuItem.Text = "Subscriptions";
             // 
-            // manageSubscriptionsToolStripMenuItem
+            // ManageSubscriptionsMenu
             // 
-            this.manageSubscriptionsToolStripMenuItem.Name = "manageSubscriptionsToolStripMenuItem";
-            this.manageSubscriptionsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.manageSubscriptionsToolStripMenuItem.Text = "Manage Subscriptions";
-            this.manageSubscriptionsToolStripMenuItem.Click += new System.EventHandler(this.ManageSubscriptions_Click);
+            this.ManageSubscriptionsMenu.Name = "ManageSubscriptionsMenu";
+            this.ManageSubscriptionsMenu.Size = new System.Drawing.Size(191, 22);
+            this.ManageSubscriptionsMenu.Text = "Manage Subscriptions";
+            this.ManageSubscriptionsMenu.Click += new System.EventHandler(this.ManageSubscriptions_Click);
             // 
             // panel1
             // 
@@ -595,10 +596,10 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem NewDatabaseMenu;
         private System.Windows.Forms.ToolStripMenuItem OpenDatabaseMenu;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ExitMenu;
         private System.Windows.Forms.ToolStripMenuItem NewEntryMenu;
         private System.Windows.Forms.ToolStripMenuItem subscriptionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem manageSubscriptionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ManageSubscriptionsMenu;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label Lbl_DateDisplay;
         private System.Windows.Forms.Label Lbl_TypeDisplay;

@@ -299,62 +299,62 @@ namespace Wealth_Wizard
             selectedFilterType = ComboB_FilterType.SelectedItem.ToString();
         }
 
-        private void PreferencesMenu_Click(object sender, EventArgs e)
+        private void MenuItem_Click(object sender, EventArgs e)
         {
-            // Opens the preference window
-            PreferencesForm preferenceWindow = new PreferencesForm();
-            preferenceWindow.ShowDialog();
-            RefreshInformation(true);
-        }
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
 
-        private void OpenDatabaseMenu_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog databaseDialog = new OpenFileDialog();
-            databaseDialog.Filter = "Wealth Wizard Database|*.wwiz";
-
-            if (databaseDialog.ShowDialog() == DialogResult.OK)
+            switch (menuItem.Name)
             {
-                DatabaseHandler.databaseLocation = @"data source=" + databaseDialog.FileName;
-            }
+                case "NewDatabaseMenu":
+                    NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
+                    newDatabaseForm.ShowDialog();
 
-            RefreshInformation(true);  // Refresh the page
-        }
+                    RefreshInformation(true);
+                    break;
+                case "OpenDatabaseMenu":
+                    OpenFileDialog databaseDialog = new OpenFileDialog();
+                    databaseDialog.Filter = "Wealth Wizard Database|*.wwiz";
 
-        private void NewDatabaseMenu_Click(object sender, EventArgs e)
-        {
-            NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
-            newDatabaseForm.ShowDialog();
+                    if (databaseDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        DatabaseHandler.databaseLocation = @"data source=" + databaseDialog.FileName;
+                    }
 
-            RefreshInformation(true); 
-        }
+                    RefreshInformation(true); 
+                    break;
+                case "ExportToExcelMenu":
+                    InputMessageBox inputMessageBox = new InputMessageBox("Sheet name", Settings.Default.ExcelSheetName, "Export to Excel");
 
-        private void NewEntryMenu_Click(object sender, EventArgs e)
-        {
-            EditEntryForm editEntryForm = new EditEntryForm();
-            editEntryForm.ShowDialog();
 
-            if (editEntryForm.DialogResult == DialogResult.Cancel) return;
-            
-            Entry newEntry = editEntryForm.GetEntryValues();
-            AddEntry(newEntry);
-            RefreshInformation();
-        }
+                    if (inputMessageBox.ShowDialog() == DialogResult.OK)
+                    {
+                        ExcelHandler.LoadEntries(EntriesHandler.GetEntriesAsTable(DatePick_FilterStartDate.Value,
+                        DatePick_FilterEndDate.Value, selectedFilterType),
+                        inputMessageBox.Value);
+                    }
+                    break;
+                case "NewEntryMenu":
+                    EditEntryForm editEntryForm = new EditEntryForm();
+                    editEntryForm.ShowDialog();
 
-        private void EditEntryMenu_Click(object sender, EventArgs e)
-        {
-            EditEntry();
-        }
+                    if (editEntryForm.DialogResult == DialogResult.Cancel) return;
 
-        private void ExportToExcelMenu_Click(object sender, EventArgs e)
-        {
-            InputMessageBox inputMessageBox = new InputMessageBox("Sheet name", Settings.Default.ExcelSheetName, "Export to Excel");
-            
-
-            if (inputMessageBox.ShowDialog() == DialogResult.OK)
-            {
-                ExcelHandler.LoadEntries(EntriesHandler.GetEntriesAsTable(DatePick_FilterStartDate.Value,
-                DatePick_FilterEndDate.Value, selectedFilterType),
-                inputMessageBox.Value);
+                    Entry newEntry = editEntryForm.GetEntryValues();
+                    AddEntry(newEntry);
+                    RefreshInformation();
+                    break;
+                case "EditEntryMenu":
+                    EditEntry();
+                    break;
+                case "PreferencesMenu":
+                    // Opens the preference window
+                    PreferencesForm preferenceWindow = new PreferencesForm();
+                    preferenceWindow.ShowDialog();
+                    RefreshInformation(true);
+                    break;
+                case "ExitMenu":
+                    Close();
+                    break;
             }
         }
 
@@ -376,7 +376,5 @@ namespace Wealth_Wizard
             Settings.Default.LastOpened = SystemClock.Now;
             Settings.Default.Save();
         }
-
-        
     }
 }
