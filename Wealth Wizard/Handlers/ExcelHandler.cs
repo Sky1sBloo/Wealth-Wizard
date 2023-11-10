@@ -92,7 +92,6 @@ namespace Wealth_Wizard.Handlers
             Excel.Range excelCellRange = sheet.Range[sheet.Cells[startX, startY],
                 sheet.Cells[info.Rows.Count + startX, info.Columns.Count + startY]];
             excelCellRange.EntireColumn.AutoFit();
-            
         }
     }
 }

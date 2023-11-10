@@ -35,7 +35,7 @@ namespace Wealth_Wizard.Handlers
 
             if (filterSpecificType != "All" && filterSpecificType != null)
             {
-                query += " AND purchases.type_idx = (SELECT types.type_idx FROM types WHERE types.name = @type_filter)";
+                query += " AND entries.type = @type_filter";
             }
 
             SQLiteCommand cmd = new SQLiteCommand(query, con);

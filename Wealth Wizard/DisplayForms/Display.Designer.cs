@@ -46,6 +46,8 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewDatabaseMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenDatabaseMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExportMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExportToExcelMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewEntryMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,8 +78,6 @@
             this.Lbl_DatabaseName = new System.Windows.Forms.Label();
             this.Lbl_DatabaseNameDisplay = new System.Windows.Forms.Label();
             this.sqLiteCommandBuilder1 = new System.Data.SQLite.SQLiteCommandBuilder();
-            this.ExportMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.ExportToExcelMenu = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridV_Display)).BeginInit();
             this.Panel_Filter.SuspendLayout();
             this.MenuStrip_Display.SuspendLayout();
@@ -267,21 +267,36 @@
             // NewDatabaseMenu
             // 
             this.NewDatabaseMenu.Name = "NewDatabaseMenu";
-            this.NewDatabaseMenu.Size = new System.Drawing.Size(180, 22);
+            this.NewDatabaseMenu.Size = new System.Drawing.Size(154, 22);
             this.NewDatabaseMenu.Text = "New Database";
             this.NewDatabaseMenu.Click += new System.EventHandler(this.NewDatabaseMenu_Click);
             // 
             // OpenDatabaseMenu
             // 
             this.OpenDatabaseMenu.Name = "OpenDatabaseMenu";
-            this.OpenDatabaseMenu.Size = new System.Drawing.Size(180, 22);
+            this.OpenDatabaseMenu.Size = new System.Drawing.Size(154, 22);
             this.OpenDatabaseMenu.Text = "Open Database";
             this.OpenDatabaseMenu.Click += new System.EventHandler(this.OpenDatabaseMenu_Click);
+            // 
+            // ExportMenu
+            // 
+            this.ExportMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ExportToExcelMenu});
+            this.ExportMenu.Name = "ExportMenu";
+            this.ExportMenu.Size = new System.Drawing.Size(154, 22);
+            this.ExportMenu.Text = "Export";
+            // 
+            // ExportToExcelMenu
+            // 
+            this.ExportToExcelMenu.Name = "ExportToExcelMenu";
+            this.ExportToExcelMenu.Size = new System.Drawing.Size(116, 22);
+            this.ExportToExcelMenu.Text = "To Excel";
+            this.ExportToExcelMenu.Click += new System.EventHandler(this.ExportToExcelMenu_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // editToolStripMenuItem
@@ -298,27 +313,27 @@
             // NewEntryMenu
             // 
             this.NewEntryMenu.Name = "NewEntryMenu";
-            this.NewEntryMenu.Size = new System.Drawing.Size(180, 22);
+            this.NewEntryMenu.Size = new System.Drawing.Size(135, 22);
             this.NewEntryMenu.Text = "New Entry";
             this.NewEntryMenu.Click += new System.EventHandler(this.NewEntryMenu_Click);
             // 
             // EditEntryMenu
             // 
             this.EditEntryMenu.Name = "EditEntryMenu";
-            this.EditEntryMenu.Size = new System.Drawing.Size(180, 22);
+            this.EditEntryMenu.Size = new System.Drawing.Size(135, 22);
             this.EditEntryMenu.Text = "Edit Entry";
             this.EditEntryMenu.Click += new System.EventHandler(this.EditEntryMenu_Click);
             // 
             // queriesToolStripMenuItem
             // 
             this.queriesToolStripMenuItem.Name = "queriesToolStripMenuItem";
-            this.queriesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.queriesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.queriesToolStripMenuItem.Text = "Queries";
             // 
             // PreferencesMenu
             // 
             this.PreferencesMenu.Name = "PreferencesMenu";
-            this.PreferencesMenu.Size = new System.Drawing.Size(180, 22);
+            this.PreferencesMenu.Size = new System.Drawing.Size(135, 22);
             this.PreferencesMenu.Text = "Preferences";
             this.PreferencesMenu.Click += new System.EventHandler(this.PreferencesMenu_Click);
             // 
@@ -333,7 +348,7 @@
             // statsToolStripMenuItem
             // 
             this.statsToolStripMenuItem.Name = "statsToolStripMenuItem";
-            this.statsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.statsToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
             this.statsToolStripMenuItem.Text = "Stats";
             // 
             // subscriptionsToolStripMenuItem
@@ -554,21 +569,6 @@
             // 
             this.sqLiteCommandBuilder1.DataAdapter = null;
             this.sqLiteCommandBuilder1.QuoteSuffix = "]";
-            // 
-            // ExportMenu
-            // 
-            this.ExportMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ExportToExcelMenu});
-            this.ExportMenu.Name = "ExportMenu";
-            this.ExportMenu.Size = new System.Drawing.Size(180, 22);
-            this.ExportMenu.Text = "Export";
-            // 
-            // ExportToExcelMenu
-            // 
-            this.ExportToExcelMenu.Name = "ExportToExcelMenu";
-            this.ExportToExcelMenu.Size = new System.Drawing.Size(180, 22);
-            this.ExportToExcelMenu.Text = "To Excel";
-            this.ExportToExcelMenu.Click += new System.EventHandler(this.ExportToExcelMenu_Click);
             // 
             // Display
             // 

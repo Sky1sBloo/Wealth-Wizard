@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace Wealth_Wizard.Handlers
 {
     /// <summary>
-    /// Class used to selecting and retrieving subscriptions in the dataabase
+    /// Class used to selecting and retrieving subscriptions in the database
     /// </summary>
     public static class SubscriptionsHandler
     {
