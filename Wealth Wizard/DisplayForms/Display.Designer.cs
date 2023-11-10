@@ -54,11 +54,8 @@
             this.EditEntryMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.queriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PreferencesMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.preferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subscriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageSubscriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manageGoalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Lbl_A = new System.Windows.Forms.Label();
             this.DatePick_EntryDate = new System.Windows.Forms.DateTimePicker();
@@ -245,7 +242,6 @@
             this.MenuStrip_Display.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
-            this.preferenceToolStripMenuItem,
             this.subscriptionsToolStripMenuItem});
             this.MenuStrip_Display.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip_Display.Name = "MenuStrip_Display";
@@ -337,25 +333,10 @@
             this.PreferencesMenu.Text = "Preferences";
             this.PreferencesMenu.Click += new System.EventHandler(this.PreferencesMenu_Click);
             // 
-            // preferenceToolStripMenuItem
-            // 
-            this.preferenceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statsToolStripMenuItem});
-            this.preferenceToolStripMenuItem.Name = "preferenceToolStripMenuItem";
-            this.preferenceToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
-            this.preferenceToolStripMenuItem.Text = "Profile";
-            // 
-            // statsToolStripMenuItem
-            // 
-            this.statsToolStripMenuItem.Name = "statsToolStripMenuItem";
-            this.statsToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
-            this.statsToolStripMenuItem.Text = "Stats";
-            // 
             // subscriptionsToolStripMenuItem
             // 
             this.subscriptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.manageSubscriptionsToolStripMenuItem,
-            this.manageGoalsToolStripMenuItem});
+            this.manageSubscriptionsToolStripMenuItem});
             this.subscriptionsToolStripMenuItem.Name = "subscriptionsToolStripMenuItem";
             this.subscriptionsToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
             this.subscriptionsToolStripMenuItem.Text = "Subscriptions";
@@ -366,12 +347,6 @@
             this.manageSubscriptionsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.manageSubscriptionsToolStripMenuItem.Text = "Manage Subscriptions";
             this.manageSubscriptionsToolStripMenuItem.Click += new System.EventHandler(this.ManageSubscriptions_Click);
-            // 
-            // manageGoalsToolStripMenuItem
-            // 
-            this.manageGoalsToolStripMenuItem.Name = "manageGoalsToolStripMenuItem";
-            this.manageGoalsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.manageGoalsToolStripMenuItem.Text = "Manage Goals";
             // 
             // panel1
             // 
@@ -618,15 +593,12 @@
         private System.Windows.Forms.MenuStrip MenuStrip_Display;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem preferenceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem NewDatabaseMenu;
         private System.Windows.Forms.ToolStripMenuItem OpenDatabaseMenu;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem NewEntryMenu;
         private System.Windows.Forms.ToolStripMenuItem subscriptionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem statsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageSubscriptionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem manageGoalsToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label Lbl_DateDisplay;
         private System.Windows.Forms.Label Lbl_TypeDisplay;
